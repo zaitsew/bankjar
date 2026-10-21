@@ -1,0 +1,37 @@
+# FAKE test fixture. Not a real offer. Testbank does not exist.
+id: testbank-payroll-cash
+bank: Testbank
+bank_slug: testbank
+country: ES
+goal: salary
+product_name: Testbank Payroll Account
+headline: EUR 800 in cash for moving your payroll for 12 months
+reward:
+  type: cash
+  value_eur: 800
+  description: Paid in two instalments of EUR 400.
+  paid_when: Within 60 days of the second payroll
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: 2000
+  new_customer_only: true
+  other:
+    - Two direct debits a month
+fees:
+  monthly_eur: 0
+  notes: No fees while the payroll arrives
+penalty: Bonus is clawed back if the payroll stops within 12 months
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: null
+valid_until: null
+source_url: https://example.com/testbank/payroll-cash
+confirmed_by: bank
+verified_on: 2026-10-15
+notes: null
+paid_placement: false
