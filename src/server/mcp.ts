@@ -1,0 +1,144 @@
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+import pkg from "../../package.json";
+import {
+  DISCLAIMER,
+  GOAL_INFO,
+  ProfileToolShape,
+  compareBody,
+  goalsBody,
+  offerBody,
+  rowLine,
+  searchBody,
+  type OfferRow,
+} from "./api";
+
+/**
+ * The MCP server: four read-only tools over the same service functions as the REST
+ * API, so an agent sees the table a person sees. A new server per request (stateless).
+ */
+
+export const MCP_INSTRUCTIONS = [
+  "BankJar ranks Spanish bank offers (salary bonuses, savings, free accounts, term deposits, welcome bonuses) by first-year net value in euros.",
+  "Always cite source_url and verified_on for every offer you mention, and say the figures are estimates for the profile given.",
+  "Never present the numbers as financial advice or a recommendation to sign; terms change, so tell the person to check source_url before signing.",
+  "Ask for monthly income, balance, residency and the longest commitment the person accepts when they matter and are unknown; do not guess them.",
+  "If an offer has stale=true, say its terms may have changed. Numbers come from the engine; never compute or invent your own.",
+].join(" ");
+
+const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false } as const;
+
+function textBlock(text: string) {
+  return { type: "text" as const, text };
+}
+
+function summaryLines(rows: readonly OfferRow[]): string {
+  return rows.map((r, i) => rowLine(r, i + 1)).join("\n");
+}
+
+export function createMcpServer(): McpServer {
+  const server = new McpServer(
+    { name: "bankjar", version: pkg.version },
+    { instructions: MCP_INSTRUCTIONS },
+  );
+
+  server.registerTool(
+    "search_offers",
+    {
+      title: "Search Spanish bank offers",
+      description:
+        "Find and rank Spanish bank offers for a person. Give a plain-language question in `query` (English, Spanish or Russian) and/or explicit fields; explicit fields win. " +
+        "Returns the top 10 offers by first-year net value in EUR (after 19% withholding tax, gift value and fees), each with source_url, verified_on, requirements, penalties and flags, plus the offers excluded for this person and why. " +
+        "Use it for questions like 'best salary bonus for 2,500 a month', 'where to park 15,000 euros', 'free account for a non-resident'.",
+      inputSchema: { query: z.string().max(500).optional().describe("The person's question in their own words."), ...ProfileToolShape },
+      annotations: { title: "Search Spanish bank offers", ...READ_ONLY },
+    },
+    ({ query, ...fields }) => {
+      const body = searchBody(query, fields);
+      const top = body.offers.slice(0, 10);
+      const structured = { ...body, offers: top, total_offers: body.offers.length };
+      const text = [
+        `Goal: ${body.goal}. ${body.summary}`,
+        top.length ? `Top ${top.length} of ${body.offers.length}:\n${summaryLines(top)}` : "No offers match.",
+        body.excluded.length ? `${body.excluded.length} offer(s) excluded for this profile; reasons are in the JSON.` : "",
+        `Cite source_url and verified_on. ${DISCLAIMER}`,
+      ]
+        .filter(Boolean)
+        .join("\n\n");
+      return { content: [textBlock(text), textBlock(JSON.stringify(structured))], structuredContent: structured };
+    },
+  );
+
+  server.registerTool(
+    "get_offer",
+    {
+      title: "Get one bank offer",
+      description:
+        "Fetch one offer by id: the full terms, the net-value score with its line-by-line breakdown, flags (penalties, unknown facts), source_url and verified_on. " +
+        "Pass the profile fields to learn whether this person can take it (not_eligible_reasons). Ids come from search_offers results.",
+      inputSchema: { id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).describe("Offer id, e.g. an `id` from search_offers."), ...ProfileToolShape },
+      annotations: { title: "Get one bank offer", ...READ_ONLY },
+    },
+    ({ id, ...fields }) => {
+      const body = offerBody(id, fields);
+      if (!body) {
+        return { isError: true, content: [textBlock(`No offer with id "${id}". Use search_offers to find ids.`)] };
+      }
+      const text = [
+        rowLine(body.offer),
+        body.hidden ? "This offer is expired or unverified for 60+ days and is in no ranking." : "",
+        body.not_eligible_reasons.length ? `Not available to this profile: ${body.not_eligible_reasons.join("; ")}.` : "",
+        body.offer.score.flags.length ? `Flags: ${body.offer.score.flags.join("; ")}.` : "",
+        `Cite source_url and verified_on. ${DISCLAIMER}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
+    },
+  );
+
+  server.registerTool(
+    "compare_offers",
+    {
+      title: "Compare bank offers",
+      description:
+        "Compare 2 to 5 offers side by side for one person. Rows keep the order of `ids`. An offer the person cannot take stays in the table with not_eligible_reasons instead of being dropped. " +
+        "Ids that match nothing come back in `missing`.",
+      inputSchema: {
+        ids: z.array(z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)).min(2).max(5).describe("Offer ids to compare, 2 to 5."),
+        ...ProfileToolShape,
+      },
+      annotations: { title: "Compare bank offers", ...READ_ONLY },
+    },
+    ({ ids, ...fields }) => {
+      const body = compareBody(ids, fields);
+      const text = [
+        body.offers.length ? summaryLines(body.offers) : "None of these ids matched an offer.",
+        ...body.offers.filter((o) => o.not_eligible_reasons.length).map((o) => `${o.bank} (${o.id}) not available: ${o.not_eligible_reasons.join("; ")}.`),
+        body.missing.length ? `Unknown ids: ${body.missing.join(", ")}.` : "",
+        `Cite source_url and verified_on. ${DISCLAIMER}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
+    },
+  );
+
+  server.registerTool(
+    "list_goals",
+    {
+      title: "List offer goals",
+      description:
+        "List the goals offers are ranked for (salary, savings, account, deposit, welcome) with a description and an example question each. Call it first when the person's intent is unclear.",
+      inputSchema: {},
+      annotations: { title: "List offer goals", ...READ_ONLY },
+    },
+    () => {
+      const body = goalsBody();
+      const text = GOAL_INFO.map((g) => `${g.id}: ${g.label}. ${g.description} Example: "${g.example_prompt}"`).join("\n");
+      return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
+    },
+  );
+
+  return server;
+}
