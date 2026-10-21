@@ -4,8 +4,9 @@ import { makeProfile } from "../core/profile";
 import { compareOffers, rankOffers, type ExcludedOffer, type RankedOffer } from "../core/rank";
 import { GOALS, GoalSchema, type Goal, type Offer } from "../core/schema";
 import { scoreOffer, type Score } from "../core/score";
+import type { ParserName } from "./ai";
 import { allOffers, datasetVersion, type DatasetVersion } from "./data";
-import { search } from "./search";
+import { search, searchAsync, type SearchResult } from "./search";
 
 /**
  * The agent surface: one stable JSON shape for an offer row, the response
@@ -348,15 +349,14 @@ export interface SearchBody extends Envelope {
   goal: Goal;
   profile: Profile;
   summary: string;
-  parser: "rules" | "ai";
+  parser: ParserName;
   intent: { goal: Goal | null; confidence: number; matched: string[] };
   count: number;
   offers: OfferRow[];
   excluded: ExcludedRow[];
 }
 
-export function searchBody(q: string | undefined, overrides: Partial<ProfileInput> = {}): SearchBody {
-  const r = search({ q: q ?? "", overrides, today: todayIso() });
+function toSearchBody(r: SearchResult): SearchBody {
   return {
     query: r.query,
     goal: r.goal,
@@ -369,6 +369,20 @@ export function searchBody(q: string | undefined, overrides: Partial<ProfileInpu
     excluded: excludedRows(r.result.excluded),
     ...envelope(),
   };
+}
+
+/** Rule parser only; no I/O. */
+export function searchBody(q: string | undefined, overrides: Partial<ProfileInput> = {}): SearchBody {
+  return toSearchBody(search({ q: q ?? "", overrides, today: todayIso() }));
+}
+
+/** With the optional AI step. The REST route and the MCP tool call this one. */
+export async function searchBodyAsync(
+  q: string | undefined,
+  overrides: Partial<ProfileInput> = {},
+  ctx: { ip?: string } = {},
+): Promise<SearchBody> {
+  return toSearchBody(await searchAsync({ q: q ?? "", overrides, today: todayIso() }, ctx));
 }
 
 export interface GoalTable {
