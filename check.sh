@@ -13,9 +13,12 @@ cd "$(dirname "$0")"
 # Supabase product reads its counters with: teyla probe-sql <ref> "select …"
 case "${1:-}" in
   usage)
-    # EDIT ME: replace with real counters, e.g.
-    #   echo "items=$(sqlite3 data/app.db 'select count(*) from items')"
-    echo "usage_probe=not_implemented"
+    # Counters come from the dataset itself: offers=<count> goals=<count>.
+    if [ -d node_modules ]; then
+      npm run -s usage
+    else
+      echo "usage_probe=not_installed"
+    fi
     exit 0 ;;
 esac
 
@@ -46,6 +49,7 @@ fi
 if [ -f package.json ]; then
   command -v node >/dev/null 2>&1 || missing+=("toolchain: node (package.json present)")
   command -v npm  >/dev/null 2>&1 || missing+=("toolchain: npm (package.json present)")
+  [ -d node_modules ] || missing+=("run: npm install")
 fi
 if [ -f pyproject.toml ] || [ -f requirements.txt ]; then
   command -v python3 >/dev/null 2>&1 || missing+=("toolchain: python3")
@@ -66,9 +70,11 @@ fi
 # --- tests, if any exist ---------------------------------------------------
 ran_tests=0
 if [ -f package.json ] && command -v npm >/dev/null 2>&1; then
-  npm test && ran_tests=1 || { echo "npm test FAILED"; exit 1; }
+  npm run -s typecheck || { echo "npm run typecheck FAILED"; exit 1; }
+  npm test --silent && ran_tests=1 || { echo "npm test FAILED"; exit 1; }
+  npm run -s validate-data || { echo "npm run validate-data FAILED"; exit 1; }
 fi
-if { [ -f pyproject.toml ] || [ -d tests ]; } && command -v python3 >/dev/null 2>&1; then
+if { [ -f pyproject.toml ] || [ -f requirements.txt ]; } && command -v python3 >/dev/null 2>&1; then
   if python3 -m pytest --version >/dev/null 2>&1; then
     python3 -m pytest -q && ran_tests=1 || { echo "pytest FAILED"; exit 1; }
   fi
@@ -82,5 +88,5 @@ if [ "$ran_tests" -eq 0 ]; then
 fi
 
 echo "OK"
-for w in "${warnings[@]}"; do echo "  note: $w"; done
+for w in ${warnings[@]+"${warnings[@]}"}; do echo "  note: $w"; done
 exit 0
