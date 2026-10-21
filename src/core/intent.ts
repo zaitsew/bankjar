@@ -141,6 +141,11 @@ const CUSTOMER_CUE = re(
   `${B0}(customer|client|cliente|already|ya|existing|my\\s+bank|mi\\s+banco|account\\s+(?:at|with)|cuenta\\s+(?:en|con)|tengo)${B1}|клиент|уже|мой\\s+банк`,
 );
 
+/** A negation right before the customer cue: "not a customer of", "no soy cliente de", "я не клиент". */
+const NEGATED_CUE = re(
+  `(?:${B0}(?:not|never|no\\s+soy|no\\s+tengo|no\\s+estoy|nunca|не|нет)${B1}|n't)\\s+(?:[\\p{L}']+\\s+){0,4}$`,
+);
+
 // --- Amounts -------------------------------------------------------------
 
 const AMOUNT = new RegExp(
@@ -159,6 +164,7 @@ const ANNUAL_AFTER = re(
   `^\\s*(?:per\\s+year|a\\s+year|/\\s?(?:yr|year)|annual\\p{L}*|yearly|per\\s+annum|al\\s+ano|anual\\p{L}*|por\\s+ano|в\\s+год|/год)`,
 );
 const ANNUAL_BEFORE = re(`(annual|yearly|anual|годов\\p{L}*)\\s+(salary|income|nomina|sueldo|зарплат\\p{L}*)?\\s*(of|de|is|:)?\\s*$`);
+const FEE_AFTER = re(`^\\s*(fees?|commissions?|comision|comisiones|комисси)`);
 const DURATION_AFTER = re(`^\\s*[-\\s]?(months?|meses|mes${B1}|месяц|мес${B1}|years?|anos?|лет|год)`);
 
 function parseNumber(raw: string): number {
@@ -206,7 +212,9 @@ function findAmounts(text: string, goal: Goal | null): Amounts {
     const hasCurrency = Boolean(euroBefore || euroAfter);
     let value = parseNumber(num);
     if (suffix) value *= 1000;
-    if (!Number.isFinite(value) || value <= 0) continue;
+    if (!Number.isFinite(value) || value < 0) continue;
+    // A stated 0 is kept, but "0€ fees" is a price, not a balance.
+    if (value === 0 && FEE_AFTER.test(rest)) continue;
 
     if (!hasCurrency && !suffix) {
       // A bare number counts only next to a money word, and never as a duration or a year.
@@ -222,6 +230,7 @@ function findAmounts(text: string, goal: Goal | null): Amounts {
     else if (goal === "salary") kind = "income";
     else if (goal === "savings" || goal === "deposit") kind = "balance";
     if (kind === null) continue;
+    if (value === 0 && incomeDist === Infinity && balanceDist === Infinity) continue;
     if (!hasCurrency && !suffix && incomeDist === Infinity && balanceDist === Infinity) continue;
 
     if (kind === "income") {
@@ -237,17 +246,35 @@ function findAmounts(text: string, goal: Goal | null): Amounts {
 
 // --- Durations -------------------------------------------------------------
 
-function findDurationMonths(text: string): number | undefined {
-  const hits: Array<{ index: number; months: number }> = [];
+/** Words that tie a duration to the commitment the person accepts. */
+const COMMITMENT_WORD = re(`${B0}(commitment|lock[\\s-]?in|minimum\\s+stay|permanencia|compromiso)|обязательств`);
+/** A limit phrase directly before the duration: "up to 12 months". */
+const LIMIT_BEFORE = re(`(?:${B0}(?:at\\s+most|up\\s+to|max(?:imum)?|hasta|maximo|como\\s+maximo)|не\\s+более|${B0}до)\\s*$`);
+/** Residence and age durations: "resident for 2 years", "I am 30 years old". */
+const RESIDENCE_BEFORE = re(
+  `(resident\\p{L}*|residenc\\p{L}*|residen\\p{L}*|living|lived|live|resido|vivo|llevo|aged?|edad|since|desde|живу|проживаю|резидент\\p{L}*|мне)\\W+(?:\\p{L}+\\W+){0,3}$`,
+);
+const AGE_AFTER = re(`^\\W*(old|of\\s+age|de\\s+edad|в\\s+(?:испании|стране))`);
+
+function findDurationMonths(text: string, goal: Goal | null): number | undefined {
+  const hits: Array<{ index: number; end: number; months: number }> = [];
   const add = (regex: RegExp, toMonths: (m: RegExpMatchArray) => number) => {
-    for (const m of text.matchAll(regex)) hits.push({ index: m.index, months: toMonths(m) });
+    for (const m of text.matchAll(regex)) hits.push({ index: m.index, end: m.index + m[0].length, months: toMonths(m) });
   };
   add(re(`(\\d{1,3})[\\s-]*(?:months?|meses|mes${B1}|месяц\\p{L}*|мес${B1})`, "giu"), (m) => Number(m[1]));
   add(re(`(\\d{1,2})[\\s-]*(?:years?|yrs?|anos?|лет|года?|год)${B1}`, "giu"), (m) => Number(m[1]) * 12);
   add(re(`${B0}(?:for\\s+(?:a|one|1)|one|un|por\\s+un|на(?:\\s+один|\\s+1)?)[\\s-]*(?:year|ano|год)${B1}`, "giu"), () => 12);
   add(re(`${B0}(?:for\\s+(?:a|one|1)|one|un|por\\s+un|на(?:\\s+один|\\s+1)?)[\\s-]*(?:month|mes|месяц)${B1}`, "giu"), () => 1);
   hits.sort((a, b) => a.index - b.index);
-  const first = hits.find((h) => h.months > 0 && h.months <= 120);
+  const first = hits.find((h) => {
+    if (h.months <= 0 || h.months > 120) return false;
+    const before = text.slice(Math.max(0, h.index - 40), h.index);
+    const after = text.slice(h.end, h.end + 30);
+    if (RESIDENCE_BEFORE.test(before) || AGE_AFTER.test(after)) return false;
+    if (COMMITMENT_WORD.test(before.slice(-30)) || COMMITMENT_WORD.test(after) || LIMIT_BEFORE.test(before)) return true;
+    // The product term: "12-month deposit" is the deposit term.
+    return goal === "deposit";
+  });
   return first?.months;
 }
 
@@ -268,8 +295,12 @@ export function parseIntent(input: string): Intent {
   const strong = new Map<Goal, boolean>();
   const weak = new Map<Goal, boolean>();
   for (const goal of GOAL_PRIORITY) {
-    strong.set(goal, STRONG[goal].some((r) => r.test(text)) || (goal === "welcome" && noSalary));
+    strong.set(goal, STRONG[goal].some((r) => r.test(text)));
     weak.set(goal, WEAK[goal].some((r) => r.test(text)));
+  }
+  // "Without payroll" means welcome only when no other goal word is present.
+  if (noSalary && GOAL_PRIORITY.every((g) => g === "welcome" || (!strong.get(g) && !weak.get(g)))) {
+    strong.set("welcome", true);
   }
   const score = (g: Goal) => (strong.get(g) ? 10 : 0) + (weak.get(g) ? 1 : 0);
   let goal: Goal | null = null;
@@ -302,7 +333,7 @@ export function parseIntent(input: string): Intent {
     profile.max_commitment_months = 0;
     matched.push("max_commitment_months:0");
   } else {
-    const months = findDurationMonths(text);
+    const months = findDurationMonths(text, goal);
     if (months !== undefined) {
       profile.max_commitment_months = months;
       matched.push(`max_commitment_months:${months}`);
@@ -331,7 +362,7 @@ export function parseIntent(input: string): Intent {
     const bank = re(`${B0}(${pattern})${B1}`, "giu");
     for (const m of text.matchAll(bank)) {
       const before = text.slice(Math.max(0, m.index - 40), m.index);
-      if (CUSTOMER_CUE.test(before) && !existing.includes(slug)) existing.push(slug);
+      if (CUSTOMER_CUE.test(before) && !NEGATED_CUE.test(before) && !existing.includes(slug)) existing.push(slug);
     }
   }
   if (existing.length > 0) {
