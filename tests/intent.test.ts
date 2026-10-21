@@ -156,4 +156,52 @@ describe("parseIntent: details", () => {
   it("does not mark a bank as existing without a cue", () => {
     expect(parseIntent("welcome bonus at BBVA").profile.existing_customer_of).toBeUndefined();
   });
+  describe("review fixes", () => {
+    it("keeps a stated zero balance", () => {
+      expect(parseIntent("savings balance €0").profile.balance_eur).toBe(0);
+      expect(parseIntent("savings account, I have 0 euros").profile.balance_eur).toBe(0);
+    });
+
+    it("does not read a zero fee as a balance", () => {
+      expect(parseIntent("savings account with 0€ fees").profile.balance_eur).toBeUndefined();
+    });
+
+    it("keeps an explicit goal when the person has no payroll", () => {
+      expect(parseIntent("savings account without payroll").goal).toBe("savings");
+      expect(parseIntent("term deposit sin nómina").goal).toBe("deposit");
+      expect(parseIntent("free account without payroll").goal).toBe("account");
+      expect(parseIntent("bonus without payroll").goal).toBe("welcome");
+    });
+
+    it.each([
+      "I am not a customer of BBVA",
+      "no soy cliente de BBVA",
+      "я не клиент BBVA",
+    ])("does not mark a bank as existing after a negation: %s", (prompt) => {
+      expect(parseIntent(`best welcome bonus, ${prompt}`).profile.existing_customer_of).toBeUndefined();
+    });
+
+    it("still marks a bank when a negation belongs to another phrase", () => {
+      expect(parseIntent("savings, no commitment, customer of BBVA").profile.existing_customer_of).toEqual(["bbva"]);
+    });
+
+    it("does not read a residence duration as a commitment", () => {
+      const i = parseIntent("Resident for 2 years, looking for a 12-month deposit");
+      expect(i.profile.max_commitment_months).toBe(12);
+      expect(parseIntent("Resident for 2 years, best savings account").profile.max_commitment_months).toBeUndefined();
+      expect(parseIntent("llevo 3 años en España, cuenta de ahorro").profile.max_commitment_months).toBeUndefined();
+      expect(parseIntent("я резидент 2 года, ищу накопительный счет").profile.max_commitment_months).toBeUndefined();
+    });
+
+    it.each([
+      ["savings account, lock-in of 6 months", 6],
+      ["savings, up to 2 years", 24],
+      ["savings, for at most 18 months", 18],
+      ["savings, max 1 year", 12],
+      ["ahorro con permanencia de 12 meses", 12],
+      ["накопительный счет, обязательство 6 месяцев", 6],
+    ])("reads a commitment duration: %s", (prompt, months) => {
+      expect(parseIntent(prompt).profile.max_commitment_months).toBe(months);
+    });
+  });
 });
