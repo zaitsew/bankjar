@@ -1,0 +1,36 @@
+# FAKE test fixture. Not a real offer. Testbank does not exist.
+id: testbank-free-account
+bank: Testbank
+bank_slug: testbank
+country: ES
+goal: account
+product_name: Testbank Free Account
+headline: Everyday account with no fees and no conditions
+reward:
+  type: none
+  value_eur: null
+  description: No reward. The account is free.
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other: []
+fees:
+  monthly_eur: 0
+  notes: No maintenance fee, no card fee
+penalty: null
+eligibility:
+  residents_only: false
+  nie_tie_ok: true
+  non_residents: true
+  notes: null
+valid_until: null
+source_url: https://example.com/testbank/free-account
+confirmed_by: bank
+verified_on: 2026-10-20
+notes: null
+paid_placement: false

@@ -1,0 +1,36 @@
+# FAKE test fixture. Not a real offer. Testbank does not exist.
+id: testbank-phone-gift
+bank: Testbank
+bank_slug: testbank
+country: ES
+goal: salary
+product_name: Testbank Phone Plan
+headline: A EUR 1,500 phone for a 36-month payroll commitment
+reward:
+  type: gift
+  value_eur: 1500
+  description: Flagship phone, delivered after the third payroll.
+  paid_when: Delivered after the third payroll
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 36
+requirements:
+  min_monthly_income_eur: 2500
+  new_customer_only: false
+  other: []
+fees:
+  monthly_eur: 5
+  notes: Waived with a payroll above EUR 2,500
+penalty: Pay back the phone's value pro rata if you leave early
+eligibility:
+  residents_only: false
+  nie_tie_ok: true
+  non_residents: false
+  notes: Needs a Spanish address for delivery
+valid_until: 2026-12-31
+source_url: https://example.com/testbank/phone-gift
+confirmed_by: aggregator
+verified_on: 2026-10-10
+notes: Fixture for gift scoring.
+paid_placement: false
