@@ -14,6 +14,7 @@ export function FilterForm({ res, explicit }: { res: SearchResult; explicit: Par
       <summary>Edit filters</summary>
       <form action="/search" method="get" className="panel mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <input type="hidden" name="q" value={res.query} />
+        {res.profile.prefer === "cash" ? <input type="hidden" name="prefer" value="cash" /> : null}
         <div className="field">
           <label htmlFor="f-goal">Goal</label>
           <select id="f-goal" name="goal" className="input" defaultValue={res.goal}>
@@ -26,7 +27,7 @@ export function FilterForm({ res, explicit }: { res: SearchResult; explicit: Par
         </div>
         <div className="field">
           <label htmlFor="f-income">Net monthly income, EUR</label>
-          <input id="f-income" name="income" type="number" min="0" step="50" inputMode="numeric" className="input" defaultValue={p.monthly_income_eur ?? ""} />
+          <input id="f-income" name="income" type="number" min="0" step="any" inputMode="numeric" className="input" defaultValue={p.monthly_income_eur ?? ""} />
         </div>
         <div className="field">
           <label htmlFor="f-commit">Longest commitment, months (0 = none)</label>
@@ -47,7 +48,7 @@ export function FilterForm({ res, explicit }: { res: SearchResult; explicit: Par
         </div>
         <div className="field">
           <label htmlFor="f-balance">Balance to park, EUR</label>
-          <input id="f-balance" name="balance" type="number" min="0" step="500" inputMode="numeric" className="input" placeholder={String(p.balance_eur)} defaultValue={explicit.balance_eur ?? ""} />
+          <input id="f-balance" name="balance" type="number" min="0" step="any" inputMode="numeric" className="input" placeholder={String(p.balance_eur)} defaultValue={explicit.balance_eur ?? ""} />
         </div>
         <div className="flex flex-wrap items-center gap-3 sm:col-span-2 lg:col-span-3">
           <button type="submit" className="btn btn-primary">

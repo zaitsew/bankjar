@@ -86,9 +86,11 @@ const ROWS: Row[] = [
     label: "Minimum income",
     cell: (i) => {
       const m = i.offer.requirements.min_monthly_income_eur;
-      return m === null || m === 0 ? "None" : `${eur(m)}/month`;
+      if (m === null) return "Unknown";
+      return m === 0 ? "None" : `${eur(m)}/month`;
     },
-    num: (i) => i.offer.requirements.min_monthly_income_eur ?? 0,
+    // Unknown is not "no minimum": leave it out of the best-value comparison.
+    num: (i) => i.offer.requirements.min_monthly_income_eur,
     best: "low",
   },
   { label: "New customers only", cell: (i) => yesNo(i.offer.requirements.new_customer_only) },
