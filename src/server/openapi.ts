@@ -92,7 +92,7 @@ export function buildOpenApi(): Json {
           operationId: "searchOffers",
           summary: "Search with a free-text question",
           description:
-            "The same pipeline as the search box: the rule parser reads goal, income, balance, commitment and residency out of q; explicit parameters win over what q says.",
+            "The same pipeline as the search box: the rule parser reads goal, income, balance, commitment and residency out of q, and on the hosted site an AI step fills what the rules miss (see `parser` in the response); explicit parameters win over what q says. The AI never writes a number in a table.",
           parameters: [
             { name: "q", in: "query", required: false, description: "A question in English, Spanish or Russian, up to 500 characters.", example: "I earn 2500 a month, best salary bonus without commitment", schema: { type: "string", maxLength: 500 } },
             ...profileParameters(),
@@ -276,7 +276,7 @@ export function buildOpenApi(): Json {
             goal: ref("Goal"),
             profile: profileRef,
             summary: { type: "string", description: "A template over the ranked rows. Never adds a number." },
-            parser: { type: "string", enum: ["rules", "ai"] },
+            parser: { type: "string", enum: ["rules", "ai", "rules+ai"], description: "Which parser read q: the rule parser, the AI alone, or both." },
             intent: { type: "object", properties: { goal: { oneOf: [ref("Goal"), { type: "null" }] }, confidence: { type: "number" }, matched: { type: "array", items: { type: "string" } } } },
             count: { type: "integer" },
             offers: { type: "array", items: ref("OfferRow") },

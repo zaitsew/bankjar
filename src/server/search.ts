@@ -2,7 +2,10 @@ import { parseIntent, type Intent } from "../core/intent";
 import { makeProfile, type Profile, type ProfileInput } from "../core/profile";
 import { rankOffers, type RankResult } from "../core/rank";
 import type { Goal } from "../core/schema";
+import { aiEnabled, mergeIntents, parseIntentWithAI, type ParserName } from "./ai";
+import { createLruCache, normalizeQuery, CACHE_MAX_ENTRIES, CACHE_TTL_MS } from "./cache";
 import { allOffers, datasetVersion, type DatasetVersion } from "./data";
+import { aiLimiter, visitorId } from "./ratelimit";
 
 /**
  * The one search pipeline. The search box, `/api/v1/search` and the MCP tool all call
@@ -29,8 +32,8 @@ export interface SearchResult {
   result: RankResult;
   summary: string;
   dataset: DatasetVersion;
-  /** "rules" today; "ai" once the hub parser is on. */
-  parser: "rules" | "ai";
+  /** Which parser read the question: the rules, the AI alone, or both ("rules+ai"). */
+  parser: ParserName;
 }
 
 function eur(n: number): string {
@@ -61,7 +64,7 @@ export function templateSummary(goal: Goal, result: RankResult): string {
   return text;
 }
 
-export function search(input: SearchInput = {}, intentOverride?: Intent): SearchResult {
+export function search(input: SearchInput = {}, intentOverride?: Intent, parser?: ParserName): SearchResult {
   const query = (input.q ?? "").trim();
   const intent = intentOverride ?? parseIntent(query);
   const profile = makeProfile({ ...intent.profile, ...input.overrides });
@@ -77,6 +80,46 @@ export function search(input: SearchInput = {}, intentOverride?: Intent): Search
     result,
     summary: templateSummary(goal, result),
     dataset: datasetVersion(offers),
-    parser: intentOverride ? "ai" : "rules",
+    parser: parser ?? (intentOverride ? "ai" : "rules"),
   };
+}
+
+// --- With the optional AI step -------------------------------------------------
+
+/** Rule confidence at or above this, with a goal, is trusted without asking the AI. */
+export const AI_SKIP_CONFIDENCE = 0.8;
+
+/** Intents the AI returned, by normalised question. Module-level: best effort on serverless. */
+export const intentCache = createLruCache<Intent>(CACHE_MAX_ENTRIES, CACHE_TTL_MS);
+
+export interface SearchContext {
+  /** The caller's address; hashed into a daily pseudonym, never stored or sent as is. */
+  ip?: string;
+}
+
+/**
+ * `search` plus the AI step. The rule parser always runs first. The AI is asked only when
+ * it is enabled, `q` is not empty, and the rules are unsure (confidence below 0.8 or no goal).
+ * A cache hit costs nothing; a rate-limited caller silently gets the rules. Explicit
+ * overrides in `input` still win over both parsers, exactly as in `search`.
+ */
+export async function searchAsync(input: SearchInput = {}, ctx: SearchContext = {}): Promise<SearchResult> {
+  const query = (input.q ?? "").trim();
+  const rules = parseIntent(query);
+  const needsAi = query.length >= 3 && aiEnabled() && (rules.goal === null || rules.confidence < AI_SKIP_CONFIDENCE);
+  if (!needsAi) return search(input, undefined, "rules");
+
+  const key = normalizeQuery(query);
+  let ai = intentCache.get(key) ?? null;
+  if (!ai) {
+    const ip = ctx.ip ?? "unknown";
+    if (!aiLimiter.take(ip)) return search(input, undefined, "rules");
+    ai = await parseIntentWithAI(query, { visitorId: visitorId(ip) });
+    if (ai) intentCache.set(key, ai);
+  }
+  if (!ai) return search(input, undefined, "rules");
+
+  const merged = mergeIntents(rules, ai);
+  if (merged.parser === "rules") return search(input, undefined, "rules");
+  return search(input, merged.intent, merged.parser);
 }

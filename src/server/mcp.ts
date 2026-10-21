@@ -9,7 +9,7 @@ import {
   goalsBody,
   offerBody,
   rowLine,
-  searchBody,
+  searchBodyAsync,
   type OfferRow,
 } from "./api";
 
@@ -36,7 +36,7 @@ function summaryLines(rows: readonly OfferRow[]): string {
   return rows.map((r, i) => rowLine(r, i + 1)).join("\n");
 }
 
-export function createMcpServer(): McpServer {
+export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
   const server = new McpServer(
     { name: "bankjar", version: pkg.version },
     { instructions: MCP_INSTRUCTIONS },
@@ -53,8 +53,8 @@ export function createMcpServer(): McpServer {
       inputSchema: { query: z.string().max(500).optional().describe("The person's question in their own words."), ...ProfileToolShape },
       annotations: { title: "Search Spanish bank offers", ...READ_ONLY },
     },
-    ({ query, ...fields }) => {
-      const body = searchBody(query, fields);
+    async ({ query, ...fields }) => {
+      const body = await searchBodyAsync(query, fields, ctx);
       const top = body.offers.slice(0, 10);
       const structured = { ...body, offers: top, total_offers: body.offers.length };
       const text = [

@@ -2,6 +2,7 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 import pkg from "../../package.json";
 import { siteUrl } from "../../src/server/api";
 import { createMcpServer } from "../../src/server/mcp";
+import { clientIp } from "../../src/server/ratelimit";
 
 /**
  * POST /mcp: a stateless Streamable HTTP MCP server. Each request builds its own server and
@@ -29,7 +30,7 @@ export async function POST(request: Request): Promise<Response> {
     sessionIdGenerator: undefined,
     enableJsonResponse: true,
   });
-  const server = createMcpServer();
+  const server = createMcpServer({ ip: clientIp(request.headers) });
   await server.connect(transport);
   try {
     return withCors(await transport.handleRequest(request));
