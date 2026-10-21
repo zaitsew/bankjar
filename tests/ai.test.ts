@@ -410,7 +410,7 @@ describe("MCP search_offers with the AI on", () => {
     await client.connect(new StreamableHTTPClientTransport(new URL(`${SITE}/mcp`), { fetch: routeFetch as typeof fetch }));
     try {
       const res = await client.callTool({ name: "search_offers", arguments: { query: VAGUE } });
-      const body = (res as { structuredContent: { parser: string; goal: string } }).structuredContent;
+      const body = (res as unknown as { structuredContent: { parser: string; goal: string } }).structuredContent;
       expect(body).toMatchObject({ parser: "ai", goal: "deposit" });
       const hubCall = realFetch.mock.calls.find((c) => String(c[0]).endsWith("/functions/v1/ai"));
       expect(hubCall![1].headers["x-accounts-external-user"]).toBe(visitorId("192.0.2.77"));
