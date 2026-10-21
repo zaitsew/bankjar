@@ -131,9 +131,12 @@ if [ "$DRY" = 1 ]; then
   echo "[dry] poll ${URL} every 3 s until HTTP 200"
   exit 0
 fi
+# Ask the target host's own container first, so --host never passes on another box's answer.
 code="000"
 for _ in $(seq 1 30); do
-  code="$(curl -s -o /dev/null -m 5 -w '%{http_code}' "$URL" || true)"
+  if "${SSH[@]}" "$HOST" "cd /srv && docker compose exec -T ${NAME} wget -qO- http://127.0.0.1:3000/api/v1/goals >/dev/null"; then
+    code="$(curl -s -o /dev/null -m 5 -w '%{http_code}' "$URL" || true)"
+  fi
   [ "$code" = "200" ] && break
   sleep 3
 done
