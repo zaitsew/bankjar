@@ -34,16 +34,54 @@ The person's profile filters offers: monthly income, new or existing customer, r
 
 ## AI search (src/server/ai.ts)
 
-1. Rule-based parser first (`src/core/intent.ts`): goal keywords in English, Spanish and Russian, euro amounts, months and years.
-2. If `ACCOUNTS_SERVICE_BANKJAR` is set: Haiku 5.5 through the accounts hub (`/functions/v1/ai`, service path, product `bankjar`) fills the same `Intent` type with tool use.
-   Anthropic is the primary track (POLICY §1). The hub enforces the per-visitor and product-wide monthly EUR ceilings.
-3. Without a key the site still works: the rule parser covers the example prompts.
-4. Identical questions are cached for 24 h. Per-IP rate limit: 20 AI searches per hour.
+The AI turns a question into the same `Intent` the rule parser returns. It never writes a number a table shows: every euro comes from `data/offers`.
+
+```
+q ──► rule parser ──► confident? (goal found, confidence ≥ 0.8) ──yes──► search()          parser "rules"
+                          │ no
+                          ▼
+                 AI enabled? (ACCOUNTS_SERVICE_BANKJAR set, BANKJAR_AI ≠ off)  ──no──►    parser "rules"
+                          │ yes
+                          ▼
+              cache hit? ──yes──┐        rate limit ok? ──no──► search()                  parser "rules"
+                          │ no  │                 │ yes
+                          └─────┼─► Haiku 5.5 via the hub (4 s timeout) ──fail──►         parser "rules"
+                                ▼
+                  merge(rules, ai) ──► search(); explicit parameters still win           parser "ai" | "rules+ai"
+```
+
+- **Code.** `src/server/ai.ts` (hub call, validation, merge), `cache.ts` (LRU), `ratelimit.ts` (limiter, client address, visitor id), `search.ts` (`searchAsync`, the sync `search` is unchanged). `/api/v1/search` and the MCP `search_offers` tool call `searchAsync`; the search page should too.
+- **Hub call.** `POST ${ACCOUNTS_URL}/functions/v1/ai` on the service path: headers `x-accounts-service` (`ACCOUNTS_SERVICE_BANKJAR`), `x-accounts-product: bankjar`, `x-accounts-external-user: <visitor id>`. Model `claude-haiku-5-5`, one function tool `set_search_filters` forced with `tool_choice`, `fallback: []`, `max_tokens: 400`. Anthropic is the primary track (POLICY §1).
+- **Validation.** The tool arguments pass through zod: `gift_factor` clamped to 0..1, month counts rounded to integers, `goal` and `residency` from fixed enums, bank slugs kebab-case. Arguments that do not parse return null. `unknown` residency and `prefer: any` are dropped, so they never overwrite a rule-parser value.
+- **Merge.** The rule result comes first and the AI fills gaps. Where both found a field, the AI wins only when the rule confidence is below 0.6. The response's `parser` is `rules` (the AI added nothing or was skipped), `ai` (the rules found nothing) or `rules+ai`. `intent.matched` lists the AI fields as `ai:<field>:<value>`.
+- **Never an error to the person.** No key, a network error, a 4 s timeout, a non-200 (402 `budget_exhausted`, 429), an answer with no tool call or invalid arguments: the call returns null, logs one line (`[bankjar-ai] fallback to rules: …`, never the question) and the rule parser answers.
+- **Cache.** In-memory LRU, 500 entries, 24 h, keyed by the lower-cased, whitespace-collapsed question; it stores the AI's intent. A hit costs nothing and uses no rate-limit slot. Failures are not cached. The state is per server instance (best effort on serverless); `/api/v1/search` responses are also cached by the CDN for an hour.
+- **Rate limit.** Fixed one-hour window, AI calls only: 20 per IP, 600 per instance. Over the limit the rule parser answers with no error. The IP is the first hop of `x-forwarded-for`, else `x-real-ip`.
+- **Privacy.** The hub sees `sha256(ip | BANKJAR_VISITOR_SALT | UTC day)` cut to 16 hex characters. The raw IP is neither stored nor sent, and the id changes every day. The question text goes to the hub and Anthropic; the privacy page must say so.
+- **Switches.** `ACCOUNTS_SERVICE_BANKJAR` unset: AI off, nothing else changes. `BANKJAR_AI=off`: AI off with the key present.
+
+### Hub setup (one-time, on the accounts side)
+
+1. Add the product's service token as the hub secret `ACCOUNTS_SERVICE_BANKJAR` and the same value to the BankJar deployment.
+2. Set `ACCOUNTS_EXTERNAL_BUDGET_EUR` above 0. External callers resolve on the free plan, whose seeded budget is 0, so without it every call is a 402 and BankJar silently stays on the rule parser.
+3. The product-wide ceiling for external callers is 25 EUR a month by default (`ACCOUNTS_EXTERNAL_PRODUCT_BUDGET_EUR`). The visitor id changes daily, so the per-person budget rarely binds; the 25 EUR ceiling is the hard stop.
+
+### Cost
+
+Prices from the hub's `_shared/cost.ts` (EUR per million tokens): Haiku 5.5 input 0.092, output 0.46.
+
+| Call | Tokens | EUR |
+|---|---|---|
+| Input (system prompt, tool schema, question) | about 600 | 0.0000552 |
+| Output (one tool call) | about 120 | 0.0000552 |
+| **One AI search** | | **about 0.00011** |
+
+At the 25 EUR ceiling that is about **226,000 AI searches a month**. If Haiku adds hidden thinking tokens and the output is five times larger (600 tokens), a search costs about 0.00033 EUR and the ceiling fits about 75,000. The hub reserves the estimate for the raised output ceiling before the call and settles to the real tokens afterwards, so the monthly sum follows real usage. Only questions the rules cannot place, and that miss the cache, reach the hub, so real traffic costs less than this. These are estimates from price tables, not an invoice; check `accounts.usage` after the first week.
 
 ## For agents
 
 - `GET /api/v1/offers?goal=salary&country=ES&income=2500` — ranked offers as JSON.
-- `GET /api/v1/search?q=...` — the same pipeline as the search box, returning `{intent, offers, summary}`.
+- `GET /api/v1/search?q=...` — the same pipeline as the search box (rule parser, plus the AI step when the host enables it), returning `{parser, intent, offers, summary}`.
 - `GET /api/v1/offers/{id}` and `GET /api/v1/compare?ids=a,b`.
 - `GET /openapi.json`, `/llms.txt`, `/llms-full.txt`, `/data/offers.json` (the whole dataset, CC BY 4.0).
 - `POST /mcp` — a stateless Streamable-HTTP MCP server with tools `search_offers`, `get_offer`, `compare_offers`, `list_goals`.

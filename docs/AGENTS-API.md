@@ -25,7 +25,7 @@ All endpoints are `GET`, return JSON, and send `Access-Control-Allow-Origin: *` 
 
 | Endpoint | Returns |
 |---|---|
-| `/api/v1/search?q=` | The search-box pipeline: `{query, goal, profile, summary, parser, intent, count, offers[], excluded[]}`. |
+| `/api/v1/search?q=` | The search-box pipeline: `{query, goal, profile, summary, parser, intent, count, offers[], excluded[]}`. `parser` is `rules`, `ai` or `rules+ai`. |
 | `/api/v1/offers?goal=&country=ES` | Ranked rows for one goal; with no `goal`, one ranked table per goal under `goals`. |
 | `/api/v1/offers/{id}` | `{offer, full_offer, hidden, not_eligible_reasons}`. 404 JSON for an unknown id. |
 | `/api/v1/compare?ids=a,b,c` | `{offers[], missing[]}` in the order asked; offers the profile cannot take stay in, with `not_eligible_reasons`. |
