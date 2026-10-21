@@ -289,7 +289,7 @@ export function parseQuery<S extends z.ZodObject>(url: URL, schema: S): ParseRes
       issues.push({ param: key, message: `unknown parameter; accepted: ${[...known].join(", ")}` });
       continue;
     }
-    if (name in raw && raw[name] !== value && key !== name) {
+    if (name in raw && raw[name] !== value) {
       issues.push({ param: key, message: `${name} was given twice with different values` });
       continue;
     }

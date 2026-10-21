@@ -44,9 +44,13 @@ export function templateSummary(goal: Goal, result: RankResult): string {
       ? `No offer fits these filters. ${result.excluded.length} offer(s) were left out; see why below.`
       : "No offers for this goal yet.";
   }
-  const commit = first.offer.commitment_months
-    ? ` for a ${first.offer.commitment_months}-month commitment`
-    : " with no commitment";
+  const months = first.offer.commitment_months;
+  const commit =
+    months == null
+      ? " (commitment not stated; check the source)"
+      : months > 0
+        ? ` for a ${months}-month commitment`
+        : " with no commitment";
   let text = `${first.offer.bank} leads: ${first.offer.headline} — about ${eur(first.score.net_value_eur)} net in the first year${commit}.`;
   if (second) {
     text += ` Next: ${second.offer.bank}, about ${eur(second.score.net_value_eur)}.`;

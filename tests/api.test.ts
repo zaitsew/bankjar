@@ -220,3 +220,12 @@ describe("GET /data/offers.json", () => {
     expect(body.offers[0].source_url).toMatch(/^https:/);
   });
 });
+
+describe("conflicting aliases", () => {
+  it("rejects an alias and its long name with different values, in either order", async () => {
+    for (const qs of ["monthly_income_eur=1000&income=2500", "income=2500&monthly_income_eur=1000"]) {
+      const res = await searchGET(new Request(`http://localhost/api/v1/search?goal=salary&${qs}`));
+      expect(res.status).toBe(400);
+    }
+  });
+});
