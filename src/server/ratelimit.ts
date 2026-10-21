@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 
 /**
  * A fixed-window limiter for AI calls only. Over the limit the caller skips the AI and the
@@ -69,7 +69,11 @@ export function clientIp(headers: Headers): string {
   return headers.get("x-real-ip")?.trim() || "unknown";
 }
 
-const DEFAULT_SALT = "bankjar-visitor-v1";
+/**
+ * Without BANKJAR_VISITOR_SALT each process draws its own secret salt. A public constant
+ * would let anyone holding hub records hash every IPv4 address and recover visitors.
+ */
+const PROCESS_SALT = randomBytes(32).toString("hex");
 
 /**
  * A stable-for-a-day pseudonym for the hub's `x-accounts-external-user`: the first 16 hex
@@ -77,7 +81,7 @@ const DEFAULT_SALT = "bankjar-visitor-v1";
  * pseudonym changes every day, so it cannot follow a person across days.
  */
 export function visitorId(ip: string, now: Date = new Date()): string {
-  const salt = process.env.BANKJAR_VISITOR_SALT?.trim() || DEFAULT_SALT;
+  const salt = process.env.BANKJAR_VISITOR_SALT?.trim() || PROCESS_SALT;
   const day = now.toISOString().slice(0, 10);
   return createHash("sha256").update(`${ip}|${salt}|${day}`).digest("hex").slice(0, 16);
 }
