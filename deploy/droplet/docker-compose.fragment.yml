@@ -1,0 +1,48 @@
+# A fragment, not a stack. add-product.sh renders it to /srv/bankjar/docker-compose.yml
+# on the shared server and adds that path to the root /srv/docker-compose.yml's
+# `include:` list, so the root file is never edited by hand.
+#
+# Caddy (on the external network `apps`) reaches this service by name. Nothing
+# publishes a port to the host.
+#
+# Redeploy with scripts/deploy.sh. To do it by hand, use the ROOT stack, not this
+# file on its own, so the container stays in the one compose project:
+#   cd /srv && docker compose up -d --build bankjar
+
+services:
+  bankjar:
+    # Built on the box from the bundle rsynced to ./app (see deploy/droplet/Dockerfile).
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    image: bankjar-web:latest
+    restart: unless-stopped
+    # add-product.sh creates /srv/{{name}}/.env from .env.example, so it always exists.
+    # On Compose 2.24+ you can make it optional with `- path: ... / required: false`.
+    env_file:
+      - /srv/{{name}}/.env
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    # Next stays well under its 192 MB heap cap; 300 MB leaves room for the runtime.
+    mem_limit: 300m
+    cpus: 0.5
+    networks:
+      - apps
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/api/v1/goals || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  # Declared external: this fragment joins the network Caddy is on instead of making one.
+  apps:
+    external: true
