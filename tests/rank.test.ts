@@ -137,3 +137,17 @@ describe("compareOffers", () => {
     expect(r.items[0]?.score.net_value_eur).toBe(855);
   });
 });
+
+import { templateSummary } from "../src/server/search";
+import { describe as d2, it as i2, expect as e2 } from "vitest";
+d2("templateSummary", () => {
+  i2("does not promise no commitment when the commitment is unknown", () => {
+    const offer = { bank: "Testbank", headline: "h", commitment_months: null, reward: { type: "cash" } };
+    const text = templateSummary("salary", {
+      ranked: [{ offer, score: { net_value_eur: 100 } }],
+      excluded: [],
+    } as never);
+    e2(text).toContain("commitment not stated");
+    e2(text).not.toContain("no commitment");
+  });
+});
