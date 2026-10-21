@@ -10,7 +10,9 @@ import { PromptBox } from "../../components/PromptBox";
 import { dateLabel, today } from "../../components/format";
 import { first, overridesFrom, type SearchParams } from "../../components/params";
 import { getVariant } from "../../components/variant";
-import { search } from "../../src/server/search";
+import { headers } from "next/headers";
+import { clientIp } from "../../src/server/ratelimit";
+import { searchAsync } from "../../src/server/search";
 
 type Props = { searchParams: Promise<SearchParams> };
 
@@ -30,7 +32,7 @@ export default async function SearchPage({ searchParams }: Props) {
   const overrides = overridesFrom(sp);
   const asked = q !== "" || Object.keys(overrides).length > 0;
   const now = today();
-  const res = search({ q, overrides, today: now });
+  const res = await searchAsync({ q, overrides, today: now }, { ip: clientIp(await headers()) });
   const { ranked, excluded } = res.result;
   const explicit = { ...res.intent.profile, ...overrides };
 

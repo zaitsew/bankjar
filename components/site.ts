@@ -1,3 +1,5 @@
+import { siteUrl as apiSiteUrl } from "../src/server/api";
+
 export const SITE_NAME = "BankJar";
 export const REPO_URL = "https://github.com/zaitsew/bankjar";
 export const TAGLINE = "Find the bank offer that pays you most";
@@ -6,11 +8,9 @@ export const DESCRIPTION =
 
 /** Public origin for metadata, the sitemap and the examples on /agents. */
 export function siteUrl(): URL {
-  const explicit = process.env.SITE_URL;
-  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  const raw = explicit ?? (vercel ? `https://${vercel}` : "http://localhost:3000");
+  // One origin for the pages and the API: the same helper /api/v1 uses.
   try {
-    return new URL(raw);
+    return new URL(apiSiteUrl());
   } catch {
     return new URL("http://localhost:3000");
   }

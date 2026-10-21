@@ -18,6 +18,7 @@ import { ExternalIcon } from "../../../components/icons";
 import { makeProfile } from "../../../src/core/profile";
 import { scoreOffer } from "../../../src/core/score";
 import { allOffers } from "../../../src/server/data";
+import { JsonLd, offerJsonLd } from "../../../src/server/jsonld";
 import { search } from "../../../src/server/search";
 
 export const revalidate = 3600;
@@ -64,7 +65,7 @@ export default async function OfferPage({ params }: Props) {
 
   return (
     <div className="wrap pt-6 sm:pt-10">
-      {/* JSON-LD: added by the agents lane */}
+      <JsonLd data={offerJsonLd(offer, score)} />
       <p className="t-caption muted">
         <Link href={`/leaderboard/${offer.goal}`} className="underline underline-offset-4">
           {GOAL_META[offer.goal].name}
