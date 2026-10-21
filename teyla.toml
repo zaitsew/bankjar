@@ -32,7 +32,7 @@ primary = "web"                         # the one platform features land on firs
 identity = "none"                       # none | shared-key | invite-key | supabase-auth |
                                         # supabase-auth+tokens | sign-in-with-apple | icloud
 tenancy = "single"                      # single | per-device | user_id | user_id+rls
-backend = "vercel"                        # none | local-mac | supabase:<ref> | droplet:<name> |
+backend = "droplet:fabrique-apps-1"       # none | local-mac | supabase:<ref> | droplet:<name> |
                                         # vercel | github-pages
 llm = "proxy-metered"                            # none | byo-key | app-key | proxy-metered |
                                         # byo-key+proxy-metered
@@ -46,7 +46,7 @@ secrets = []                            # every name must appear in .env.example
 cost_cap = "accounts hub: 25 EUR/month product ceiling, 1 EUR per visitor"                           # required once your key pays for someone else's use
 
 [productize.distribution]
-web = "vercel"                            # none | pwa | github-pages | vercel | droplet
+web = "droplet"                            # none | pwa | github-pages | vercel | droplet
 # ios = "none"                          # none | xcode | testflight-internal |
 #                                       # testflight-external | app-store
 # macos = "none"                        # none | xcode | testflight | dmg-notarized | app-store

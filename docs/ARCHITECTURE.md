@@ -14,7 +14,7 @@ public/                                   llms.txt, icons
 tests/                                    node:test / vitest over src/core and the API
 ```
 
-- **Next.js (App Router) on Vercel Hobby.** Offer pages, goal leaderboards and the methodology page are static at build time.
+- **Next.js (App Router), standalone build, on the shared droplet `fabrique-apps-1`** (`https://bankjar.fabriquefutur.com`, behind the shared Caddy). The droplet has 1 GB of RAM, so `scripts/deploy.sh` builds on the laptop and ships the plain-JS standalone output; the image is built on the box. Offer pages, goal leaderboards and the methodology page are static at build time.
   Search pages render on the server. Agents and crawlers get full HTML, not a client-only shell.
 - **Data is the source of truth.** YAML files are validated by a zod schema in `src/core/schema.ts` at build and in `./check.sh`.
   An invalid file fails the build. `verified_on` older than 30 days shows a "stale" badge; older than 60 days hides the offer from rankings.

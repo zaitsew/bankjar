@@ -17,6 +17,15 @@ npm install && npm run dev
 open http://localhost:3000
 ```
 
+## Deploy
+
+```bash
+./scripts/deploy.sh          # build here, ship to the droplet, wait for https://bankjar.fabriquefutur.com/api/v1/goals
+./scripts/deploy.sh --dry    # print the steps, touch nothing
+```
+
+The droplet has 1 GB of RAM and cannot compile Next, so the script builds on your machine and ships the standalone output; the image is built on the box. Needs ssh access as `deploy@159.89.99.84`. The first run creates `/srv/bankjar/` with the platform's `add-product.sh`. Files: `deploy/droplet/`.
+
 ## What it does / doesn't
 
 - Does: rank Spanish bank offers by goal with one transparent formula; show every catch and the source; answer agents over JSON and MCP.
