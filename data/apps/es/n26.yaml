@@ -1,0 +1,30 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: n26
+bank: "N26"
+bank_slug: n26
+country: ES
+app_name: "N26"
+ios:
+  app_id: 956857223
+  url: https://apps.apple.com/es/app/id956857223
+  rating: 4.76
+  ratings_count: 65414
+  updated_on: 2026-10-21
+  languages:
+    - DE
+    - EN
+    - ES
+    - FR
+    - IT
+android:
+  package: de.number26.android
+  url: https://play.google.com/store/apps/details?id=de.number26.android&gl=ES
+  rating: 4.09
+  ratings_count: 163581
+  updated_on: 2026-10-16
+features:
+  bizum: { value: true, source_url: https://n26.com/es-es/bizum }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
+verified_on: 2026-10-22
+notes: "Google Play's rating count is worldwide for this app; its average is the one Play shows in Spain."

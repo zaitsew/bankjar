@@ -1,0 +1,27 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: cajamar
+bank: "Cajamar"
+bank_slug: cajamar
+country: ES
+app_name: "Grupo Cajamar"
+ios:
+  app_id: 1218170094
+  url: https://apps.apple.com/es/app/id1218170094
+  rating: 2.29
+  ratings_count: 2455
+  updated_on: 2026-10-20
+  languages:
+    - EN
+    - ES
+android:
+  package: com.grupocajamar.wefferent
+  url: https://play.google.com/store/apps/details?id=com.grupocajamar.wefferent&gl=ES
+  rating: 2.69
+  ratings_count: 15267
+  updated_on: 2026-10-19
+features:
+  bizum: { value: null, source_url: null }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-10-22
+notes: null

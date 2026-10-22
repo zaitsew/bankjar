@@ -23,7 +23,7 @@ export function defaultOffersDir(): string {
   return process.env.BANKJAR_OFFERS_DIR ?? path.join(process.cwd(), "data", "offers");
 }
 
-function listYaml(dir: string): string[] {
+export function listYaml(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
   const out: string[] = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

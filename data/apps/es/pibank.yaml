@@ -1,0 +1,27 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: pibank
+bank: "Pibank"
+bank_slug: pibank
+country: ES
+app_name: "Pibank"
+ios:
+  app_id: 6752624386
+  url: https://apps.apple.com/es/app/id6752624386
+  rating: 4.06
+  ratings_count: 116
+  updated_on: 2026-09-24
+  languages:
+    - EN
+    - ES
+android:
+  package: es.pibank.app
+  url: https://play.google.com/store/apps/details?id=es.pibank.app&gl=ES
+  rating: 4.71
+  ratings_count: 296
+  updated_on: 2026-09-23
+features:
+  bizum: { value: false, source_url: https://finantres.com/bizum-pibank/ }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
+verified_on: 2026-10-22
+notes: "Bizum: no per a Finantres article updated 14 Oct 2026, not a Pibank page."

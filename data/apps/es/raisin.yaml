@@ -1,0 +1,33 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: raisin
+bank: "Raisin"
+bank_slug: raisin
+country: ES
+app_name: "Raisin"
+ios:
+  app_id: 1515520813
+  url: https://apps.apple.com/es/app/id1515520813
+  rating: 4.64
+  ratings_count: 2601
+  updated_on: 2026-10-21
+  languages:
+    - DE
+    - EN
+    - ES
+    - FI
+    - FR
+    - IT
+    - NL
+    - PL
+android:
+  package: com.raisin.app
+  url: https://play.google.com/store/apps/details?id=com.raisin.app&gl=ES
+  rating: 4.39
+  ratings_count: 11480
+  updated_on: 2026-10-19
+features:
+  bizum: { value: null, source_url: null }
+  apple_pay: { value: null, source_url: null }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-10-22
+notes: "BluOr Bank, Fjord Bank, Mano Bank and SME Bank deposits in BankJar are opened and managed in the Raisin app."

@@ -1,0 +1,29 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: imagin
+bank: "imagin"
+bank_slug: imagin
+country: ES
+app_name: "imagin: Banco Móvil y Finanzas"
+ios:
+  app_id: 1069665204
+  url: https://apps.apple.com/es/app/id1069665204
+  rating: 4.66
+  ratings_count: 159037
+  updated_on: 2026-10-07
+  languages:
+    - CA
+    - EN
+    - ES
+    - EU
+android:
+  package: com.imaginbank.app
+  url: https://play.google.com/store/apps/details?id=com.imaginbank.app&gl=ES
+  rating: 4.54
+  ratings_count: 290529
+  updated_on: 2026-10-02
+features:
+  bizum: { value: true, source_url: https://roams.es/finanzas/entidades-financieras/imaginbank/bizum/ }
+  apple_pay: { value: null, source_url: null }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-10-22
+notes: "imagin is CaixaBank's digital bank; it has its own app and no offers in BankJar yet."
