@@ -180,6 +180,10 @@ describe("parseIntent: details", () => {
       expect(i.profile.balance_eur).toBe(balance);
     });
 
+    it("still reads 'earns' with an amount as income", () => {
+      expect(parseIntent("Which free account suits me if my partner earns €3,000 a month?").profile.monthly_income_eur).toBe(3000);
+    });
+
     it("still reads a qualified salary as a salary when it is not negated", () => {
       expect(parseIntent("I have a fixed salary of 2,000€ and want a payroll bonus").goal).toBe("salary");
       expect(parseIntent("I have a fixed salary of 2,000€ and want a payroll bonus").profile.monthly_income_eur).toBe(2000);

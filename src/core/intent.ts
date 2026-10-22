@@ -161,7 +161,7 @@ const AMOUNT = new RegExp(
   "giu",
 );
 const INCOME_WORDS = re(
-  `${B0}(salary|salaries|payroll|paycheck|wages?|income|earn(?:ing)?(?!\\s+(?:some\\s+)?(?:interest|something|anything|returns?|a\\s+return|more))|make|nomina|sueldo|ingresos?|gano|cobro|cobrar|net|neto|neta)${B1}|зарплат\\p{L}*|доход\\p{L}*|получаю|зарабатываю|нетто|на\\s+руки`,
+  `${B0}(salary|salaries|payroll|paycheck|wages?|income|earn(?:s|ing)?(?!\\s+(?:some\\s+)?(?:interest|something|anything|returns?|a\\s+return|more))|make|nomina|sueldo|ingresos?|gano|cobro|cobrar|net|neto|neta)${B1}|зарплат\\p{L}*|доход\\p{L}*|получаю|зарабатываю|нетто|на\\s+руки`,
   "giu",
 );
 const BALANCE_WORDS = re(
