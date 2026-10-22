@@ -24,7 +24,7 @@ No bank page offers Santander's iPhone today; its live offer is up to €840 ove
 
 ## Not done or not verified
 
-- **AI search is off.** The code and the hub product are in place; the hub secret is not set, so the rule parser answers every question. Turning it on is a spend decision for the owner.
+- **AI search** was off during the sprint and turned on later on 2026-10-22, after the owner's approval, with a 15 EUR a month ceiling. A Russian question the rules could not place came back with `parser: ai`; the hub logged one Haiku 5.5 call at 0.000153 EUR.
 - **Hosting is the droplet, not Vercel.** The Vercel connector returned 403 and the CLI was not logged in.
 - **Blind pick** is labelled "Coming soon" (Sprint 3).
 - **Freshness** is manual until the Sprint 2 verifier: offers go stale after 30 days and hide after 60.

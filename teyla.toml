@@ -43,7 +43,7 @@ sample_data = "none"              # none | labelled | unlabelled — canned cont
                                         # never look like the user's own
 onboarding_doc = "docs/GETTING-STARTED.md"
 secrets = []                            # every name must appear in .env.example
-cost_cap = "accounts hub: 25 EUR/month product ceiling, 1 EUR per visitor"                           # required once your key pays for someone else's use
+cost_cap = "accounts hub: 15 EUR/month product ceiling (ACCOUNTS_EXTERNAL_PRODUCT_BUDGET_EUR_BANKJAR), 1 EUR per visitor"                           # required once your key pays for someone else's use
 
 [productize.distribution]
 web = "droplet"                            # none | pwa | github-pages | vercel | droplet
