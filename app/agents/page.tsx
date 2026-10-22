@@ -95,7 +95,11 @@ export default function AgentsPage() {
           MCP server
         </h2>
         <p className="muted">
-          Add this to an MCP client that supports remote servers. Tools:
+          Add this to an MCP client that supports remote servers. Step-by-step setup for Claude, ChatGPT and Codex is on{" "}
+          <a className="underline underline-offset-4" href="/connect">
+            /connect
+          </a>
+          . Tools:
         </p>
         <ul className="grid list-none gap-2 p-0">
           {TOOLS.map((t) => (

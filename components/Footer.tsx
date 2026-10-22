@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { datasetVersion } from "../src/server/data";
 import { dateLabel } from "./format";
 import { REPO_URL } from "./site";
@@ -18,6 +19,18 @@ export function Footer() {
             </a>
           </span>
         </p>
+        <nav aria-label="Legal and help">
+          <Link href="/privacy">Privacy</Link>
+          <span className="dot-sep">
+            <Link href="/terms">Terms</Link>
+          </span>
+          <span className="dot-sep">
+            <Link href="/support">Support</Link>
+          </span>
+          <span className="dot-sep">
+            <Link href="/connect">Add to Claude or ChatGPT</Link>
+          </span>
+        </nav>
         <p className="num">
           Dataset {ds.version}: {ds.count} {ds.count === 1 ? "offer" : "offers"}
           {ds.latest_verified_on ? `, latest check ${dateLabel(ds.latest_verified_on)}` : ", none verified yet"}

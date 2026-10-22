@@ -1119,6 +1119,14 @@ code.inline {
 .prose li {
   margin-bottom: 0.5rem;
 }
+.prose .table-scroll {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.prose .table-scroll table {
+  min-width: 38rem;
+  margin-bottom: 0;
+}
 .prose a {
   text-decoration: underline;
   text-underline-offset: 0.2em;

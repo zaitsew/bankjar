@@ -1,0 +1,105 @@
+{
+  "name": "bankjar",
+  "version": "1.0.0",
+  "description": "Rank Spanish bank offers by net value in euros for a goal: salary bonus, savings, account, deposit or welcome bonus. Every offer carries a source link and the date it was checked.",
+  "author": {
+    "name": "Ivan Zaitsev (Fabrique Futur)",
+    "url": "https://bankjar.fabriquefutur.com"
+  },
+  "homepage": "https://bankjar.fabriquefutur.com",
+  "repository": "https://github.com/zaitsew/bankjar",
+  "license": "Apache-2.0",
+  "keywords": [
+    "banking",
+    "spain",
+    "offers",
+    "savings",
+    "salary",
+    "comparison"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "BankJar",
+    "shortDescription": "Compare Spanish bank offers",
+    "longDescription": "BankJar ranks Spanish bank offers by what they pay you, in euros, for a goal you choose: moving your payroll, parking savings, opening an account, a term deposit or a welcome bonus.\n\nAsk in plain words, in English, Spanish or Russian, or pass your own figures: monthly income, balance, residency, the longest commitment you accept and the banks where you are already a customer. BankJar returns one table where a cash bonus paid over 12 months and a gift with a 36-month stay sit on the same scale, after tax and fees, with every catch shown as a flag.\n\nTools:\n- search_offers: ranked offers for a question or a profile, plus the offers that are closed to you and why.\n- get_offer: every term of one offer with its score breakdown.\n- compare_offers: two to five offers side by side for your profile.\n- list_goals: the goals that are ranked.\n- rank_bank_apps: Spanish bank mobile apps ranked by store ratings, release freshness, reach and payment features such as Bizum.\n\nHow it works: every number comes from a deterministic engine that reads dated data files, never from a language model. Each offer carries the address of the page its terms were read from and the date it was last checked. Offers not re-checked for 30 days are marked stale, and after 60 days they leave the rankings. The code is Apache-2.0 and the dataset is CC BY 4.0, both public on GitHub.\n\nLimits: BankJar covers Spain. It is read-only: it does not open accounts, move money or contact banks. It gives information, not financial advice, and terms change, so check the source page before you sign. No account or sign-in is needed.",
+    "developerName": "Ivan Zaitsev (Fabrique Futur)",
+    "category": "Finance",
+    "capabilities": [
+      "Search Spanish bank offers",
+      "Compare bank offers",
+      "Rank Spanish bank apps"
+    ],
+    "websiteURL": "https://bankjar.fabriquefutur.com",
+    "supportURL": "https://bankjar.fabriquefutur.com/support",
+    "privacyPolicyURL": "https://bankjar.fabriquefutur.com/privacy",
+    "termsOfServiceURL": "https://bankjar.fabriquefutur.com/terms",
+    "defaultPrompt": [
+      "Which Spanish bank pays most for moving a 2,500 euro monthly salary? I can commit for 12 months.",
+      "I'm a non-resident. Which everyday bank account without fees can I open in Spain?",
+      "Where can I park 15,000 euros in Spain for a year at the highest savings rate?"
+    ],
+    "brandColor": "#0B0B0C",
+    "brandColorDark": "#F2C14E",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Rank salary offers for a stated profile",
+              "prompt": "Which Spanish bank pays most for moving a 2,500 euro monthly salary? I can commit for 12 months.",
+              "tools_triggered": "search_offers",
+              "expected_behavior": "Calls search_offers with goal salary, income 2500 and a 12-month commitment limit. Returns a ranked list with the net value in euros for the first year, the commitment, a source link and a verified date for each offer, and says the figures are estimates and not financial advice."
+            },
+            {
+              "description": "Find an account a non-resident can open, then read its terms",
+              "prompt": "I'm a non-resident. Which everyday bank account without fees can I open in Spain, and what are the terms of the top one?",
+              "tools_triggered": "search_offers, get_offer",
+              "expected_behavior": "Calls search_offers with goal account and residency non-resident, then get_offer for the top result. Lists the account's terms, flags and eligibility for a non-resident, with its source link and verified date. Offers closed to non-residents are listed as excluded with the reason."
+            },
+            {
+              "description": "Compare two offers side by side",
+              "prompt": "Compare the top two Spanish savings accounts for 15,000 euros over one year.",
+              "tools_triggered": "search_offers, compare_offers",
+              "expected_behavior": "Calls search_offers with goal savings and balance 15000, then compare_offers with the ids of the top two. Shows both side by side with net value, rate or bonus, commitment, source links and verified dates."
+            },
+            {
+              "description": "Explain the goals BankJar can rank",
+              "prompt": "What kinds of bank offers can BankJar rank?",
+              "tools_triggered": "list_goals",
+              "expected_behavior": "Calls list_goals and names the five goals: salary, savings, account, deposit and welcome, with a one-line description of each."
+            },
+            {
+              "description": "Rank Spanish bank mobile apps",
+              "prompt": "Which Spanish bank apps have the best store ratings and support Bizum?",
+              "tools_triggered": "rank_bank_apps",
+              "expected_behavior": "Calls rank_bank_apps and returns bank apps ranked 0 to 100 with store ratings and rating counts, Bizum support where known, and the store links. States that an app score says nothing about the quality of a bank's offers."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Moving money is not supported. Expected: no BankJar tool is called; the assistant says it cannot transfer funds and BankJar only compares public offers.",
+              "prompt": "Move 500 euros from my checking account to my savings account."
+            },
+            {
+              "description": "Outside Spanish bank offers. Expected: no BankJar tool is called; the request is about a US credit card, which BankJar does not cover.",
+              "prompt": "Which US credit card gives the highest cashback on groceries?"
+            },
+            {
+              "description": "Investment advice is not supported. Expected: no BankJar tool is called; BankJar ranks bank offers and gives no investment or trading advice.",
+              "prompt": "Should I buy Bitcoin or Tesla shares this week?"
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "BankJar does not sell products or process payments. It ranks public bank offers and links to the page where each offer's terms were read."
+      },
+      "publication": {
+        "release_notes": "Initial release: five read-only tools for Spanish bank offers and bank apps."
+      }
+    }
+  }
+}
