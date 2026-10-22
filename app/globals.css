@@ -252,6 +252,18 @@ summary:focus-visible,
     display: none;
   }
 }
+/* Phones: the logo and six 2.75rem targets are wider than 375px, so the nav
+   takes its own full-width row instead of widening the page. */
+@media (max-width: 30rem) {
+  .masthead {
+    flex-wrap: wrap;
+    row-gap: 0;
+  }
+  .masthead .nav {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+}
 
 .wrap {
   width: 100%;
@@ -671,6 +683,9 @@ a.card:hover {
   container: tbl / inline-size;
 }
 .tbl-wrap {
+  /* Containing block for .sr-only (absolute) inside cells, so the scroll box
+     clips it instead of the page gaining a horizontal scrollbar. */
+  position: relative;
   overflow-x: auto;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1057,6 +1072,8 @@ details.disc[open] > summary::before {
 /* Code blocks */
 .code {
   position: relative;
+  min-width: 0;
+  max-width: 100%;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-md);
@@ -1084,6 +1101,7 @@ details.disc[open] > summary::before {
   cursor: pointer;
 }
 code.inline {
+  overflow-wrap: anywhere;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.9em;
   padding: 0.05em 0.35em;
@@ -1120,6 +1138,7 @@ code.inline {
   margin-bottom: 0.5rem;
 }
 .prose .table-scroll {
+  position: relative;
   overflow-x: auto;
   margin-bottom: 1rem;
 }
