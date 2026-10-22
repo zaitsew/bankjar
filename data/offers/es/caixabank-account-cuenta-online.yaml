@@ -1,0 +1,36 @@
+# Source: https://www.caixabank.es/particular/domiciliar-nomina.html
+id: caixabank-account-cuenta-online
+bank: CaixaBank
+bank_slug: caixabank
+country: ES
+goal: account
+product_name: CaixaBank Cuenta Online sin comisiones
+headline: Everyday account with no admin or maintenance fees, one debit card included, 0% interest
+reward:
+  type: none
+  value_eur: null
+  description: No reward on the account itself.
+  paid_when: null
+rate_tae: 0
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other: []
+fees:
+  monthly_eur: 0
+  notes: No administration or maintenance fees; one debit card with no issuance or maintenance cost; extra cards cost per contract; EEA transfers free.
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.caixabank.es/particular/domiciliar-nomina.html
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Pays no interest (0% TAE, 0% TIN). If the included card is cancelled, new debit cards carry issuance and annual fees per the tariff book.
+paid_placement: false

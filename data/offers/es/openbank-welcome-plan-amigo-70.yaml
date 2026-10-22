@@ -1,0 +1,41 @@
+# Source: https://www.openbank.es/plan-amigo-hasta-700-euros
+id: openbank-welcome-plan-amigo-70
+bank: Openbank
+bank_slug: openbank
+country: ES
+goal: welcome
+product_name: Plan Amigo (invite a friend)
+headline: "EUR 70 net for you and EUR 70 for a friend who opens an account with EUR 70 and keeps Bizum 3 months"
+reward:
+  type: cash
+  value_eur: 70
+  description: "Up to EUR 70 net each for referrer and friend, paid as EUR 30, EUR 20 and EUR 20. A referrer can earn up to EUR 700 (10 friends)."
+  paid_when: "Three monthly payments (30 + 20 + 20) between the 15th and 20th of each month once the conditions are met"
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 3
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - "Friend signs up with the referrer's personal code by 2026-10-29"
+    - "Friend deposits at least EUR 70 within 30 days of opening and activates the card"
+    - "Both keep Bizum at Openbank for at least 3 months"
+    - "Friend was not an Openbank customer in the previous 12 months"
+    - "Cannot be combined with another welcome promotion code"
+fees:
+  monthly_eur: 0
+  notes: "Cuenta Corriente Open has no maintenance fee"
+penalty: "Second and third payments need both people to keep Bizum; fraud or misuse of the code can lead to exclusion and reversal of payments"
+eligibility:
+  residents_only: true
+  nie_tie_ok: null
+  non_residents: false
+  notes: "Referrer and friend must be resident in Spain, 18+ (promotion terms)"
+valid_until: 2026-10-29
+source_url: https://www.openbank.es/plan-amigo-hasta-700-euros
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Legal terms: https://www.openbank.es/assets/OK_ES/es-ES/documents/v1/MGM_2026.pdf (promotion period 2026-10-05 to 2026-10-29). Needs an existing customer's code; the referrer must be a customer."
+paid_placement: false

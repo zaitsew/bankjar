@@ -1,0 +1,38 @@
+# Source: https://www.ing.es/cuenta-naranja
+id: ing-savings-cuenta-naranja-con-nomina
+bank: ING
+bank_slug: ing
+country: ES
+goal: savings
+product_name: Cuenta NARANJA with Cuenta NÓMINA
+headline: "1.00% TAE on any balance while you also hold an ING Cuenta NÓMINA"
+reward:
+  type: rate
+  value_eur: null
+  description: "1.00% TAE (0.995% TIN) on any amount, interest paid monthly, as long as the holder has a Cuenta NÓMINA."
+  paid_when: null
+rate_tae: 1.00
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: 700
+  new_customer_only: false
+  other:
+    - "Hold an ING Cuenta NÓMINA"
+    - "Cuenta NÓMINA is free only with payroll, pension or EUR 700+ monthly income"
+fees:
+  monthly_eur: 0
+  notes: "Cuenta NARANJA has no fees; the linked Cuenta NÓMINA costs EUR 3 a month if payroll/income of EUR 700 stops"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.ing.es/cuenta-naranja
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "The EUR 700 threshold comes from the Cuenta NÓMINA page (https://www.ing.es/cuenta-nomina-ing); the Cuenta NARANJA page only says 'while you have a Cuenta NÓMINA'. No end date stated."
+paid_placement: false

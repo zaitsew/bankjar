@@ -1,0 +1,38 @@
+# Source: https://n26.com/es-es/cuentas
+id: n26-account-estandar
+bank: N26
+bank_slug: n26
+country: ES
+goal: account
+product_name: N26 Estándar
+headline: Free account with a virtual debit card and 2 free euro ATM withdrawals a month
+reward:
+  type: none
+  value_eur: null
+  description: No reward. The Estándar plan is free.
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - Valid ID or passport plus a Spanish NIF or NIE
+    - Legal address in Spain and a smartphone
+fees:
+  monthly_eur: 0
+  notes: Free virtual debit card; physical card EUR 10. 2 free euro withdrawals a month, then fees apply. ATM withdrawals outside the eurozone 1.7%. Card payments worldwide free. Cash26 deposits 1.5%. Paid plans - Smart EUR 4.90, Go EUR 9.90, Metal EUR 16.90 a month.
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: Requires a Spanish NIF or NIE and a legal address in Spain (from the expat account page).
+valid_until: null
+source_url: https://n26.com/es-es/cuentas
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Eligibility from https://n26.com/es-es/cuenta-bancaria-para-expats. N26 runs a monthly prize draw for payroll customers (10 winners double a payroll of up to EUR 10,000; EUR 800+ a month; sign up between 4 Sep 2026 and 28 Feb 2027) and a bill-refund draw (100 winners, up to EUR 100, sign up to 31 Dec 2026). These are draws, not guaranteed bonuses, so no salary offer is listed. The referral reward amount is shown only in the app. Deposits are covered by the German scheme up to EUR 100,000.
+paid_placement: false

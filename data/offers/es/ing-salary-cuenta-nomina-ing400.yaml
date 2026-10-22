@@ -1,0 +1,41 @@
+# Source: https://www.ing.es/sobre-ing/pdf/bases-legales-promo-ING400-2026-09.pdf
+id: ing-salary-cuenta-nomina-ing400
+bank: ING
+bank_slug: ing
+country: ES
+goal: salary
+product_name: Cuenta NÓMINA + Cuenta NARANJA (code ING400)
+headline: "EUR 400 gross for new customers who bring a EUR 700+ payroll and Bizum, 12-month stay"
+reward:
+  type: cash
+  value_eur: 400
+  description: "EUR 400 gross (subject to IRPF withholding) paid into the Cuenta NARANJA. Requires code ING400 when opening Cuenta NÓMINA and Cuenta NARANJA."
+  paid_when: "Within the month after at least three valid deposits (payroll, pension or unemployment benefit of EUR 700+, or a monthly transfer of EUR 700+ from another bank) have arrived in the Cuenta NÓMINA"
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: 700
+  new_customer_only: true
+  other:
+    - "Enter code ING400 when opening Cuenta NÓMINA and Cuenta NARANJA"
+    - "First valid deposit received before 2026-12-31 and kept for 12 consecutive months"
+    - "Activate Bizum before 2026-12-31 and keep it 12 months"
+    - "Payroll money stays in the account until 9:00 the next day"
+    - "Not combinable with other ING promotions"
+fees:
+  monthly_eur: 0
+  notes: "Cuenta NÓMINA is free while payroll, pension, unemployment benefit or monthly income of at least EUR 700 arrives; otherwise EUR 3 a month"
+penalty: "If payroll/income or Bizum stops early, ING charges the bonus pro rata for the missing days (EUR 400 / 365 x days short, max 12 months)"
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: "ING FAQ accepts a valid residence card for non-EU citizens. The product page says a payroll of any amount counts, but the legal terms (used here) require EUR 700 or more."
+valid_until: 2026-10-31
+source_url: https://www.ing.es/sobre-ing/pdf/bases-legales-promo-ING400-2026-09.pdf
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Promotion period for opening the account: 2026-08-24 to 2026-10-31. Also shown at https://www.ing.es/cuenta-nomina-ing. Existing or former ING customers are excluded."
+paid_placement: false

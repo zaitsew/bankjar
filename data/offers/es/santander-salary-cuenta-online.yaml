@@ -1,0 +1,41 @@
+# Source: https://www.bancosantander.es/en/particulares/cuentas-bancarias/cuentas-nomina/
+id: santander-salary-cuenta-online
+bank: Santander
+bank_slug: santander
+country: ES
+goal: salary
+product_name: Santander Online Account with payroll
+headline: Up to EUR 840 over 24 months for moving a payroll of EUR 800+ a month, no lock-in
+reward:
+  type: cash
+  value_eur: 840
+  description: "Paid monthly for up to 24 months. EUR 10/month for income of EUR 800-1,499 or EUR 15/month from EUR 1,500; plus EUR 10/month for 3 Bizum payments (or 1 credit card transaction) and EUR 10/month for 2 direct debits. EUR 840 needs income of EUR 1,500+ and every condition met each month; with income of EUR 800-1,499 the maximum is EUR 720."
+  paid_when: Monthly, for each month the conditions are met, up to 24 months
+rate_tae: null
+promo_months: 24
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: 800
+  new_customer_only: true
+  other:
+    - Salary, pension of EUR 800+ or self-employed contributions paid into the account
+    - Income must not already be paid into Santander
+    - 3 Bizum payments a month (or 1 credit card transaction) for the Bizum bonus
+    - 2 direct debits a month for the direct-debit bonus
+    - Sign up before 30 October 2026
+fees:
+  monthly_eur: 0
+  notes: Online Account has no maintenance fee and no conditions; debit card has no issuance or maintenance fee; euro transfers free except urgent ones.
+penalty: No tie-in stated. A month with the income condition missed pays no bonus for that month; missed bonuses are not paid retroactively.
+eligibility:
+  residents_only: true
+  nie_tie_ok: null
+  non_residents: false
+  notes: Aged 18+ and resident in Spain. Press release (Apr 2026) and aggregators say new and existing customers, but the offer page says income must not already be paid into Santander.
+valid_until: 2026-10-30
+source_url: https://www.bancosantander.es/en/particulares/cuentas-bancarias/cuentas-nomina/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "The iPhone 17 Pro Max for a 3-year commitment is not on the Santander page fetched; Roams (Jul 2026) describes a 36-month iPhone rental (17e at EUR 1,200 payroll; 17 at EUR 3,000) with no lock-in, not verified on a bank page."
+paid_placement: false

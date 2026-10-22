@@ -1,0 +1,36 @@
+# Source: https://b100.es/es/banco/cuentas/cuenta-online/
+id: b100-account-cuenta-b100
+bank: B100
+bank_slug: b100
+country: ES
+goal: account
+product_name: Cuenta B100
+headline: "Online account with no fees and no conditions, no payroll or direct debits required"
+reward:
+  type: fee_waiver
+  value_eur: null
+  description: "No maintenance or administration fees and no conditions to avoid them. Includes Bizum, transfers, direct debits and the Pay to Save card."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other: []
+fees:
+  monthly_eur: 0
+  notes: "No maintenance or administration fees, 0% TAE. Card, ATM and foreign-payment fees were not read from the page."
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: "Sign-up needs a DNI or a TIE; self-employed need their IRPF model 130"
+valid_until: null
+source_url: https://b100.es/es/banco/cuentas/cuenta-online/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "B100 is a trade name of ABANCA. Opening the account also opens the Save (2.75%) and Health accounts."
+paid_placement: false

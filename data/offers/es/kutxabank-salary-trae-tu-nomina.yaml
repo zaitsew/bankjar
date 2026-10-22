@@ -1,0 +1,41 @@
+# Source: https://portal.kutxabank.es/cs/Satellite/kb/es/particulares/trae-tu-nomina-1/pys?c=PyS&cid=1306596275876&d=Touch&hizkuntza=es&localizador=1298547039252&pagename=PortalBBK%2FPortalKutxabank%2FPyS%2FPK_PyS&sitio=PortalBBK%2FPortalKutxabank
+id: kutxabank-salary-trae-tu-nomina
+bank: Kutxabank
+bank_slug: kutxabank
+country: ES
+goal: salary
+product_name: Trae tu nómina
+headline: "EUR 300 gross for a EUR 800+ net payroll, EUR 600 for EUR 2,500+, 36-month stay"
+reward:
+  type: cash
+  value_eur: 300
+  description: "EUR 300 gross for a net payroll of EUR 800+ a month. EUR 600 gross for a net payroll of EUR 2,500+, a pension of EUR 2,000+, or (under 31) a payroll of EUR 1,800+. value_eur is the lowest tier."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 36
+requirements:
+  min_monthly_income_eur: 800
+  new_customer_only: false
+  other:
+    - "Domicile payroll or pension in a Kutxabank savings account for the first time before 2026-12-31"
+    - "Minimum balance of EUR 250 in the account"
+    - "Bizum linked to the account for the whole stay period"
+    - "Under 31: stay period is 12 months instead of 36"
+    - "A pension does not count as new if payroll was domiciled at Kutxabank before"
+fees:
+  monthly_eur: 0
+  notes: "Accounts and Visa Dual cards have no maintenance fee for customers aged 31+ with payroll over EUR 600 or pension over EUR 400, 5 card purchases per quarter and online banking active"
+penalty: "A penalty applies for breaking the conditions; its amount is not stated on the page"
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-12-31
+source_url: https://portal.kutxabank.es/cs/Satellite/kb/es/particulares/trae-tu-nomina-1/pys?c=PyS&cid=1306596275876&d=Touch&hizkuntza=es&localizador=1298547039252&pagename=PortalBBK%2FPortalKutxabank%2FPyS%2FPK_PyS&sitio=PortalBBK%2FPortalKutxabank
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Page header says 'hasta el 31 de diciembre'; year read as 2026 from the footnote. Fine print refers to further conditions at kutxabank.es that were not read."
+paid_placement: false

@@ -1,0 +1,38 @@
+# Source: https://www.unicajabanco.es/en/cuenta-online
+id: unicaja-savings-cuenta-online
+bank: Unicaja
+bank_slug: unicaja
+country: ES
+goal: savings
+product_name: Unicaja Online Account (guaranteed rate)
+headline: 2.55% TAE guaranteed to 31 March 2027 on up to EUR 50,000
+reward:
+  type: rate
+  value_eur: null
+  description: "2.55% AER (2.5207% APR) on an interest-bearing balance up to EUR 50,000, paid monthly. Example: EUR 1,260.36 gross a year on EUR 50,000. The rate may change from 1 April 2027."
+  paid_when: Monthly
+rate_tae: 2.55
+promo_months: null
+balance_cap_eur: 50000
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - Open the account between 1 Oct 2026 and 31 Jan 2027
+    - No Unicaja products in the last 12 months
+fees:
+  monthly_eur: 0
+  notes: No maintenance or administration fees; free debit card.
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: Aged 18+, resident in Spain.
+valid_until: 2027-01-31
+source_url: https://www.unicajabanco.es/en/cuenta-online
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Rate is guaranteed until 31 Mar 2027 for accounts opened in the window; valid_until is the last opening date. No payroll needed for the rate.
+paid_placement: false

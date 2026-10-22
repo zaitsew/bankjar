@@ -1,0 +1,38 @@
+# Source: https://www.ing.es/cuenta-nomina-ing
+id: ing-account-cuenta-nomina
+bank: ING
+bank_slug: ing
+country: ES
+goal: account
+product_name: Cuenta NÓMINA
+headline: "Free current account with free cards and transfers if EUR 700+ arrives monthly, else EUR 3 a month"
+reward:
+  type: fee_waiver
+  value_eur: null
+  description: "No maintenance fee, free debit and credit cards, free same-day transfers, free cash at thousands of ATMs and shops, 2 days of free overdraft, free travel plan (refund of foreign payment fees up to EUR 1,000 and 2 foreign ATM withdrawals)."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: 700
+  new_customer_only: false
+  other:
+    - "Payroll, pension, unemployment benefit or monthly income of EUR 700+ from another bank"
+    - "Credit card is subject to ING risk approval"
+fees:
+  monthly_eur: 0
+  notes: "EUR 3 a month if payroll/pension or EUR 700 monthly income stops. Overdraft service: EUR 3.99 for any month it is used (none if under EUR 10), 2 days free to regularise."
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: "ING FAQ lists a valid residence card for non-EU customers"
+valid_until: null
+source_url: https://www.ing.es/cuenta-nomina-ing
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Max 3 transactional accounts per customer. Opening also opens a free Cuenta NARANJA for new customers."
+paid_placement: false

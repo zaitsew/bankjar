@@ -1,0 +1,39 @@
+# Source: https://www.openbank.es/cuenta-nomina
+id: openbank-deposit-open-6-meses
+bank: Openbank
+bank_slug: openbank
+country: ES
+goal: deposit
+product_name: Depósito Open 6 meses
+headline: "3.25% TAE for 6 months with payroll or EUR 900+ monthly income, 2.75% TAE without, no cap on new money"
+reward:
+  type: rate
+  value_eur: null
+  description: "3.25% TAE (3.22% TIN) with payroll or a monthly income of EUR 900+; 2.75% TAE (2.73% TIN) without. Example on the page: EUR 25,000 pays EUR 402.50 gross (3.25%) or EUR 341.25 gross (2.75%)."
+  paid_when: "At maturity"
+rate_tae: 3.25
+promo_months: 6
+balance_cap_eur: null
+commitment_months: 6
+requirements:
+  min_monthly_income_eur: 900
+  new_customer_only: false
+  other:
+    - "From EUR 1, no maximum amount"
+    - "Rate applies only to money brought from outside Openbank that raises the total balance as of 2026-09-30"
+    - "Keep payroll or a monthly income for at least 4 months within the deposit term to get 3.25%"
+fees:
+  monthly_eur: 0
+  notes: null
+penalty: "Leaving before 6 months pays only 0.20% TAE (EUR 12.50 gross on EUR 25,000 held 3 months)"
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.openbank.es/cuenta-nomina
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "The page states no end date for this deposit rate, but it depends on the new-money reference date of 2026-09-30. Rates also shown on https://www.openbank.es/cuenta-ahorro."
+paid_placement: false

@@ -1,0 +1,37 @@
+# Source: https://www.pibank.es/cuenta-remunerada/
+id: pibank-savings-cuenta-remunerada
+bank: Pibank
+bank_slug: pibank
+country: ES
+goal: savings
+product_name: Cuenta Remunerada Pibank
+headline: "2.02% TAE from the first euro, no cap, no conditions or fees"
+reward:
+  type: rate
+  value_eur: null
+  description: "2.02% TAE (2.00% TIN) on the daily balance with no maximum, interest paid monthly on day 1 of the next month."
+  paid_when: null
+rate_tae: 2.02
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "No card and no direct debits on this account"
+fees:
+  monthly_eur: 0
+  notes: "No fees or conditions"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.pibank.es/cuenta-remunerada/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "No end date stated for the rate. Pibank is the trade name of Banco Pichincha España."
+paid_placement: false

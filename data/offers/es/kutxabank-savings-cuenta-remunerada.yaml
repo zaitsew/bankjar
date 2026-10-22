@@ -1,0 +1,39 @@
+# Source: https://portal.kutxabank.es/cs/Satellite/kb/es/particulares/cuenta-remunerada/pys?c=PyS&cid=1306601848440&d=Touch&hizkuntza=es&localizador=1298547039252&pagename=PortalBBK%2FPortalKutxabank%2FPyS%2FPK_PyS&sitio=PortalBBK%2FPortalKutxabank
+id: kutxabank-savings-cuenta-remunerada
+bank: Kutxabank
+bank_slug: kutxabank
+country: ES
+goal: savings
+product_name: Cuenta Remunerada Kutxabank
+headline: "3.10% TAE for 12 months on up to EUR 100,000, new digital customers, then 0.75%"
+reward:
+  type: rate
+  value_eur: null
+  description: "3.10% TAE (3.056% TIN) for 12 months on up to EUR 100,000, interest paid monthly; 0.75% TAE in year two; afterwards it becomes an ordinary savings account. Free Visa Debit card."
+  paid_when: null
+rate_tae: 3.1
+promo_months: 12
+balance_cap_eur: 100000
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - "New digital customer with no current relationship or open financing study at Kutxabank"
+    - "Activate the account between 2026-10-05 and 2026-11-22"
+    - "Sign up in the Kutxabank app with an ID"
+fees:
+  monthly_eur: 0
+  notes: "Account is free for new customers; Visa Debit has no issue or maintenance fee"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-11-22
+source_url: https://portal.kutxabank.es/cs/Satellite/kb/es/particulares/cuenta-remunerada/pys?c=PyS&cid=1306601848440&d=Touch&hizkuntza=es&localizador=1298547039252&pagename=PortalBBK%2FPortalKutxabank%2FPyS%2FPK_PyS&sitio=PortalBBK%2FPortalKutxabank
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "valid_until is the last day to activate the account (page footnote). The page headline says the promotion runs until 2026-12-31, but the footnote limits activation to 2026-11-22; the stricter date is used. The page also advertises up to EUR 600 for payroll (see kutxabank-salary-trae-tu-nomina)."
+paid_placement: false

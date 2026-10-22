@@ -1,0 +1,38 @@
+# Source: https://www.ing.es/cuenta-naranja
+id: ing-savings-cuenta-naranja
+bank: ING
+bank_slug: ing
+country: ES
+goal: savings
+product_name: Cuenta NARANJA
+headline: "0.30% TAE on any balance, no fees, money always available"
+reward:
+  type: rate
+  value_eur: null
+  description: "0.30% TAE on any amount, interest paid monthly. Rises to 1.00% TAE while the customer also holds a Cuenta NÓMINA (see ing-savings-cuenta-naranja-con-nomina)."
+  paid_when: null
+rate_tae: 0.30
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "No direct debits or tax payments allowed on the account"
+    - "Maximum of two Cuentas NARANJA per holder"
+fees:
+  monthly_eur: 0
+  notes: "No opening, administration or maintenance fees"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: "Opening requires an ID; the page lists a residence card for non-EU citizens"
+valid_until: null
+source_url: https://www.ing.es/cuenta-naranja
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Rate has no end date stated. Interest is credited on day 1 of each month. Dutch deposit guarantee up to EUR 100,000 per depositor."
+paid_placement: false

@@ -1,0 +1,40 @@
+# Source: https://www.bancomediolanum.es/es/w/cuentas-depositos/depositos/deposito-banco-mediolanum
+id: mediolanum-deposit-mix-plus-12m
+bank: Banco Mediolanum
+bank_slug: mediolanum
+country: ES
+goal: deposit
+product_name: Depósito MIX PLUS a 12 meses
+headline: 3.00% TAE for 12 months, only if you also put 3x the amount into a Mediolanum managed product
+reward:
+  type: rate
+  value_eur: null
+  description: 3.00% TAE (3.00% TIN) paid at maturity on EUR 2,000 to 500,000, but only if you contribute at least three times the deposit to a managed product of Banco Mediolanum (investment funds, group insurance, pension plans). Otherwise the standard 12-month rate applies, 0.05% TAE.
+  paid_when: At maturity (12 months)
+rate_tae: 3
+promo_months: 12
+balance_cap_eur: 500000
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other:
+    - Minimum deposit EUR 2,000, maximum EUR 500,000
+    - Contribute at least 3x the deposit to a managed product (funds, insurance, pension plan) with the customer as first holder
+    - Contract through a Family Banker or a Family Bankers' Office
+    - Open to individuals and companies; no additional contributions or partial cancellations
+fees:
+  monthly_eur: null
+  notes: Not stated on the deposit page
+penalty: Early cancellation pays 0.00% TIN from the start of the deposit
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: The page does not state residency or NIE/TIE rules. Contracting requires a Family Banker.
+valid_until: 2026-12-31
+source_url: https://www.bancomediolanum.es/es/w/cuentas-depositos/depositos/deposito-banco-mediolanum
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Contracting window ends 31 Dec 2026 or when EUR 10,000,000 is reached. The managed product carries its own investment risk, higher than the deposit. TAE calculated on a EUR 30,000 deposit (EUR 900 gross).
+paid_placement: false

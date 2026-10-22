@@ -1,0 +1,40 @@
+# Source: https://www.revolut.com/es-ES/instant-access-savings/
+id: revolut-savings-cuenta-remunerada
+bank: Revolut
+bank_slug: revolut
+country: ES
+goal: savings
+product_name: Cuenta Remunerada (tipo mejorado para nuevos clientes)
+headline: 3.51% TAE for up to 4 months on up to EUR 25,000, then 1.15% TAE, new customers only
+reward:
+  type: rate
+  value_eur: null
+  description: Enhanced 3.51% TAE (3.45% TIN) on balances up to EUR 25,000 for a maximum of 4 months from opening the savings account, interest paid daily. After that the rate of your plan applies; the pricing page shows 1.15% TAE above EUR 25,000.
+  paid_when: Daily
+rate_tae: 3.51
+promo_months: 4
+balance_cap_eur: 25000
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - Open the Cuenta Remunerada within 30 days of signing up to Revolut
+    - Use the card 3 times every 30 days, each purchase EUR 5 or more, to keep the enhanced rate
+    - A Revolut current account is required
+    - Over 18
+fees:
+  monthly_eur: 0
+  notes: No fees on the savings account; instant withdrawals; deposits from EUR 1
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: The page does not state residency or NIE/TIE rules.
+valid_until: null
+source_url: https://www.revolut.com/es-ES/instant-access-savings/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Revolut may stop the promotion for new customers at any time. Extra conditions may be sent by email and shown in the app before opening; if not met, the plan rate applies. After the promotion the rate depends on the plan; the pricing page only shows 1.15% TAE above EUR 25,000, and plan-by-plan rates were not found on the fetched pages. Maximum deposited EUR 5,000,000. Services provided by Revolut Bank UAB, Sucursal en España. Fetched with a browser; the bank's page returns 403 to plain HTTP clients.
+paid_placement: false

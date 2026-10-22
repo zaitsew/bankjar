@@ -1,0 +1,38 @@
+# Source: https://www.raisin.com/es-es/depositos-a-plazo-fijo/depositos-un-ano/
+id: sme-bank-deposit-raisin-12m
+bank: SME Bank (via Raisin)
+bank_slug: sme-bank
+country: ES
+goal: deposit
+product_name: SME Bank 12-month deposit via Raisin
+headline: 3.35% TAE for 12 months at SME Bank (Lithuania), opened through Raisin
+reward:
+  type: rate
+  value_eur: null
+  description: Fixed 3.35% TAE for a 12-month deposit at SME Bank (Lithuania, rated A), contracted through the Raisin platform with no fee for the saver. Capital and interest are paid at maturity.
+  paid_when: At maturity (12 months)
+rate_tae: 3.35
+promo_months: 12
+balance_cap_eur: 100000
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other:
+    - Open a free Cuenta Raisin (Raisin Bank AG) and transfer the funds
+    - Minimum EUR 20,000, maximum EUR 100,000 per the Raisin bank page
+fees:
+  monthly_eur: 0
+  notes: No fees for the saver; Raisin is paid a commission by the partner banks
+penalty: The Raisin page says early withdrawal is not possible in a 12-month deposit and the bank may apply a penalty, normally losing the interest earned
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: Raisin pages fetched do not state residency or NIE/TIE rules for opening a Cuenta Raisin.
+valid_until: null
+source_url: https://www.raisin.com/es-es/depositos-a-plazo-fijo/depositos-un-ano/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Rate from the Raisin 12-month page updated 2 Oct 2026. The Raisin bank page for SME Bank shows 3.31% for 1 year with data dated 09/06/2026, so the rate moves; confirm in the Raisin app. Raisin describes SME Bank as a digital bank oriented to businesses; the Raisin 12-month page lists its deposit for savers. Guarantee is the Lithuanian scheme, EUR 100,000 per depositor and bank.
+paid_placement: false

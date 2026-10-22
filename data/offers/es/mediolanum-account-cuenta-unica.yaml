@@ -1,0 +1,40 @@
+# Source: https://www.bancomediolanum.es/es/w/cuentas-depositos/cuentas-corrientes/cuenta-unica
+id: mediolanum-account-cuenta-unica
+bank: Banco Mediolanum
+bank_slug: mediolanum
+country: ES
+goal: account
+product_name: Cuenta Única
+headline: Current account free if EUR 700+/month arrives or EUR 3,000+ is in managed products, otherwise EUR 5/month
+reward:
+  type: rate
+  value_eur: null
+  description: New customers earn 2.50% TIN for 6 months on average balance up to EUR 15,000, then no interest. Over a full year that is 1.25% TAE (0.95% TAE if the maintenance fee is paid). First 3 months have no fees.
+  paid_when: Interest settled 30/11/2026, 28/02/2027, 31/05/2027 and 31/08/2027
+rate_tae: 1.25
+promo_months: 6
+balance_cap_eur: 15000
+commitment_months: null
+requirements:
+  min_monthly_income_eur: 700
+  new_customer_only: null
+  other:
+    - Fee waiver and interest need recurring income of EUR 700+/month, or EUR 3,000+ in Mediolanum managed products (funds, life insurance, pension plans) as first holder
+    - Contract through a Family Banker or a Family Bankers' Office
+    - Individuals only
+    - Promotional rate and 3 free months are for new customers only
+fees:
+  monthly_eur: 5
+  notes: After the first 3 months, a EUR 5/month fee is charged every 6 months unless the income or managed-product condition is met on the charge date. Debit and credit cards, online banking and national transfers have no fee. Transfers in euros within the EEA up to EUR 50,000 have no fee (footnote mentions a 0.1% charge, min EUR 3, max EUR 300, in some transfer cases). A second account earns 0%.
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: The page does not state residency or NIE/TIE rules.
+valid_until: 2026-12-31
+source_url: https://www.bancomediolanum.es/es/w/cuentas-depositos/cuentas-corrientes/cuenta-unica
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: valid_until is the last day to contract the offer, as stated on the page. 1.25% TAE is the bank's example for a EUR 15,000 average balance and a contract date of 01/10/2026. Payroll bonus not stated on the page; a Servicio Crédito Nómina is offered with a payroll domiciliation.
+paid_placement: false

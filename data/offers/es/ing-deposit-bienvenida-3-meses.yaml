@@ -1,0 +1,39 @@
+# Source: https://www.ing.es/depositos-naranja
+id: ing-deposit-bienvenida-3-meses
+bank: ING
+bank_slug: ing
+country: ES
+goal: deposit
+product_name: Depósito Bienvenida 3 meses
+headline: "3.00% TAE for 3 months on up to EUR 50,000, new ING customers only"
+reward:
+  type: rate
+  value_eur: null
+  description: "3.00% TAE (2.967% TIN) for 3 months. Example on the page: EUR 50,000 for 90 days pays EUR 370.88 gross. Money moves to the Cuenta NARANJA at maturity."
+  paid_when: "At maturity, into the Cuenta NARANJA"
+rate_tae: 3.00
+promo_months: 3
+balance_cap_eur: 50000
+commitment_months: 3
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - "Open a Cuenta NARANJA and make a first transfer from another bank"
+    - "Open the deposit from the client area within 30 days of opening the Cuenta NARANJA"
+    - "One Depósito Bienvenida per customer; no extra contributions"
+fees:
+  monthly_eur: 0
+  notes: "No fees or minimum amount"
+penalty: "Early cancellation (partial or total) pays only 0.87% TAE (0.868% TIN) for the days held"
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-12-31
+source_url: https://www.ing.es/depositos-naranja
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "End date shown on the page as 'Hasta el 31/12' (year not printed; read as 2026-12-31). Exclusive to customers contracting their first account with ING."
+paid_placement: false

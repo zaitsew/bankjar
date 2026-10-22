@@ -1,0 +1,37 @@
+# Source: https://www.unicajabanco.es/en/cuenta-online
+id: unicaja-account-cuenta-online
+bank: Unicaja
+bank_slug: unicaja
+country: ES
+goal: account
+product_name: Unicaja Online Account
+headline: Everyday account with no maintenance fee, free debit card, free SEPA transfers
+reward:
+  type: none
+  value_eur: null
+  description: No reward on the account itself.
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - No Unicaja products in the last 12 months
+fees:
+  monthly_eur: 0
+  notes: No maintenance or administration fees; free debit card; free standard and immediate SEPA transfers; free ATM withdrawals at Unicaja ATMs in listed provinces; elsewhere free at EURO 6000 ATMs for EUR 120+; foreign networks 4.00% (minimum EUR 3.50).
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: Aged 18+, resident in Spain, with a national or foreigner's ID card and a mobile phone. One account per customer.
+valid_until: null
+source_url: https://www.unicajabanco.es/en/cuenta-online
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: The page says the debit card fee waiver is valid until 31 Dec 2026. Authorised overdraft up to EUR 500 after 3 months of payroll; salary advance up to EUR 6,000 after 6 months of payroll.
+paid_placement: false

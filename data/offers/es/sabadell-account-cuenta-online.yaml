@@ -1,0 +1,36 @@
+# Source: https://www.bancsabadell.com/bsnacional/en/personal/bank-accounts/sabadell-online-account/
+id: sabadell-account-cuenta-online
+bank: Banco Sabadell
+bank_slug: sabadell
+country: ES
+goal: account
+product_name: Sabadell Online Account
+headline: Everyday account with no fees and no conditions, free debit and credit card
+reward:
+  type: none
+  value_eur: null
+  description: "No reward on the account itself. 3% cashback on direct-debited electricity and gas bills, unlimited."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other: []
+fees:
+  monthly_eur: 0
+  notes: "No management or maintenance fees; no payroll or direct-debit requirement; no minimum term. One debit and/or credit card with no issuance or maintenance fee; second and later credit cards carry fees. Free euro transfers in the EEA from the app."
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: "Over 18, tax resident in Spain, not a current Sabadell customer, no US citizenship. Opened online only."
+valid_until: null
+source_url: https://www.bancsabadell.com/bsnacional/en/personal/bank-accounts/sabadell-online-account/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Account page lists 3% cashback on electricity and gas bills. Savings rate promotion is listed separately.
+paid_placement: false

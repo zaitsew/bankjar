@@ -1,0 +1,40 @@
+# Source: https://assets.bancsabadell.com/is/content/grupbancsabadell/Condiciones_COS_Promo_Nuevos_Clientes_12_meses_09_2026_INGpdf
+id: sabadell-salary-cuenta-online
+bank: Banco Sabadell
+bank_slug: sabadell
+country: ES
+goal: salary
+product_name: Sabadell Online Account (payroll + Bizum)
+headline: EUR 400 gross for a payroll of EUR 1,000+ a month and Bizum, paid over 12 months
+reward:
+  type: cash
+  value_eur: 400
+  description: "EUR 33.34 gross (EUR 27.01 net) a month for 12 months, total EUR 400.08 gross, with 19% withholding. Payment stops if the payroll stops or Bizum is unlinked."
+  paid_when: Monthly for 12 months; first payment in the third month after opening, if the payroll arrived in the first two months
+rate_tae: null
+promo_months: 12
+balance_cap_eur: null
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: 1000
+  new_customer_only: true
+  other:
+    - New payroll (SEPA salary code) of at least EUR 1,000 per payment within 2 months of opening
+    - Bizum linked to the account without interruption until the last payment
+    - Pensions and unemployment benefits do not count
+    - Account opened online between 8 Oct and 12 Nov 2026
+fees:
+  monthly_eur: 0
+  notes: No management or maintenance fees; one free debit and one free credit card with no issuance or maintenance fee.
+penalty: No clawback stated. Payments stop and the customer is excluded if the payroll stops or Bizum is unlinked before the last payment.
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: "Over 18, tax resident in Spain, not a current Sabadell customer, no US citizenship, no public office in the last 2 years. Address on DNI/TIE must match the address entered."
+valid_until: 2026-11-12
+source_url: https://assets.bancsabadell.com/is/content/grupbancsabadell/Condiciones_COS_Promo_Nuevos_Clientes_12_meses_09_2026_INGpdf
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: The 12 months is a condition to keep the payroll and Bizum to receive all payments, not a formal permanence period. Cannot be combined with other payroll promotions the holder already received.
+paid_placement: false

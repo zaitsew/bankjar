@@ -1,0 +1,40 @@
+# Source: https://www.deutsche-bank.es/es/soluciones-db/deposito-confianza-mas.html
+id: deutsche-bank-deposit-confianza-mas-db
+bank: Deutsche Bank España
+bank_slug: deutsche-bank
+country: ES
+goal: deposit
+product_name: Depósito Confianza Más DB
+headline: 12-month deposit at 2.50% TAE, up to 3.50% with card, payroll and fund, for new money of EUR 25,000-150,000
+reward:
+  type: rate
+  value_eur: null
+  description: 2.50% TAE guaranteed. Add 0.20% for using a DB credit card, 0.40% for a domiciled payroll or pension, 0.40% for investing in a DB fund (EUR 15,000+ of new money), for up to 3.50% TAE. Linkages are checked at maturity.
+  paid_when: At maturity (12 months)
+rate_tae: 2.5
+promo_months: 12
+balance_cap_eur: 150000
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - New money from other banks, EUR 25,000 to EUR 150,000
+    - One deposit per customer
+    - Contracted through a manager via the form on the page
+    - "Bonus +0.60%: card use, payroll or pension, and EUR 15,000+ of new money in one of six listed DB funds"
+fees:
+  monthly_eur: null
+  notes: Not stated on the deposit page
+penalty: Early cancellation costs 4% a year on the cancelled amount for the remaining term, never more than the interest earned
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: The page does not state residency or NIE/TIE rules.
+valid_until: null
+source_url: https://www.deutsche-bank.es/es/soluciones-db/deposito-confianza-mas.html
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Example on the page - EUR 150,000 earns EUR 5,250 gross at 3.50% TAE and EUR 3,750 at 2.50% TAE. Renews automatically. Deutsche Bank also lists Depósito Más DB (12 months, 2.75% TAE, EUR 3,000-300,000 new money, online only) on its deposits page; not a separate file here.
+paid_placement: false
