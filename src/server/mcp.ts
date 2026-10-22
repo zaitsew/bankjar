@@ -10,13 +10,19 @@ import {
   offerBody,
   rowLine,
   searchBodyAsync,
+  siteUrl,
   type OfferRow,
 } from "./api";
 import { appLine, appsBody } from "./apps-api";
+import { MCP_APP_MIME_TYPE, OFFER_WIDGET_HTML, OFFER_WIDGET_URI, offerWidgetResourceMeta, offerWidgetToolMeta } from "./mcp-widget";
 
 /**
  * The MCP server: five read-only tools over the same service functions as the REST
  * API, so an agent sees the table a person sees. A new server per request (stateless).
+ *
+ * search_offers and compare_offers also render offer cards in hosts that support MCP Apps
+ * (Claude, ChatGPT): the tools point at one `ui://` resource through `_meta`, and every result keeps its
+ * text blocks for models and text-only clients next to the structuredContent the widget draws.
  */
 
 export const MCP_INSTRUCTIONS = [
@@ -44,6 +50,22 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
     { instructions: MCP_INSTRUCTIONS },
   );
 
+  server.registerResource(
+    "offer_cards",
+    OFFER_WIDGET_URI,
+    {
+      title: "BankJar offer cards",
+      description: "Interactive ranked offer cards for search_offers and compare_offers, with a link to each bank's own terms.",
+      mimeType: MCP_APP_MIME_TYPE,
+      _meta: offerWidgetResourceMeta(siteUrl()),
+    },
+    () => ({
+      contents: [
+        { uri: OFFER_WIDGET_URI, mimeType: MCP_APP_MIME_TYPE, text: OFFER_WIDGET_HTML, _meta: offerWidgetResourceMeta(siteUrl()) },
+      ],
+    }),
+  );
+
   server.registerTool(
     "search_offers",
     {
@@ -54,6 +76,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
         "Use it for questions like 'best salary bonus for 2,500 a month', 'where to park 15,000 euros', 'free account for a non-resident'.",
       inputSchema: { query: z.string().max(500).optional().describe("The person's question in their own words."), ...ProfileToolShape },
       annotations: { title: "Search Spanish bank offers", ...READ_ONLY },
+      _meta: offerWidgetToolMeta("Searching bank offers", "Ranked offers ready"),
     },
     async ({ query, ...fields }) => {
       const body = await searchBodyAsync(query, fields, ctx);
@@ -111,6 +134,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
         ...ProfileToolShape,
       },
       annotations: { title: "Compare bank offers", ...READ_ONLY },
+      _meta: offerWidgetToolMeta("Comparing bank offers", "Comparison ready"),
     },
     ({ ids, ...fields }) => {
       const body = compareBody(ids, fields);

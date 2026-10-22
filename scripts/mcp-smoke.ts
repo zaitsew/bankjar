@@ -39,6 +39,24 @@ async function main(): Promise<void> {
   const names = tools.map((t) => t.name).sort();
   check("tools/list", names.join(",") === "compare_offers,get_offer,list_goals,rank_bank_apps,search_offers", names.join(","));
 
+  // MCP App: the offer-cards widget is listed, readable, and referenced by the two offer tools.
+  const uiTools = tools.filter((t) => (t._meta as { ui?: { resourceUri?: string } } | undefined)?.ui?.resourceUri);
+  check("ui tools", uiTools.map((t) => t.name).sort().join(",") === "compare_offers,search_offers", uiTools.map((t) => t.name).join(","));
+  const widgetUri = (uiTools[0]!._meta as { ui: { resourceUri: string } }).ui.resourceUri;
+  check("ui resourceUri is ui://", widgetUri.startsWith("ui://") && uiTools.every((t) => (t._meta as any).ui.resourceUri === widgetUri), widgetUri);
+  const { resources } = await client.listResources();
+  const widget = resources.find((r) => r.uri === widgetUri);
+  check("resources/list has the widget", widget?.mimeType === "text/html;profile=mcp-app", widget?.mimeType);
+  const html = await client.readResource({ uri: widgetUri });
+  const page = html.contents[0] as { mimeType?: string; text?: string; _meta?: { ui?: { csp?: Record<string, string[]> } } };
+  check("resources/read returns the HTML", page.mimeType === "text/html;profile=mcp-app" && (page.text ?? "").includes("Not financial advice"), `${(page.text ?? "").length} bytes`);
+  const csp = page._meta?.ui?.csp ?? {};
+  check("widget CSP asks for no origins", Object.values(csp).every((v) => v.length === 0));
+  for (const t of tools) {
+    const a = t.annotations;
+    check(`annotations ${t.name}`, !!a?.title && a.readOnlyHint === true && a.destructiveHint === false && a.idempotentHint === true && a.openWorldHint === false);
+  }
+
   const goals = await client.callTool({ name: "list_goals", arguments: {} });
   check("list_goals", structured(goals).goals?.length === 5, `${structured(goals).goals?.length} goals`);
 
@@ -48,6 +66,7 @@ async function main(): Promise<void> {
   });
   const rows: Row[] = structured(search).offers ?? [];
   check("search_offers", !search.isError && rows.length > 0 && rows.length <= 10, `${rows.length} rows, goal ${structured(search).goal}`);
+  check("search_offers keeps text and structuredContent", ((search as { content: unknown[] }).content ?? []).length === 2 && typeof structured(search).summary === "string" && typeof structured(search).total_offers === "number");
   check("search_offers cites sources", rows.every((r) => /^https?:\/\//.test(r.source_url) && /^\d{4}-\d{2}-\d{2}$/.test(r.verified_on)));
 
   const first = rows[0];
@@ -62,6 +81,7 @@ async function main(): Promise<void> {
   if (ids.length === 2) {
     const cmp = await client.callTool({ name: "compare_offers", arguments: { ids } });
     check("compare_offers", !cmp.isError && structured(cmp).offers?.length === 2, ids.join(" vs "));
+    check("compare_offers has missing[] for the widget", Array.isArray(structured(cmp).missing));
   } else {
     console.log("skip compare_offers (fewer than 2 rows)");
   }
