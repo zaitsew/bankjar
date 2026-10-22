@@ -1,0 +1,36 @@
+# Source: https://www.kelisto.es/cuentas-nomina/bancos/bankinter/cuenta-nomina
+id: bankinter-account-cuenta-digital
+bank: Bankinter
+bank_slug: bankinter
+country: ES
+goal: account
+product_name: Bankinter Cuenta Digital
+headline: Everyday account with no fees, no payroll or direct-debit requirement, free debit card
+reward:
+  type: none
+  value_eur: null
+  description: No reward on the account itself.
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other: []
+fees:
+  monthly_eur: 0
+  notes: No maintenance, administration, cheque-deposit or transfer fees; free debit card; no credit card.
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.kelisto.es/cuentas-nomina/bancos/bankinter/cuenta-nomina
+confirmed_by: aggregator
+verified_on: 2026-10-22
+notes: bankinter.com could not be fetched (HTTP 403); fees come from Kelisto (page dated 1 Oct 2026).
+paid_placement: false

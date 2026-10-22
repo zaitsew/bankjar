@@ -1,0 +1,40 @@
+# Source: https://www.selfbank.es/invertir/fondos-de-inversion/promocion-consigue-hasta-5000-euros
+id: self-bank-welcome-fondos-1-por-ciento
+bank: Self Bank
+bank_slug: self-bank
+country: ES
+goal: welcome
+product_name: "Promoción fondos: hasta 5.000 euros"
+headline: "1% of the money or funds you bring from another bank into investment funds, up to EUR 5,000, until 30 Nov"
+reward:
+  type: cash
+  value_eur: null
+  description: "1% of the amount contributed by buying or transferring investment funds with money or funds from another bank, capped at EUR 5,000 per account (equal to 1% of EUR 500,000). The payout depends on the amount invested, so no fixed value is given."
+  paid_when: "In the fund account during the first 10 days of the month after each completed quarter"
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "Money or fund holdings must arrive from another bank between 2026-10-13 and 2026-11-30"
+    - "Purchases, transfers and changes of distributor all count"
+    - "Transferred funds must keep the same ownership; a free fund account is needed"
+    - "Investing in funds can lose capital"
+fees:
+  monthly_eur: 0
+  notes: "The fund account is free"
+penalty: "None: you can redeem the funds and the quarterly payments already received are not reclaimed"
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-11-30
+source_url: https://www.selfbank.es/invertir/fondos-de-inversion/promocion-consigue-hasta-5000-euros
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "The promotion terms (bases) were not read; only the promotion page. Payment is a percentage of a fund investment, so the cash value depends on the amount invested."
+paid_placement: false

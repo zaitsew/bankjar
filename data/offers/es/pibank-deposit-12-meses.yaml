@@ -1,0 +1,37 @@
+# Source: https://www.pibank.es/deposito-bancario-plazo-fijo/
+id: pibank-deposit-12-meses
+bank: Pibank
+bank_slug: pibank
+country: ES
+goal: deposit
+product_name: Depósito Pibank 12 meses
+headline: "3.03% TAE for 12 months, no minimum or maximum, interest paid quarterly, offer to 31 Oct 2026"
+reward:
+  type: rate
+  value_eur: null
+  description: "3.00% TIN (3.03% TAE) for 12 months with quarterly interest. Example: EUR 75,000 for 12 months pays EUR 2,250 gross."
+  paid_when: "Quarterly, into the free Cuenta Remunerada Pibank"
+rate_tae: 3.03
+promo_months: 12
+balance_cap_eur: null
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "A Cuenta Remunerada Pibank is opened automatically with the deposit and receives the interest"
+fees:
+  monthly_eur: 0
+  notes: "No maintenance or administration fees on the associated account"
+penalty: "Early cancellation (partial or total) deducts all interest already received; partial cancellation penalises only the amount withdrawn"
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-10-31
+source_url: https://www.pibank.es/deposito-bancario-plazo-fijo/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "The page says 'Oferta válida hasta el 31/10/2026'."
+paid_placement: false

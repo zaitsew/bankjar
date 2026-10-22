@@ -1,0 +1,40 @@
+# Source: https://www.caixabank.es/particular/ahorro/fixed-term-deposit.html
+id: caixabank-deposit-bonificado
+bank: CaixaBank
+bank_slug: caixabank
+country: ES
+goal: deposit
+product_name: CaixaBank Depósito Bonificado a plazo fijo
+headline: 12-month deposit from EUR 5,000, 0.10% TAE base rising to a 1.10% nominal rate with linked products
+reward:
+  type: rate
+  value_eur: null
+  description: "Base rate 0.10% NIR (0.10% AER). Bonus: +0.50% NIR for payroll or pension direct deposit, +0.25% NIR per eligible product (life, health, home insurance, MyBox alarm or senior protection, MyBox Retirement). Maximum 1.10% NIR; the page gives no AER for the maximum and says AER includes the cost of the linked products."
+  paid_when: At maturity, after 12 months, into the CaixaBank current account
+rate_tae: 0.1
+promo_months: 12
+balance_cap_eur: null
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - Minimum EUR 5,000 in one payment
+    - CaixaBank current account to receive interest
+    - Bonus products taken out at least 2 months before maturity and kept to the end
+    - Payroll or pension direct deposit for the 6 months before maturity
+fees:
+  monthly_eur: null
+  notes: null
+penalty: "Total early withdrawal: no interest paid. Partial withdrawal: at least EUR 500 must remain; interest only on the remaining amount."
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.caixabank.es/particular/ahorro/fixed-term-deposit.html
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "rate_tae is the base AER (0.10%); the maximum is quoted as a nominal rate only. The page's representative-example table looks internally inconsistent. No start or end date shown. Not competitive against online banks; included because it is the CaixaBank deposit published."
+paid_placement: false

@@ -1,0 +1,40 @@
+# Source: https://www.finect.com/usuario/mariarefojos/articulos/hasta-400-euros-o-un-iphone-los-regalos-que-te-hacen-los-bancos-por-abrirte-una-cuenta
+id: bankinter-salary-cuenta-digital
+bank: Bankinter
+bank_slug: bankinter
+country: ES
+goal: salary
+product_name: Bankinter Cuenta Digital
+headline: EUR 600 gross for a payroll of EUR 850+ a month, paid EUR 50 a month for 12 months
+reward:
+  type: cash
+  value_eur: 600
+  description: "EUR 50 gross a month for 12 months, total EUR 600 gross (EUR 486 net per Finect). Pensions, unemployment benefits and self-employed income can also qualify. Limited to the first 50,000 contracts."
+  paid_when: Monthly for 12 months, subject to a monthly review
+rate_tae: null
+promo_months: 12
+balance_cap_eur: null
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: 850
+  new_customer_only: true
+  other:
+    - Payroll or equivalent income domiciled within the promotion window
+    - Keep the income for 12 months
+    - Not combinable with more than one payroll or holder
+    - Sign up by 28 Oct 2026 or until 50,000 contracts
+fees:
+  monthly_eur: 0
+  notes: No maintenance, administration, cheque-deposit or transfer fees; free debit card; no credit card.
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-10-28
+source_url: https://www.finect.com/usuario/mariarefojos/articulos/hasta-400-euros-o-un-iphone-los-regalos-que-te-hacen-los-bancos-por-abrirte-una-cuenta
+confirmed_by: aggregator
+verified_on: 2026-10-22
+notes: "bankinter.com returned HTTP 403 to every fetch, so figures come from Finect (updated 21 Oct 2026), HelpMyCash (19 Oct) and Kelisto (updated 1 Oct). HelpMyCash says the commitment is none in one section and a year in another; Finect and Kelisto-era bank FAQ say keep the income 12 months. A penalty for leaving is not stated. Ends 28 Oct, the year is given by Finect as 2026."
+paid_placement: false

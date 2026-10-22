@@ -1,0 +1,38 @@
+# Source: https://myinvestor.es/cuentas-tarjetas/tarjetas
+id: myinvestor-account-cuenta-corriente
+bank: MyInvestor
+bank_slug: myinvestor
+country: ES
+goal: account
+product_name: Cuenta MyInvestor with free debit and credit cards
+headline: "No fees, no payroll needed, free cards, one free ATM withdrawal a month worldwide"
+reward:
+  type: fee_waiver
+  value_eur: null
+  description: "No opening, maintenance or cancellation fees; free debit and credit cards with no issue, maintenance or renewal fee; free SEPA transfers; Bizum; free travel insurance up to EUR 20,000."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "1 free ATM withdrawal a month; 4 free if you have a mortgage with MyInvestor or EUR 3,000 in investment products"
+    - "No cash deposits: no branches or deposit machines"
+fees:
+  monthly_eur: 0
+  notes: "Foreign-currency card payments carry a 1.5% Visa network cost; Euronet ATMs cost EUR 1"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: "ID can be DNI, TIE or passport"
+valid_until: null
+source_url: https://myinvestor.es/cuentas-tarjetas/tarjetas
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Account details from https://myinvestor.es/cuentas-tarjetas/cuentas (no fees, no payroll needed). Same account as myinvestor-savings-cuenta-remunerada."
+paid_placement: false

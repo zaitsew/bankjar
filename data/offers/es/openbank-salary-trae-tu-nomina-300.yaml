@@ -1,0 +1,41 @@
+# Source: https://www.openbank.es/assets/static/pdf/promociones/BBLL_300EUR_1_Cashback_Fondos_1026.pdf
+id: openbank-salary-trae-tu-nomina-300
+bank: Openbank
+bank_slug: openbank
+country: ES
+goal: salary
+product_name: Cuenta Nómina Open (code NOMINA300F)
+headline: "EUR 300 gross for moving a EUR 900+ payroll, plus 1% fund cashback (max EUR 1,000), needs EUR 2,000 invested"
+reward:
+  type: cash
+  value_eur: 300
+  description: "EUR 300 gross paid into the account. Extra: 1% cashback on money put into investment funds during the 6 months after the payroll starts, up to EUR 1,000 gross."
+  paid_when: "During the month after the conditions are met"
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: null
+requirements:
+  min_monthly_income_eur: 900
+  new_customer_only: false
+  other:
+    - "Sign up with code NOMINA300F by 2026-12-31"
+    - "Payroll, pension or unemployment benefit of EUR 900+ net in a single monthly payment, domiciled before 2027-02-01"
+    - "Keep at least EUR 2,000 in Openbank investment products (funds, broker, crypto, plans)"
+    - "Self-employed: RETA direct debit plus a single EUR 900+ monthly income"
+    - "Excluded if payroll of EUR 900+ was at Openbank between 2026-04-05 and 2026-10-05"
+fees:
+  monthly_eur: 0
+  notes: "Cuenta Nómina Open has no maintenance fee"
+penalty: "Fund cashback is lost and already-paid cashback is reclaimed if the funds that earned it are sold or transferred out before the bonus period ends (latest 2027-06-30). No clawback of the EUR 300 is stated."
+eligibility:
+  residents_only: true
+  nie_tie_ok: null
+  non_residents: false
+  notes: "Natural person, resident in Spain, 18+"
+valid_until: 2026-12-31
+source_url: https://www.openbank.es/assets/static/pdf/promociones/BBLL_300EUR_1_Cashback_Fondos_1026.pdf
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Promotion runs 2026-10-06 to 2026-12-31. The page does not say existing customers are excluded, but anyone who got a payroll promotion in the last three years is. Cuenta Nómina Open fees: see openbank-account-cuenta-nomina-open. The EUR 2,000 invested requirement is the main cost to the user; no permanence period is stated for the EUR 300 itself. Offer page: https://www.openbank.es/ofertas-bancarias/300-euros-nomina-cashback-fondos-inversion"
+paid_placement: false

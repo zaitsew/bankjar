@@ -1,0 +1,38 @@
+# Source: https://assets.bancsabadell.com/is/content/grupbancsabadell/BBLL_BA_COS_12_meses_10_2026_INGpdf
+id: sabadell-savings-cuenta-online
+bank: Banco Sabadell
+bank_slug: sabadell
+country: ES
+goal: savings
+product_name: Sabadell Online Account (promotional rate)
+headline: 2.75% TAE for 12 months on up to EUR 100,000, then 1% on up to EUR 20,000
+reward:
+  type: rate
+  value_eur: null
+  description: "2.75% APR for the first 12 months on the combined balance of the Online Account and its linked Savings Account, up to EUR 100,000. Example: EUR 2,720.09 interest on EUR 100,000 average balance (2.7201% NIR, 2.7543% APR). Interest is paid monthly on the 15th. Afterwards the account pays 1% NIR (1.005% APR) on up to EUR 20,000, or the rate in force then."
+  paid_when: Monthly, on the 15th of the following month
+rate_tae: 2.75
+promo_months: 12
+balance_cap_eur: 100000
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - Account opened online between 8 Oct and 12 Nov 2026
+    - Account in good standing on the payment day
+fees:
+  monthly_eur: 0
+  notes: No opening or maintenance fees.
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: "Over 18, tax resident in Spain, new Sabadell customer, no US citizenship, no public office in the last 2 years."
+valid_until: 2026-11-12
+source_url: https://assets.bancsabadell.com/is/content/grupbancsabadell/BBLL_BA_COS_12_meses_10_2026_INGpdf
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Interest is taxable income from movable capital with 19% withholding. No payroll needed for the rate.
+paid_placement: false

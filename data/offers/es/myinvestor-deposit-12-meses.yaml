@@ -1,0 +1,38 @@
+# Source: https://myinvestor.es/depositos/
+id: myinvestor-deposit-12-meses
+bank: MyInvestor
+bank_slug: myinvestor
+country: ES
+goal: deposit
+product_name: Depósito 12 meses
+headline: "3.00% TAE for 12 months from EUR 10,000 to EUR 100,000, no conditions (3.10% with a robo-portfolio)"
+reward:
+  type: rate
+  value_eur: null
+  description: "3.00% TAE for 12 months with no conditions; 3.10% TAE if you hold an automated portfolio of at least EUR 150 (contracted 15+ days before maturity). Interest paid at maturity."
+  paid_when: "At maturity"
+rate_tae: 3.0
+promo_months: 12
+balance_cap_eur: 100000
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "Minimum EUR 10,000, maximum EUR 100,000"
+    - "Needs a MyInvestor account"
+fees:
+  monthly_eur: 0
+  notes: "No opening or cancellation fees"
+penalty: "Cancelling early returns 100% of the capital but no interest; partial cancellation is not possible"
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-10-31
+source_url: https://myinvestor.es/depositos/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Page says the promotional deposits are available only until 31 October 2026. Shorter terms on the same page: 1 month 2.25% (2.50% with robo-portfolio), 3 months 2.25% (2.50%), 6 months 2.75% (3.00%)."
+paid_placement: false

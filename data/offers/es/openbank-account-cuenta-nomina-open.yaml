@@ -1,0 +1,38 @@
+# Source: https://www.openbank.es/cuenta-nomina
+id: openbank-account-cuenta-nomina-open
+bank: Openbank
+bank_slug: openbank
+country: ES
+goal: account
+product_name: Cuenta Nómina Open / Cuenta Corriente Open
+headline: "Free account and debit card, free transfers and free cash at 5,000+ Santander and Euro Automatic Cash ATMs"
+reward:
+  type: fee_waiver
+  value_eur: null
+  description: "No opening, maintenance or cancellation fees; free debit card (first holder); free national and international transfers in available currencies; free ATM cash in Spain. With payroll of EUR 900+, Travel+ (normally EUR 4.99 a month) costs EUR 0."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "Cuenta Nómina Open perks need payroll, pension, benefit or income of EUR 900+ a month; otherwise it works as a Cuenta Corriente Open"
+    - "Credit card is subject to risk approval"
+fees:
+  monthly_eur: 0
+  notes: "0 EUR to open, maintain or cancel; free debit card (first holder). Currency conversion may carry a cost."
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.openbank.es/cuenta-nomina
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Also shows 1% Bizum cashback up to EUR 30 a year and 2% saving on Amazon.es gift cards with payroll. Fees document: https://www.openbank.es/assets/static/pdf/Productos/Documento_Informativo_Comisiones_Cuenta_Nomina.pdf (not read)."
+paid_placement: false

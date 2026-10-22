@@ -1,0 +1,38 @@
+# Source: https://www.kelisto.es/cuentas-nomina/bancos/bankinter/cuenta-nomina
+id: bankinter-savings-cuenta-digital
+bank: Bankinter
+bank_slug: bankinter
+country: ES
+goal: savings
+product_name: Bankinter Cuenta Digital
+headline: 3.0% TAE guaranteed to 30 April 2027 on up to EUR 100,000, no payroll needed
+reward:
+  type: rate
+  value_eur: null
+  description: 3.0% TAE guaranteed until 30 April 2027 on balances up to EUR 100,000, from EUR 1. Kelisto shows a nominal rate (TIN) of 2.96%, EUR 296 gross a year on EUR 10,000.
+  paid_when: null
+rate_tae: 3
+promo_months: null
+balance_cap_eur: 100000
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - Offer for new customers only
+    - Sign up by 28 Oct 2026
+fees:
+  monthly_eur: 0
+  notes: No maintenance, administration, cheque-deposit or transfer fees; free debit card; no payroll or direct debits needed.
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-10-28
+source_url: https://www.kelisto.es/cuentas-nomina/bancos/bankinter/cuenta-nomina
+confirmed_by: aggregator
+verified_on: 2026-10-22
+notes: "bankinter.com returned HTTP 403. Kelisto page (dated 1 Oct 2026) and Finect (21 Oct) give 3.0% TAE guaranteed to 30 Apr 2027. Kelisto's table shows TAE as not available and TIN 2.96%. A rate after the guarantee is not stated. Bankinter pages reportedly mention a 2.5% base rate and a 15 Mar 2027 guarantee for another product; not verified."
+paid_placement: false

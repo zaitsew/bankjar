@@ -1,0 +1,36 @@
+# Source: https://www.bancosantander.es/en/particulares/cuentas-bancarias/cuentas-nomina/
+id: santander-account-cuenta-online
+bank: Santander
+bank_slug: santander
+country: ES
+goal: account
+product_name: Santander Online Account
+headline: Everyday account with no fees and no conditions, 0% interest
+reward:
+  type: none
+  value_eur: null
+  description: No reward on the account itself. The account is free.
+  paid_when: null
+rate_tae: 0
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other: []
+fees:
+  monthly_eur: 0
+  notes: No maintenance fee, no debit card issuance or maintenance fee, euro transfers free except urgent ones, free withdrawals at Santander ATMs.
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: Payroll offer requires residence in Spain; the account page does not state residency rules.
+valid_until: null
+source_url: https://www.bancosantander.es/en/particulares/cuentas-bancarias/cuentas-nomina/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Interest is 0% nominal (0% TAE) per the Santander page.
+paid_placement: false

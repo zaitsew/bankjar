@@ -1,0 +1,40 @@
+# Source: https://www.cajamar.es/es/particulares/productos-y-servicios/cuentas/abrir-cuenta-online/
+id: cajamar-salary-cuenta-online-nomina-600
+bank: Cajamar
+bank_slug: cajamar
+country: ES
+goal: salary
+product_name: Cuenta Online (Promo Nómina from EUR 600)
+headline: "EUR 200 to EUR 750 for domiciling a EUR 600+ payroll for the first time, 36-month stay"
+reward:
+  type: cash
+  value_eur: 200
+  description: "Tiered cash bonus by monthly payroll: EUR 200 for EUR 600 to 1,199.99, EUR 300 for EUR 1,200 to 1,999.99, EUR 500 for EUR 2,000 to 3,999.99, EUR 750 for EUR 4,000 or more. One bonus per customer; value_eur is the lowest tier. Taxable."
+  paid_when: "When the system confirms the first payroll has arrived in the account"
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 36
+requirements:
+  min_monthly_income_eur: 600
+  new_customer_only: true
+  other:
+    - "Domicile the payroll for the first time with any Grupo Cooperativo Cajamar entity"
+    - "Keep the payroll for at least 36 months"
+    - "Not available to anyone who already received a payroll-domiciliation bonus"
+    - "Open the Cuenta Online as a new customer with Bizum active"
+fees:
+  monthly_eur: 0
+  notes: "No administration or maintenance fees; free debit card (no issue or maintenance fee)"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: "The page lists DNI/NIE as the identity document"
+valid_until: 2027-03-31
+source_url: https://www.cajamar.es/es/particulares/productos-y-servicios/cuentas/abrir-cuenta-online/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Page states 'Promoción válida hasta 31/03/2027'. The payroll bonus is optional on this account. The penalty for leaving early is not stated on the page; the promotion bases were not read."
+paid_placement: false

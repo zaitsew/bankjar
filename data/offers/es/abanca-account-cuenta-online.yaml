@@ -1,0 +1,37 @@
+# Source: https://www.abanca.com/en/cuentas/cuenta-online/
+id: abanca-account-cuenta-online
+bank: ABANCA
+bank_slug: abanca
+country: ES
+goal: account
+product_name: ABANCA Cuenta Online Nómina
+headline: Everyday account with no maintenance fee if used digitally, free debit card
+reward:
+  type: none
+  value_eur: null
+  description: No reward on the account itself.
+  paid_when: null
+rate_tae: 0
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other:
+    - Counter operations for two consecutive months turn it into a standard account with fees
+fees:
+  monthly_eur: 0
+  notes: "No maintenance or administration fees. Free debit card; free Tú credit card issuance in year one, then free with EUR 3,000 a year spend (subject to risk analysis); free non-urgent SEPA transfers."
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: null
+  non_residents: false
+  notes: Aged 18+, resident in Spain.
+valid_until: null
+source_url: https://www.abanca.com/en/cuentas/cuenta-online/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Page lists NIR 0% and APR 0%. Counter operations means deposits or withdrawals under EUR 600 or counter transfers; ABANCA warns before converting.
+paid_placement: false

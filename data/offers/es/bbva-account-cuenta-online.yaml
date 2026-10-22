@@ -1,0 +1,36 @@
+# Source: https://www.kelisto.es/cuentas-nomina/bancos/bbva/cuenta-nomina
+id: bbva-account-cuenta-online
+bank: BBVA
+bank_slug: bbva
+country: ES
+goal: account
+product_name: BBVA Cuenta Online sin comisiones
+headline: Everyday account with no administration or maintenance fees, free debit card, 0% interest
+reward:
+  type: none
+  value_eur: null
+  description: No reward on the account itself. Welcome bonuses are listed in the payroll offer.
+  paid_when: null
+rate_tae: 0
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other: []
+fees:
+  monthly_eur: 0
+  notes: No administration or maintenance fees; free Aqua debit card; free online and ATM transfers. The credit card is available after a risk check and the source is inconsistent on its cost.
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.kelisto.es/cuentas-nomina/bancos/bbva/cuenta-nomina
+confirmed_by: aggregator
+verified_on: 2026-10-22
+notes: bbva.es could not be fetched (HTTP 403). Account pays no interest (TIN 0%); TAE not given by the source.
+paid_placement: false

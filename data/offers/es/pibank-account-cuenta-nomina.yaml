@@ -1,0 +1,39 @@
+# Source: https://www.pibank.es/cuenta-nomina/
+id: pibank-account-cuenta-nomina
+bank: Pibank
+bank_slug: pibank
+country: ES
+goal: account
+product_name: Cuenta Nómina Pibank
+headline: "No fees; free cash at any ATM with a EUR 1,000+ payroll; pays 2.50% TIN above EUR 5,000"
+reward:
+  type: fee_waiver
+  value_eur: null
+  description: "No maintenance fee; free debit and credit cards; free immediate and SEPA transfers; free ATM cash in Spain and worldwide with payroll domiciled (ATM owner charges abroad are refunded). Pays 0% on the first EUR 5,000 and 2.50% TIN (up to 2.52% TAE) on the rest."
+  paid_when: null
+rate_tae: 2.52
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: 1000
+  new_customer_only: false
+  other:
+    - "Domicile payroll, pension or recurring income of at least EUR 1,000 a month"
+    - "Can be tried for 3 months without domiciling payroll"
+    - "Without payroll, Spanish ATM withdrawals cost 100% of the ATM owner's charge (old fees sheet)"
+fees:
+  monthly_eur: 0
+  notes: "Maintenance, cards and SEPA transfers cost EUR 0 (fees document dated 2022-06-02). Overdraft interest 7%."
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.pibank.es/cuenta-nomina/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "rate_tae is the top band: 0% TAE up to EUR 5,000, 2.52% above; a EUR 100,000 balance yields 2.40% TAE. Fees document: https://img.pibank.es/pdfs/Comisiones-Cuenta-Nomina.pdf (dated 2022). No payroll bonus or welcome gift found at Pibank."
+paid_placement: false

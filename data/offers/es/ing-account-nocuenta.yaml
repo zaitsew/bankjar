@@ -1,0 +1,36 @@
+# Source: https://www.ing.es/cuentas-ing
+id: ing-account-nocuenta
+bank: ING
+bank_slug: ing
+country: ES
+goal: account
+product_name: Cuenta NoCuenta
+headline: "Current account with no fees and no payroll requirement"
+reward:
+  type: fee_waiver
+  value_eur: null
+  description: "No fees, card on your phone free, free same-day transfers, free cash at ING ATMs and thousands of shops. Travel plan from EUR 3 (free under 28)."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other: []
+fees:
+  monthly_eur: 0
+  notes: "Travel plan costs from EUR 3 a month, free for under 28s"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.ing.es/cuentas-ing
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Opening also opens a Cuenta NARANJA at 0.30% TAE for new customers. Physical card details were not read from the page."
+paid_placement: false

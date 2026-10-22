@@ -1,0 +1,41 @@
+# Source: https://www.wizink.es/public/productos-ahorro/deposito-plazo-fijo
+id: wizink-deposit-12m
+bank: WiZink
+bank_slug: wizink
+country: ES
+goal: deposit
+product_name: Depósito WiZink 12 meses
+headline: 3.00% TAE for 12 months on EUR 5,000-100,000 of new money, interest paid quarterly
+reward:
+  type: rate
+  value_eur: null
+  description: 3.00% TAE (2.967% TIN) fixed for 12 months. Interest guaranteed and paid every 3 months. Example on the page - EUR 30,000 earns EUR 890.10 gross.
+  paid_when: Quarterly
+rate_tae: 3
+promo_months: 12
+balance_cap_eur: 100000
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: null
+  other:
+    - Minimum EUR 5,000, maximum EUR 100,000
+    - Money must come from another bank
+    - Resident in Spain and of legal age
+    - Contract online; the linked account must accept direct debits
+    - Upload DNI or NIE and proof of account ownership
+fees:
+  monthly_eur: 0
+  notes: No opening or maintenance fee on the linked savings account
+penalty: Early cancellation (full only) returns the principal only; all interest received so far must be paid back. Deposits funded from an external account can be cancelled after 60 days.
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: Page says resident in Spain and of legal age; signing step accepts DNI or NIE.
+valid_until: null
+source_url: https://www.wizink.es/public/productos-ahorro/deposito-plazo-fijo
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Longer terms listed on the same page (18, 25 and 36 months) are at lower TAEs and are not included. The deposit cannot be cancelled partially.
+paid_placement: false

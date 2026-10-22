@@ -1,0 +1,40 @@
+# Source: https://www.ibercaja.es/particulares/cuentas-tarjetas/cuentas/cuenta-vamos/
+id: ibercaja-salary-cuenta-nomina-vamos
+bank: Ibercaja
+bank_slug: ibercaja
+country: ES
+goal: salary
+product_name: Cuenta Nómina Vamos
+headline: "5.10% TAE in year one and 2.02% in year two on up to EUR 20,000 with a EUR 600+ payroll"
+reward:
+  type: rate
+  value_eur: null
+  description: "5.10% TAE (5% TIN) for the first year and 2.02% TAE (2% TIN) for the second year on the first EUR 20,000, interest paid quarterly in the account. The page headlines up to EUR 1,400 of interest (EUR 1,000 in year one on EUR 20,000)."
+  paid_when: "Quarterly interest in the account during the first two years"
+rate_tae: 5.1
+promo_months: 12
+balance_cap_eur: 20000
+commitment_months: null
+requirements:
+  min_monthly_income_eur: 600
+  new_customer_only: true
+  other:
+    - "Open between 2026-09-11 and 2026-12-31 with a debit/credit card and Banca Digital Ibercaja contracted at the same time"
+    - "Domicile payroll, pension or unemployment benefit of EUR 600+; first one within 2 calendar months after the month of opening"
+    - "At least 6 card movements and 6 direct-debit charges each half-year"
+    - "Not a holder of any Ibercaja product, or a customer for 6 months or less"
+fees:
+  monthly_eur: 0
+  notes: "No maintenance or administration fee when the conditions are met; otherwise up to EUR 120 a year (EUR 10 a month) and no interest that month"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-12-31
+source_url: https://www.ibercaja.es/particulares/cuentas-tarjetas/cuentas/cuenta-vamos/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Filed as salary because the rate depends on domiciling payroll. valid_until is the last day to open the account. Tarjeta de débito: no issue or maintenance fee when conditions are met. Early-leaving rules were not read."
+paid_placement: false

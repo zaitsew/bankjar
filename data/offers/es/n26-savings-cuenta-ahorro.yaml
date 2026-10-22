@@ -1,0 +1,38 @@
+# Source: https://n26.com/es-es/cuenta-ahorro
+id: n26-savings-cuenta-ahorro
+bank: N26
+bank_slug: n26
+country: ES
+goal: savings
+product_name: Cuenta de Ahorro N26
+headline: 0.50% TAE on any balance with the free plan; 1.30% TAE with N26 Metal (EUR 16.90/month)
+reward:
+  type: rate
+  value_eur: null
+  description: 0.50% TAE (0.50% TIN) with Estándar, Smart and Go. 1.30% TAE (1.5% TIN) with Metal, which costs EUR 202.80 a year. No maximum balance; interest calculated daily and paid monthly.
+  paid_when: Monthly, first day of the following month
+rate_tae: 0.5
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - Needs an N26 current account first
+    - The Metal rate needs the paid Metal plan (EUR 16.90 a month)
+fees:
+  monthly_eur: 0
+  notes: Savings account has no fee; the Metal plan costs EUR 16.90 a month
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: true
+  non_residents: false
+  notes: N26 account needs a Spanish NIF or NIE and a legal address in Spain (expat account page).
+valid_until: null
+source_url: https://n26.com/es-es/cuenta-ahorro
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: N26 may change the rate with 30 days' notice if rates fall. Interest is taxable in Spain and withheld monthly. A money market fund at 2.57% (Fidelity, variable, 6 Oct 2026) is promoted on the same page; it is an investment, not a deposit, and is not listed. The Metal rate is shown on the plan comparison at https://n26.com/es-es/cuentas as 1.30% TAE.
+paid_placement: false

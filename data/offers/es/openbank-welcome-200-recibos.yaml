@@ -1,0 +1,40 @@
+# Source: https://www.openbank.es/assets/static/pdf/promociones/Cuenta_Remunerada_Openbank.pdf
+id: openbank-welcome-200-recibos
+bank: Openbank
+bank_slug: openbank
+country: ES
+goal: welcome
+product_name: "200 euros por tus recibos (code OPEN325)"
+headline: "EUR 200 net, paid EUR 20 a month for 10 months, for domiciling 2 direct debits (no payroll needed)"
+reward:
+  type: cash
+  value_eur: 200
+  description: "EUR 20 net a month for up to 10 consecutive months (max EUR 200) into the Cuenta Corriente Open, for new customers with a Cuenta Remunerada Openbank."
+  paid_when: "Monthly, between the 15th and 20th of the month after each month the conditions are met; no payment after 2027-10-20"
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 10
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - "Open a Cuenta Remunerada Openbank as first holder between 2026-03-02 and 2026-10-29 with code OPEN325"
+    - "Activate the Cuenta Corriente Open by 2026-11-29"
+    - "Domiciliate at least 2 different monthly direct debits, each charged and not returned (any amount, not from private individuals)"
+    - "Card payments, subscriptions and periodic transfers do not count"
+fees:
+  monthly_eur: 0
+  notes: "Cuenta Remunerada and Cuenta Corriente Open have no maintenance fee"
+penalty: "A month with fewer than 2 charged direct debits earns no payment for that month; it is not recovered later. No clawback is stated."
+eligibility:
+  residents_only: true
+  nie_tie_ok: null
+  non_residents: false
+  notes: "Natural person 18+, resident in Spain with a Spanish mailing address"
+valid_until: 2026-10-29
+source_url: https://www.openbank.es/assets/static/pdf/promociones/Cuenta_Remunerada_Openbank.pdf
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Terms amended 2026-10-08 to extend the end date to 2026-10-29. Headline on https://www.openbank.es/cuenta-ahorro. Incompatible with other new-customer cash promotions in the same period."
+paid_placement: false

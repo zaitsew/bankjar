@@ -1,0 +1,40 @@
+# Source: https://www.caixabank.es/particular/domiciliar-nomina.html
+id: caixabank-salary-cuenta-online
+bank: CaixaBank
+bank_slug: caixabank
+country: ES
+goal: salary
+product_name: CaixaBank Cuenta Online with payroll
+headline: EUR 250 cash for a payroll of EUR 1,500+ a month, 24+24 month commitment
+reward:
+  type: cash
+  value_eur: 250
+  description: "Net cash paid into the account: EUR 250 (EUR 308.64 gross, 19% IRPF withheld) for a payroll of EUR 1,500+, or EUR 150 net (EUR 185.19 gross) for a payroll of EUR 900+. Alternatives: Facilitea coupons (EUR 200/300/400 by tier) or a Samsung smart TV (32/43/55 inch)."
+  paid_when: null
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 48
+requirements:
+  min_monthly_income_eur: 900
+  new_customer_only: null
+  other:
+    - Payroll domiciled
+    - 3 direct debits (recibos) per quarter
+    - 3 card purchases per quarter
+    - Not combinable with payroll offers made after 1 Jan 2024
+fees:
+  monthly_eur: 0
+  notes: Cuenta Online has no administration or maintenance fee and includes one debit card; EEA transfers free; 0% TAE.
+penalty: Penalty proportional to the time the conditions were not met; amount not stated on the page.
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: null
+source_url: https://www.caixabank.es/particular/domiciliar-nomina.html
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Commitment is to keep the conditions for 24 months, then keep an account or deposit with more than EUR 5 for another 24 months (48 total). The page gives no end date. The EUR 250 tier is shown at EUR 1,500+ and also at EUR 2,500+ (cash and larger coupon); the cash amount is EUR 250 for both."
+paid_placement: false

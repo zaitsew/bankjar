@@ -1,0 +1,38 @@
+# Source: https://myinvestor.es/depositos/
+id: myinvestor-deposit-premium-12-meses
+bank: MyInvestor
+bank_slug: myinvestor
+country: ES
+goal: deposit
+product_name: Depósito Premium 12 meses
+headline: "3.50% TAE for 12 months on EUR 1,000 to EUR 25,000 with the Premium plan (EUR 7.99 a month)"
+reward:
+  type: rate
+  value_eur: null
+  description: "3.50% TAE for 12 months, one Premium deposit per term. A 3-month Premium deposit pays 3.25% TAE."
+  paid_when: "At maturity"
+rate_tae: 3.5
+promo_months: 12
+balance_cap_eur: 25000
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "MyInvestor Premium plan at EUR 7.99 a month (cancel any time)"
+    - "Minimum EUR 1,000, maximum EUR 25,000"
+fees:
+  monthly_eur: 7.99
+  notes: "Premium plan cost; the account and deposit themselves have no fees"
+penalty: "Cancelling early returns the capital but no interest"
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: null
+valid_until: 2026-10-31
+source_url: https://myinvestor.es/depositos/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Premium price from https://myinvestor.es/premium. Available until 31 October 2026."
+paid_placement: false

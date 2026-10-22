@@ -1,0 +1,41 @@
+# Source: https://www.abanca.com/en/cuentas/cuenta-online/
+id: abanca-salary-cuenta-online
+bank: ABANCA
+bank_slug: abanca
+country: ES
+goal: salary
+product_name: ABANCA Cuenta Online Nómina
+headline: EUR 500 gross for a payroll of EUR 1,200+ a month, 24-month stay
+reward:
+  type: cash
+  value_eur: 500
+  description: "EUR 500 gross (EUR 405 net) for a payroll or pension of EUR 1,200+ a month; EUR 185 gross (EUR 150 net) for over EUR 800 and under EUR 1,200. Joint account: EUR 500 for each holder who brings a payroll."
+  paid_when: A few days after the first payroll per the page; within one month per the FAQ. First payroll must arrive within 2 months of joining.
+rate_tae: null
+promo_months: null
+balance_cap_eur: null
+commitment_months: 24
+requirements:
+  min_monthly_income_eur: 800
+  new_customer_only: true
+  other:
+    - Keep the payroll or pension deposited with ABANCA for 24 months
+    - No payroll or pension paid into ABANCA in the last 12 months
+    - Not available with an ABANCA remunerated account
+    - Not combinable with other payroll campaigns
+    - Opt into the campaign when signing up
+fees:
+  monthly_eur: 0
+  notes: No maintenance or administration fees while used digitally; counter operations (deposits or withdrawals under EUR 600, counter transfers) for two consecutive months convert it to a standard account with fees.
+penalty: Return the proportional part of the incentive for the months remaining until 24; after 12 months you keep 50%.
+eligibility:
+  residents_only: true
+  nie_tie_ok: null
+  non_residents: false
+  notes: Aged 18+, resident in Spain.
+valid_until: 2027-01-31
+source_url: https://www.abanca.com/en/cuentas/cuenta-online/
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: Self-employed variant page was reported to end 31 Dec 2026; the payroll page says 31 Jan 2027, which is used here. Incentive is taxed as capital income with withholding.
+paid_placement: false

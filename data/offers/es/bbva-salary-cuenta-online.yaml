@@ -1,0 +1,40 @@
+# Source: https://www.kelisto.es/cuentas-nomina/bancos/bbva/cuenta-nomina
+id: bbva-salary-cuenta-online
+bank: BBVA
+bank_slug: bbva
+country: ES
+goal: salary
+product_name: BBVA Cuenta Online sin comisiones (Plan 1.060)
+headline: Up to EUR 760 gross in year one, EUR 400 of it for a EUR 800+ payroll, no lock-in
+reward:
+  type: cash
+  value_eur: 760
+  description: "Code PLAN1060. Monthly blocks, gross: up to EUR 400 for a payroll/pension of EUR 800+ (about EUR 33.33/month), up to EUR 120 for card use, EUR 120 for Bizum, EUR 120 for direct debits. A further EUR 300 for keeping a EUR 10,000 average balance brings the maximum to EUR 1,060 gross (EUR 858.60 net). A block is not paid in a month its condition is missed."
+  paid_when: Monthly over the first year
+rate_tae: null
+promo_months: 12
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: 800
+  new_customer_only: true
+  other:
+    - Payroll (or pension) of EUR 800+ a month in one payment, identified as payroll
+    - Open the account digitally with code PLAN1060
+    - Card spending, Bizum and direct debits each earn their own block
+    - EUR 10,000 average balance for the extra EUR 300
+fees:
+  monthly_eur: 0
+  notes: No administration or maintenance fee; free debit card; free online transfers.
+penalty: No permanence and no penalty; a block is simply not paid when its condition is missed.
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: New customers over 18, single-holder account opened digitally; former customers who left within 180 days are excluded.
+valid_until: 2026-11-10
+source_url: https://www.kelisto.es/cuentas-nomina/bancos/bbva/cuenta-nomina
+confirmed_by: aggregator
+verified_on: 2026-10-22
+notes: "bbva.es returned HTTP 403 to every fetch, so figures come from Kelisto (updated 20 Oct 2026), Finect (21 Oct), HelpMyCash (19 Oct) and Finantres (2 Jul). End date is 10 Nov 2026 per Kelisto and Finect; HelpMyCash says 20 Oct. The owner's example of EUR 800 for a 1-year commitment does not match: the payroll block is EUR 400 and there is no commitment."
+paid_placement: false

@@ -1,0 +1,39 @@
+# Source: https://www.selfbank.es/ahorrar/depositos/deposito-12-meses-nuevos-clientes
+id: self-bank-deposit-12-meses
+bank: Self Bank
+bank_slug: self-bank
+country: ES
+goal: deposit
+product_name: Depósito a 12 meses
+headline: "2.75% TAE for 12 months on EUR 6,000 to EUR 1,000,000 of new money, interest paid quarterly"
+reward:
+  type: rate
+  value_eur: null
+  description: "2.7221% TIN (2.75% TAE) for 12 months, interest paid every 3 months into the Cuenta Self. Example: EUR 100,000 pays EUR 2,772.09 gross over the term."
+  paid_when: "Quarterly, into the Cuenta Self"
+rate_tae: 2.75
+promo_months: 12
+balance_cap_eur: 1000000
+commitment_months: 12
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - "Minimum EUR 6,000, maximum EUR 1,000,000"
+    - "Money must come from another bank, increasing your position at Self Bank; internal moves and sales of existing assets do not count"
+    - "Open a Cuenta Self (free) to contract it"
+fees:
+  monthly_eur: 0
+  notes: "Cuenta Self has no opening, maintenance or cancellation fees"
+penalty: "Early cancellation returns 100% of the capital but no interest for the quarter in which you cancel. If the money was not new, the last quarter drops to 2.2221% TIN (2.62% TAE overall)."
+eligibility:
+  residents_only: null
+  nie_tie_ok: null
+  non_residents: null
+  notes: "Open to customers and non-customers, per the page"
+valid_until: null
+source_url: https://www.selfbank.es/ahorrar/depositos/deposito-12-meses-nuevos-clientes
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "No end date stated on the page. A special 12-month deposit at 3.00% TAE exists for customers who put at least 30% of the amount in selected funds (https://www.selfbank.es/ahorrar/depositos/deposito-especial-12-meses); it was seen on the home page only and not read in detail."
+paid_placement: false

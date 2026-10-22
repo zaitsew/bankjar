@@ -1,0 +1,38 @@
+# Source: https://www.wizink.es/public/productos-ahorro/cuenta-ahorro
+id: wizink-savings-cuenta-ahorro
+bank: WiZink
+bank_slug: wizink
+country: ES
+goal: savings
+product_name: Cuenta de Ahorro WiZink
+headline: 1.20% TAE on any balance from EUR 1, no fees, instant access
+reward:
+  type: rate
+  value_eur: null
+  description: 1.20% TAE (1.193% TIN) with no balance limit, interest settled monthly, money available at any time without penalty. Example on the page - EUR 15,000 for 12 months earns EUR 178.95 gross.
+  paid_when: Monthly
+rate_tae: 1.2
+promo_months: null
+balance_cap_eur: null
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: false
+  other:
+    - Resident in Spain, over 18
+    - Savings held at another bank
+fees:
+  monthly_eur: 0
+  notes: No maintenance fee, no fee for transfers in or out
+penalty: null
+eligibility:
+  residents_only: true
+  nie_tie_ok: null
+  non_residents: false
+  notes: Page requires residence in Spain; it does not name NIE/TIE explicitly on this page (the deposit page accepts DNI or NIE).
+valid_until: null
+source_url: https://www.wizink.es/public/productos-ahorro/cuenta-ahorro
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: The page says the offer is valid for new and existing customers.
+paid_placement: false

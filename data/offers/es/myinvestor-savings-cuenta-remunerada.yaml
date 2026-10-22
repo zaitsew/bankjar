@@ -1,0 +1,40 @@
+# Source: https://myinvestor.es/cuentas-tarjetas/cuentas
+id: myinvestor-savings-cuenta-remunerada
+bank: MyInvestor
+bank_slug: myinvestor
+country: ES
+goal: savings
+product_name: Cuenta corriente remunerada
+headline: "2.50% TAE for the first 6 months on up to EUR 70,000, no payroll needed, then 0.30%"
+reward:
+  type: rate
+  value_eur: null
+  description: "2.50% TAE (2.472% TIN) for the first 6 months from opening for accounts opened since 2026-09-01; from month 7 it falls to 0.30% TAE unless the customer invests monthly (1.25% / 1.75% / 2.50% TAE at EUR 300 / 600 / 900 a month invested)."
+  paid_when: null
+rate_tae: 2.5
+promo_months: 6
+balance_cap_eur: 70000
+commitment_months: 0
+requirements:
+  min_monthly_income_eur: null
+  new_customer_only: true
+  other:
+    - "Account opened from 2026-09-01"
+    - "No payroll, card use or other income needed for the first 6 months"
+    - "Linked account must be with a Spanish bank held in your name"
+    - "After 6 months, 2.50% only with EUR 900+ invested each month in selected products"
+fees:
+  monthly_eur: 0
+  notes: "No opening, maintenance or cancellation fees; free SEPA transfers"
+penalty: null
+eligibility:
+  residents_only: null
+  nie_tie_ok: true
+  non_residents: null
+  notes: "ID can be DNI, TIE or passport; a Spanish bank account in your name is required. Spanish citizens abroad only if they live in the EU or UK."
+valid_until: null
+source_url: https://myinvestor.es/cuentas-tarjetas/cuentas
+confirmed_by: bank
+verified_on: 2026-10-22
+notes: "Page also contains older text (1.25% TAE first year) from earlier campaigns; the legal conditions section states 2.50% for accounts opened since 2026-09-01, which is used here. MyInvestor may change or cancel the promotion at any time. Interest paid monthly, 19% withholding. Premium (EUR 7.99 a month) lifts the rate to 2.6% TAE up to EUR 70,000."
+paid_placement: false
