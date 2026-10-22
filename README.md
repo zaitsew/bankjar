@@ -5,6 +5,10 @@ Ask in plain words. Get one comparison table where a €800 cash bonus over 12 m
 
 Spain first. Open code (Apache-2.0) and open data (CC BY 4.0). Built for people and for AI agents.
 
+**Live: https://bankjar.fabriquefutur.com** · MCP: `https://bankjar.fabriquefutur.com/mcp`
+
+![BankJar leaderboard for salary bonuses](docs/screenshots/leaderboard-salary.jpg)
+
 > Status: alpha, built in the night sprint of 2026-10-21. Offers carry a `verified_on` date; check the source link before you sign anything. Not financial advice.
 
 ## Quick start
@@ -41,7 +45,7 @@ One offer is one YAML file in `data/offers/es/`. Copy a neighbour, change the te
 
 ## Docs
 
-`docs/BRIEF.md` (the owner's words) · `docs/PLAN.md` · `docs/ARCHITECTURE.md` · `docs/ROADMAP.md` · `docs/NIGHT-SPRINT.md`
+`docs/BRIEF.md` (the owner's words) · `docs/PLAN.md` · `docs/ARCHITECTURE.md` · `docs/ROADMAP.md` · `docs/NIGHT-SPRINT.md` · `docs/VERIFICATION.md`
 
 ## Licence
 

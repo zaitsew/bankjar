@@ -6,13 +6,13 @@ Primary platform: web. Country: Spain first.
 
 > "launch a night autonomous sprint"
 
-- [ ] Repo, licences, docs (brief, plan, architecture, roadmap).
-- [ ] Offer schema, scoring engine, intent parser, ranking, with tests.
-- [ ] Seed data: 20+ Spanish offers, each with a source URL and `verified_on`.
-- [ ] Web: home with prompt and example cards, results table, goal leaderboards, offer pages, side by side, methodology.
-- [ ] Agent surface: JSON API, OpenAPI, `llms.txt`, `offers.json`, MCP endpoint, JSON-LD.
-- [ ] AI search: Haiku 5.5 through the accounts hub, rule parser fallback, cache and rate limit.
-- [ ] Deployed on Vercel; README quick start; `./check.sh usage` counters.
+- [x] Repo, licences, docs (brief, plan, architecture, roadmap).
+- [x] Offer schema, scoring engine, intent parser, ranking, with tests.
+- [x] Seed data: 69 Spanish offers, each with a source URL and `verified_on`.
+- [x] Web: home with prompt and example cards, results table, goal leaderboards, offer pages, side by side, methodology.
+- [x] Agent surface: JSON API, OpenAPI, `llms.txt`, `offers.json`, MCP endpoint, JSON-LD.
+- [x] AI search: Haiku 5.5 through the accounts hub, rule parser fallback, cache and rate limit (off until the owner approves the spend).
+- [x] Deployed on the shared droplet (Vercel refused); README quick start; `./check.sh usage` counters.
 
 ## Sprint 2 — freshness
 
