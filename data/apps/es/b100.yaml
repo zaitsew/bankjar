@@ -1,0 +1,26 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: b100
+bank: "B100"
+bank_slug: b100
+country: ES
+app_name: "B100 - The Healthy Banking"
+ios:
+  app_id: 6467722281
+  url: https://apps.apple.com/es/app/id6467722281
+  rating: 3.9
+  ratings_count: 1166
+  updated_on: 2026-10-05
+  languages:
+    - ES
+android:
+  package: es.b100.app
+  url: https://play.google.com/store/apps/details?id=es.b100.app&gl=ES
+  rating: 3.77
+  ratings_count: 2357
+  updated_on: 2026-09-30
+features:
+  bizum: { value: true, source_url: https://finantresnoticias.com/bancos/mejores-neobancos-con-bizum/ }
+  apple_pay: { value: null, source_url: null }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-10-22
+notes: "B100 is ABANCA's digital bank."

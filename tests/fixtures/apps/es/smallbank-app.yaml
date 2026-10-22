@@ -1,0 +1,21 @@
+# FAKE test fixture. Not a real app. Smallbank does not exist.
+id: smallbank-app
+bank: Smallbank
+bank_slug: smallbank
+country: ES
+app_name: "Smallbank"
+ios:
+  app_id: 100000002
+  url: https://apps.apple.com/es/app/id100000002
+  rating: 5
+  ratings_count: 40
+  updated_on: 2026-10-20
+  languages:
+    - ES
+android: null
+features:
+  bizum: { value: null, source_url: null }
+  apple_pay: { value: null, source_url: null }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-10-01
+notes: null

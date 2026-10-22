@@ -12,6 +12,7 @@ Primary platform: web. Country: Spain first.
 - [x] Web: home with prompt and example cards, results table, goal leaderboards, offer pages, side by side, methodology.
 - [x] Agent surface: JSON API, OpenAPI, `llms.txt`, `offers.json`, MCP endpoint, JSON-LD.
 - [x] AI search: Haiku 5.5 through the accounts hub, rule parser fallback, cache and rate limit (on since 2026-10-22, 15 EUR a month ceiling).
+- [x] Bank app ranking (2026-10-22): `/apps`, `/api/v1/apps`, MCP `rank_bank_apps`; 24 Spanish bank apps scored from App Store and Google Play numbers.
 - [x] Deployed on the shared droplet (Vercel refused); README quick start; `./check.sh usage` counters.
 
 ## Sprint 2 — freshness

@@ -37,6 +37,14 @@ function inline(text: string, keyBase = "k"): ReactNode[] {
   });
 }
 
+/** "Bank apps" -> "bank-apps": the anchor for links such as /methodology#bank-apps. */
+export function headingId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function Markdown({ source, skipTitle = false }: { source: string; skipTitle?: boolean }) {
   const blocks = parseBlocks(source);
   const list = skipTitle && blocks[0]?.t === "h" && blocks[0].level === 1 ? blocks.slice(1) : blocks;
@@ -46,8 +54,9 @@ export function Markdown({ source, skipTitle = false }: { source: string; skipTi
         const key = `b${idx}`;
         switch (b.t) {
           case "h": {
-            if (b.level <= 2) return <h2 key={key}>{inline(b.text, key)}</h2>;
-            return <h3 key={key}>{inline(b.text, key)}</h3>;
+            const id = headingId(b.text);
+            if (b.level <= 2) return <h2 key={key} id={id}>{inline(b.text, key)}</h2>;
+            return <h3 key={key} id={id}>{inline(b.text, key)}</h3>;
           }
           case "p":
             return <p key={key}>{inline(b.text, key)}</p>;

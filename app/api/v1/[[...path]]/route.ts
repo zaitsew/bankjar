@@ -5,7 +5,7 @@ import { errorResponse, optionsResponse } from "../../../../src/server/http";
 function notFound(request: Request): Response {
   const { pathname } = new URL(request.url);
   return errorResponse(404, `No such endpoint: ${pathname}`, {
-    endpoints: ["/api/v1/search", "/api/v1/offers", "/api/v1/offers/{id}", "/api/v1/compare", "/api/v1/goals"],
+    endpoints: ["/api/v1/search", "/api/v1/offers", "/api/v1/offers/{id}", "/api/v1/compare", "/api/v1/goals", "/api/v1/apps", "/api/v1/apps/{id}"],
     openapi: `${siteUrl()}/openapi.json`,
   });
 }

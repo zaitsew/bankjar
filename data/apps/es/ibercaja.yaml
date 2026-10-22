@@ -1,0 +1,26 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: ibercaja
+bank: "Ibercaja"
+bank_slug: ibercaja
+country: ES
+app_name: "Ibercaja"
+ios:
+  app_id: 515972019
+  url: https://apps.apple.com/es/app/id515972019
+  rating: 4.49
+  ratings_count: 20692
+  updated_on: 2026-09-30
+  languages:
+    - ES
+android:
+  package: es.ibercaja.ibercajaapp
+  url: https://play.google.com/store/apps/details?id=es.ibercaja.ibercajaapp&gl=ES
+  rating: 4.51
+  ratings_count: 44743
+  updated_on: 2026-09-29
+features:
+  bizum: { value: null, source_url: null }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
+verified_on: 2026-10-22
+notes: null

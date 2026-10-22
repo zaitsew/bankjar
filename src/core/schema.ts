@@ -11,7 +11,7 @@ export type Goal = z.infer<typeof GoalSchema>;
 
 export const REWARD_TYPES = ["cash", "gift", "rate", "fee_waiver", "none"] as const;
 
-const isoDate = z
+export const isoDate = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/, "must be an ISO date, YYYY-MM-DD")
   .refine((s) => {
@@ -19,7 +19,7 @@ const isoDate = z
     return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s;
   }, "is not a real calendar date");
 
-const kebab = z
+export const kebab = z
   .string()
   .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "must be kebab-case: lowercase letters, digits and single dashes");
 

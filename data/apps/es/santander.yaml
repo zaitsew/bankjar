@@ -1,0 +1,34 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: santander
+bank: "Santander"
+bank_slug: santander
+country: ES
+app_name: "Santander España"
+ios:
+  app_id: 408043474
+  url: https://apps.apple.com/es/app/id408043474
+  rating: 4.77
+  ratings_count: 464810
+  updated_on: 2026-10-02
+  languages:
+    - CA
+    - EN
+    - ES
+    - EU
+    - FR
+    - GL
+    - IT
+    - PL
+    - PT
+android:
+  package: es.bancosantander.apps
+  url: https://play.google.com/store/apps/details?id=es.bancosantander.apps&gl=ES
+  rating: 4.54
+  ratings_count: 479152
+  updated_on: 2026-08-04
+features:
+  bizum: { value: true, source_url: https://www.bancosantander.es/particulares/banca-online/pagos/bizum/ }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
+verified_on: 2026-10-22
+notes: null

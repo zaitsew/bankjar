@@ -84,7 +84,8 @@ At the 15 EUR ceiling that is about **136,000 AI searches a month**. If Haiku ad
 - `GET /api/v1/search?q=...` — the same pipeline as the search box (rule parser, plus the AI step when the host enables it), returning `{parser, intent, offers, summary}`.
 - `GET /api/v1/offers/{id}` and `GET /api/v1/compare?ids=a,b`.
 - `GET /openapi.json`, `/llms.txt`, `/llms-full.txt`, `/data/offers.json` (the whole dataset, CC BY 4.0).
-- `POST /mcp` — a stateless Streamable-HTTP MCP server with tools `search_offers`, `get_offer`, `compare_offers`, `list_goals`.
+- `POST /mcp` — a stateless Streamable-HTTP MCP server with tools `search_offers`, `get_offer`, `compare_offers`, `list_goals`, `rank_bank_apps`.
+- `GET /api/v1/apps` and `GET /api/v1/apps/{id}` — Spanish bank mobile apps ranked 0 to 100 (rules in `src/core/app-score.ts`, data in `data/apps/`); the MCP tool `rank_bank_apps` serves the same ranking. The page is `/apps`.
 - Offer pages carry schema.org JSON-LD (`FinancialProduct` + `Offer`) with `validThrough` and the source URL.
 - Every response carries `verified_on` and `source_url`, so an agent can cite and date its answer.
 

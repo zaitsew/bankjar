@@ -1,0 +1,19 @@
+# FAKE test fixture. Not a real app. Ghostbank does not exist. Hidden: checked 81 days before the test clock.
+id: ghostbank-app
+bank: Ghostbank
+bank_slug: ghostbank
+country: ES
+app_name: "Ghostbank"
+ios: null
+android:
+  package: com.example.ghostbank
+  url: https://play.google.com/store/apps/details?id=com.example.ghostbank&gl=ES
+  rating: 4.9
+  ratings_count: 900000
+  updated_on: 2026-10-01
+features:
+  bizum: { value: null, source_url: null }
+  apple_pay: { value: null, source_url: null }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-08-01
+notes: null

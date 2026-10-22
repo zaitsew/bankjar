@@ -1,0 +1,28 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: sabadell
+bank: "Banco Sabadell"
+bank_slug: sabadell
+country: ES
+app_name: "App Banco Sabadell"
+ios:
+  app_id: 347887638
+  url: https://apps.apple.com/es/app/id347887638
+  rating: 4.62
+  ratings_count: 347847
+  updated_on: 2026-07-19
+  languages:
+    - CA
+    - EN
+    - ES
+android:
+  package: net.inverline.bancosabadell.officelocator.android
+  url: https://play.google.com/store/apps/details?id=net.inverline.bancosabadell.officelocator.android&gl=ES
+  rating: 4.51
+  ratings_count: 198581
+  updated_on: 2026-07-22
+features:
+  bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/banco-sabadell/bizum }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
+verified_on: 2026-10-22
+notes: null

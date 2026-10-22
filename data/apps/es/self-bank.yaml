@@ -1,0 +1,27 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: self-bank
+bank: "Self Bank"
+bank_slug: self-bank
+country: ES
+app_name: "Self Bank"
+ios:
+  app_id: 6739063648
+  url: https://apps.apple.com/es/app/id6739063648
+  rating: 2.32
+  ratings_count: 57
+  updated_on: 2026-09-29
+  languages:
+    - EN
+    - ES
+android:
+  package: com.singular.selfbankapp
+  url: https://play.google.com/store/apps/details?id=com.singular.selfbankapp&gl=ES
+  rating: 2.35
+  ratings_count: 102
+  updated_on: 2026-09-27
+features:
+  bizum: { value: null, source_url: null }
+  apple_pay: { value: null, source_url: null }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-10-22
+notes: null

@@ -69,6 +69,28 @@ BankJar sorts by net value, so B comes first, and the table shows both columns s
 With a €5 monthly fee on Bank B, net value drops by 5 × 12 = €60, to €855.
 Value per month drops by 5 × 36 ÷ 36 = €5, to €20.42.
 
+## Bank apps
+
+The [Bank apps](/apps) page ranks the mobile apps of Spanish banks. The code is `src/core/app-score.ts`. The score is about the app. It says nothing about how good a bank's offers are, and it never changes the order of offers.
+
+Each app gets a score from 0 to 100, the sum of four parts:
+
+1. **Rating, 60 points.** The App Store and Google Play ratings are pooled, weighted by how many people rated in each store. The result is then pulled towards 3.0 stars, as if the app had 200 more ratings of 3.0. A 5.0 from 40 people is not proof; a 4.7 from 100,000 people is. An average of 3.0 stars or less scores 0. 5.0 stars scores 60. Between them the score is linear.
+2. **Freshness, 15 points.** Per store: a release in the last 30 days scores full points. A release 180 days ago or more scores 0. Between them the score is linear. The two stores are averaged. A store with no release date scores 0.
+3. **Reach, 10 points.** 5 points for being on both the App Store and Google Play. Up to 5 more for the total number of ratings on a log scale: 100 ratings give 0, 100,000 or more give 5.
+4. **Features, 15 points.** 3.75 points each for Bizum, Apple Pay, Google Pay and an English interface. The English interface comes from the App Store's language list. An unknown feature scores 0 and shows as "?" with a flag.
+
+Where the numbers come from:
+
+- **App Store:** Apple's public lookup API, for the Spanish store. It gives the average rating, the number of ratings, the date of the latest release and the interface languages.
+- **Google Play:** the app's store page. The rating and the number of ratings come from the page's schema.org data; the release date is the "Updated on" line. The count is worldwide. The average is the one Google Play shows in Spain.
+- **Refresh:** `npm run fetch-apps` rewrites the store numbers and moves `verified_on` to the day it ran. A store that fails to answer keeps its old numbers and the old date.
+- **Features:** written by hand. Each one carries a `source_url`, the page that shows it. A feature without a source stays unknown.
+
+An app shows a "stale" badge when its store numbers are more than 30 days old. After 60 days it leaves the ranking.
+
+Order: highest score first. A tie goes to the app with more ratings in total, then to the bank name. No paid placement exists for apps.
+
 ## Not advice
 
 BankJar is not financial advice. Terms change. Open the source link and read the bank's page before you sign.

@@ -37,7 +37,7 @@ async function main(): Promise<void> {
 
   const { tools } = await client.listTools();
   const names = tools.map((t) => t.name).sort();
-  check("tools/list", names.join(",") === "compare_offers,get_offer,list_goals,search_offers", names.join(","));
+  check("tools/list", names.join(",") === "compare_offers,get_offer,list_goals,rank_bank_apps,search_offers", names.join(","));
 
   const goals = await client.callTool({ name: "list_goals", arguments: {} });
   check("list_goals", structured(goals).goals?.length === 5, `${structured(goals).goals?.length} goals`);
@@ -65,6 +65,11 @@ async function main(): Promise<void> {
   } else {
     console.log("skip compare_offers (fewer than 2 rows)");
   }
+
+  const apps = await client.callTool({ name: "rank_bank_apps", arguments: { limit: 3 } });
+  const appRows: Array<{ score: number; source_urls: string[]; verified_on: string }> = structured(apps).apps ?? [];
+  check("rank_bank_apps", !apps.isError && appRows.length <= 3, `${appRows.length} apps`);
+  check("rank_bank_apps cites sources", appRows.every((a) => a.source_urls.length > 0 && /^\d{4}-\d{2}-\d{2}$/.test(a.verified_on)));
 
   await client.close();
   console.log(`mcp:smoke passed ${passed} checks against ${url}`);

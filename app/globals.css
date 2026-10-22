@@ -638,6 +638,11 @@ a.card:hover {
 .badge-stale {
   color: var(--warn);
 }
+/* A fact nobody has checked yet: dashed outline, muted ink. Always carries a "?" and a text label. */
+.badge-unknown {
+  color: var(--text-2);
+  border-style: dashed;
+}
 
 .avatar {
   flex: none;
@@ -934,6 +939,25 @@ a.card:hover {
   .rt-mini .offer-cell {
     min-width: 0;
   }
+}
+
+/* Bank apps table: the score breakdown opens under the score, no JavaScript. */
+.rt-apps .chips {
+  max-width: 14rem;
+  gap: 0.25rem;
+}
+.rt-apps time {
+  white-space: nowrap;
+}
+.rt-apps details.app-breakdown > summary {
+  min-height: 2rem;
+  color: var(--text-2);
+}
+.rt-apps .app-breakdown .flag-list {
+  margin-top: 0.25rem;
+}
+.rt-apps .app-breakdown .flag-list li .num {
+  color: var(--text);
 }
 
 /* Side-by-side grid */

@@ -48,7 +48,7 @@ export function GET(): Response {
         name: "bankjar",
         version: pkg.version,
         transport: "Streamable HTTP, stateless: POST JSON-RPC to this URL with Accept: application/json, text/event-stream",
-        tools: ["search_offers", "get_offer", "compare_offers", "list_goals"],
+        tools: ["search_offers", "get_offer", "compare_offers", "list_goals", "rank_bank_apps"],
         docs: `${siteUrl()}/llms.txt`,
         claude_code: `claude mcp add --transport http bankjar ${siteUrl()}/mcp`,
       },

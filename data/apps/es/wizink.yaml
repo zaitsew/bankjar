@@ -1,0 +1,26 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: wizink
+bank: "WiZink"
+bank_slug: wizink
+country: ES
+app_name: "WiZink Bank, tu banco online"
+ios:
+  app_id: 1120078772
+  url: https://apps.apple.com/es/app/id1120078772
+  rating: 4.47
+  ratings_count: 18427
+  updated_on: 2026-10-19
+  languages:
+    - ES
+android:
+  package: app.wizink.es
+  url: https://play.google.com/store/apps/details?id=app.wizink.es&gl=ES
+  rating: 3.96
+  ratings_count: 21178
+  updated_on: 2026-09-16
+features:
+  bizum: { value: null, source_url: null }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
+verified_on: 2026-10-22
+notes: null

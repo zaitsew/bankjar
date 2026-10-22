@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { GET as fullGET } from "../app/llms-full.txt/route";
 import { GET as llmsGET } from "../app/llms.txt/route";
 import { buildOpenApi } from "../src/server/openapi";
+import { fixtureApps } from "./helpers/apps";
 import { fixtures } from "./helpers/offers";
 import { SITE, useFixtureEnv } from "./helpers/api";
 
@@ -34,6 +35,15 @@ describe("llms.txt", () => {
     expect(text).toContain("github.com/zaitsew/bankjar");
     expect(text).toContain("claude mcp add --transport http bankjar");
   });
+
+  it("names the bank-app endpoints, the page and the MCP tool", async () => {
+    const text = await llmsGET().text();
+    expect(text).toContain(`](${SITE}/api/v1/apps)`);
+    expect(text).toContain("GET /api/v1/apps/{id}");
+    expect(text).toContain(`](${SITE}/apps)`);
+    expect(text).toContain("rank_bank_apps");
+    expect(text).toContain("Not a ranking of offers");
+  });
 });
 
 describe("llms-full.txt", () => {
@@ -51,5 +61,22 @@ describe("llms-full.txt", () => {
       expect(text).toContain(`verified ${o.verified_on}`);
     }
     expect(text).toMatch(/net value EUR \d/);
+  });
+
+  it("adds a line for every ranked bank app, and none for a hidden one", async () => {
+    const text = await fullGET().text();
+    expect(text).toContain("## Bank apps");
+    expect(text).toMatch(/\n1\. Testbank - Testbank Mobile \| score [\d.]+\/100 \|/);
+    const apps = fixtureApps();
+    for (const id of ["testbank-app", "oldbank-app", "smallbank-app"]) {
+      const a = apps.find((x) => x.id === id)!;
+      expect(text, id).toContain(`${a.bank} - ${a.app_name} | score`);
+      expect(text).toContain(`verified ${a.verified_on}`);
+    }
+    expect(text).not.toContain("Ghostbank");
+    expect(text).toContain("## Bank apps\n");
+    // The methodology has a "Bank apps" section too; the table comes last.
+    expect(text.lastIndexOf("## Bank apps")).toBeGreaterThan(text.indexOf("## Current offers"));
+    expect(text).toContain("The score is about the app, not about the bank's offers.");
   });
 });

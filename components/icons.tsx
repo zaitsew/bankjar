@@ -34,6 +34,12 @@ export const BoardIcon = (p: P) => (
     <path d="M5 20V10M12 20V4M19 20v-7" />
   </Svg>
 );
+export const PhoneIcon = (p: P) => (
+  <Svg {...p}>
+    <rect x="7" y="3" width="10" height="18" rx="2.5" />
+    <path d="M11 18h2" />
+  </Svg>
+);
 export const ColumnsIcon = (p: P) => (
   <Svg {...p}>
     <rect x="4" y="4" width="7" height="16" rx="1.5" />

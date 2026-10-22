@@ -1,0 +1,30 @@
+# Store numbers: npm run fetch-apps. Features: by hand, each with its source.
+id: bbva
+bank: "BBVA"
+bank_slug: bbva
+country: ES
+app_name: "BBVA España | Banca Online"
+ios:
+  app_id: 325813155
+  url: https://apps.apple.com/es/app/id325813155
+  rating: 4.76
+  ratings_count: 178364
+  updated_on: 2026-10-22
+  languages:
+    - CA
+    - EN
+    - ES
+    - EU
+    - GL
+android:
+  package: com.bbva.bbvacontigo
+  url: https://play.google.com/store/apps/details?id=com.bbva.bbvacontigo&gl=ES
+  rating: 4.65
+  ratings_count: 330239
+  updated_on: 2026-10-21
+features:
+  bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/bbva/bizum }
+  apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
+  google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
+verified_on: 2026-10-22
+notes: null
