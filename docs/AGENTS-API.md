@@ -161,6 +161,10 @@ Check a running server end to end with the official SDK client:
 npm run mcp:smoke -- http://localhost:3000/mcp
 ```
 
+### Offer cards (MCP App)
+
+`search_offers` and `compare_offers` also render ranked offer cards in hosts that support MCP Apps (Claude, ChatGPT). Their `_meta.ui.resourceUri` points at `ui://bankjar/offer-cards-v1.html`, a self-contained HTML page served as `text/html;profile=mcp-app` (`src/server/mcp-widget.ts`). The page draws the result's `structuredContent`; every result keeps its two text blocks for models and text-only clients. The page loads nothing from the network, so the resource declares an empty CSP. "Check terms at the bank" opens `source_url` through the host (`ui/open-link`; `window.openai.openExternal` in ChatGPT). Rebuild the dev harness and the directory screenshots with `npx tsx scripts/widget-harness.ts`; see `docs/directory/prompts.md`. Bump the `-v1` in the URI on any breaking change to the HTML, because some hosts cache by URI.
+
 ## Caching and limits
 
 - REST and the text files are cached at the CDN for an hour, then served stale for up to a day while they refresh. A corrected offer shows within about an hour.

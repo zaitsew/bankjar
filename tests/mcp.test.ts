@@ -1,9 +1,11 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+import { Script, createContext } from "node:vm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { DELETE, GET, OPTIONS, POST } from "../app/mcp/route";
 import { DISCLAIMER } from "../src/server/api";
 import { MCP_INSTRUCTIONS } from "../src/server/mcp";
+import { MCP_APP_MIME_TYPE, MCP_APPS_PROTOCOL_VERSION, OFFER_WIDGET_URI } from "../src/server/mcp-widget";
 import pkg from "../package.json";
 import { SITE, useFixtureEnv } from "./helpers/api";
 
@@ -138,6 +140,228 @@ describe("MCP server", () => {
   it("list_goals lists five goals", async () => {
     const res = await client.callTool({ name: "list_goals", arguments: {} });
     expect(structured(res).goals).toHaveLength(5);
+  });
+});
+
+const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
+
+describe("MCP App: offer cards", () => {
+  it("annotations are unchanged: title plus the four hints on every tool", async () => {
+    const { tools } = await client.listTools();
+    expect(tools).toHaveLength(5);
+    for (const t of tools) expect(t.annotations, t.name).toEqual({ title: t.title, ...READ_ONLY });
+    expect(Object.fromEntries(tools.map((t) => [t.name, t.annotations!.title]))).toEqual({
+      search_offers: "Search Spanish bank offers",
+      get_offer: "Get one bank offer",
+      compare_offers: "Compare bank offers",
+      list_goals: "List offer goals",
+      rank_bank_apps: "Rank Spanish bank apps",
+    });
+  });
+
+  it("lists one ui:// resource with the MCP App mime type", async () => {
+    const { resources } = await client.listResources();
+    expect(resources).toHaveLength(1);
+    expect(resources[0]).toMatchObject({ uri: OFFER_WIDGET_URI, mimeType: "text/html;profile=mcp-app" });
+    expect(MCP_APP_MIME_TYPE).toBe("text/html;profile=mcp-app");
+    expect(OFFER_WIDGET_URI).toMatch(/^ui:\/\//);
+  });
+
+  it("search_offers and compare_offers point at the resource, the other tools do not", async () => {
+    const { tools } = await client.listTools();
+    for (const t of tools) {
+      const meta = (t._meta ?? {}) as Record<string, any>;
+      if (t.name === "search_offers" || t.name === "compare_offers") {
+        expect(meta.ui.resourceUri, t.name).toBe(OFFER_WIDGET_URI);
+        expect(meta["ui/resourceUri"], t.name).toBe(OFFER_WIDGET_URI);
+        expect(meta["openai/outputTemplate"], t.name).toBe(OFFER_WIDGET_URI);
+        for (const k of ["openai/toolInvocation/invoking", "openai/toolInvocation/invoked"]) {
+          expect(meta[k].length, `${t.name} ${k}`).toBeLessThanOrEqual(64);
+        }
+      } else {
+        expect(JSON.stringify(meta), t.name).not.toContain("ui://");
+      }
+    }
+  });
+
+  it("reads the HTML: no network, no third-party frames, disclaimer and bank link present", async () => {
+    const read = await client.readResource({ uri: OFFER_WIDGET_URI });
+    expect(read.contents).toHaveLength(1);
+    const c = read.contents[0] as { uri: string; mimeType: string; text: string; _meta: Record<string, any> };
+    expect(c).toMatchObject({ uri: OFFER_WIDGET_URI, mimeType: "text/html;profile=mcp-app" });
+    expect(c.text.startsWith("<!doctype html>")).toBe(true);
+    expect(c.text).toContain('name="color-scheme"');
+    expect(c.text).toContain("Not financial advice");
+    expect(c.text).toContain("Check terms at the bank");
+    // The only host calls: the MCP Apps bridge and ChatGPT's openExternal.
+    expect(c.text).toContain("ui/open-link");
+    expect(c.text).toContain("openExternal");
+    expect(c.text).toContain(MCP_APPS_PROTOCOL_VERSION);
+    expect(c.text).not.toMatch(/<iframe|<link |<script[^>]*\bsrc=|https?:\/\/|fetch\(|XMLHttpRequest|innerHTML/);
+    // CSP asks for nothing; the sandbox origin goes in ChatGPT's alias, not in ui.domain (Claude hashes it).
+    expect(c._meta.ui.csp).toEqual({ connectDomains: [], resourceDomains: [], frameDomains: [], baseUriDomains: [] });
+    expect(c._meta.ui.prefersBorder).toBe(false);
+    expect(c._meta.ui.domain).toBeUndefined();
+    expect(c._meta["openai/widgetDomain"]).toBe(SITE);
+  });
+
+  it("the widget script parses", async () => {
+    const read = await client.readResource({ uri: OFFER_WIDGET_URI });
+    const html = (read.contents[0] as { text: string }).text;
+    const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]!);
+    expect(scripts).toHaveLength(1);
+    expect(() => new Script(scripts[0]!)).not.toThrow();
+  });
+
+  it("search_offers keeps its two text blocks and adds structuredContent the widget draws", async () => {
+    const res = await client.callTool({ name: "search_offers", arguments: { query: "best salary bonus", monthly_income_eur: 2500 } });
+    const content = (res as { content: Array<{ type: string; text: string }> }).content;
+    expect(content).toHaveLength(2);
+    expect(content.every((c) => c.type === "text")).toBe(true);
+    expect(content[0]!.text).toContain(DISCLAIMER);
+    expect(JSON.parse(content[1]!.text)).toEqual(structured(res));
+    const s = structured(res);
+    expect(s).toMatchObject({ goal: "salary", disclaimer: DISCLAIMER });
+    expect(typeof s.summary).toBe("string");
+    expect(typeof s.total_offers).toBe("number");
+    expect(s.total_offers).toBeGreaterThanOrEqual(s.offers.length);
+    expect(Array.isArray(s.excluded)).toBe(true);
+    expect(s.dataset.latest_verified_on).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    // Search rows have no `missing` array: that is how the widget tells a comparison from a search.
+    expect(s.missing).toBeUndefined();
+    for (const o of s.offers) {
+      expect(typeof o.bank).toBe("string");
+      expect(typeof o.product_name).toBe("string");
+      expect(typeof o.headline).toBe("string");
+      expect(typeof o.score.net_value_eur).toBe("number");
+      expect(Array.isArray(o.score.flags)).toBe(true);
+      expect(typeof o.stale).toBe("boolean");
+      expect(o.requirements).toEqual(expect.objectContaining({ other: expect.any(Array) }));
+      expect(o.commitment_months === null || typeof o.commitment_months === "number").toBe(true);
+      expect(o.source_url).toMatch(/^https:/);
+      expect(o.verified_on).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
+
+  it("compare_offers keeps its text and carries missing and not_eligible_reasons for the widget", async () => {
+    const res = await client.callTool({ name: "compare_offers", arguments: { ids: ["testbank-saver", "testbank-payroll-cash", "ghost"], monthly_income_eur: 100 } });
+    const content = (res as { content: Array<{ type: string; text: string }> }).content;
+    expect(content).toHaveLength(2);
+    expect(content[0]!.text).toContain(DISCLAIMER);
+    expect(JSON.parse(content[1]!.text)).toEqual(structured(res));
+    const s = structured(res);
+    expect(Array.isArray(s.missing)).toBe(true);
+    expect(s.disclaimer).toBe(DISCLAIMER);
+    for (const o of s.offers) {
+      expect(Array.isArray(o.not_eligible_reasons)).toBe(true);
+      expect(typeof o.score.net_value_eur).toBe("number");
+      expect(o.source_url).toMatch(/^https:/);
+    }
+  });
+});
+
+/** Runs the widget script against a tiny fake DOM and returns the text of each card. */
+async function renderCards(structuredContent: unknown) {
+  type N = { tag: string; className: string; text: string; children: N[]; [k: string]: any };
+  const node = (tag: string): N => {
+    const n: N = {
+      tag, className: "", text: "", children: [], style: {},
+      appendChild(c: N) { n.children.push(c); return c; },
+      addEventListener() {}, setAttribute() {},
+    };
+    Object.defineProperty(n, "textContent", { set(v: string) { n.text = v; if (v === "") n.children = []; }, get: () => n.text });
+    return n;
+  };
+  const app = node("div");
+  const handlers: Record<string, (e: unknown) => void> = {};
+  const win: Record<string, unknown> = {
+    addEventListener: (t: string, h: (e: unknown) => void) => { handlers[t] = h; },
+    requestAnimationFrame: () => 0, innerWidth: 400,
+  };
+  win.parent = win;
+  const doc = {
+    getElementById: () => app,
+    createElement: node,
+    createTextNode: (t: string) => Object.assign(node("#text"), { text: t }),
+    documentElement: { style: { setProperty() {} }, setAttribute() {}, getBoundingClientRect: () => ({ height: 0 }) },
+    body: {},
+  };
+  const read = await client.readResource({ uri: OFFER_WIDGET_URI });
+  const script = (read.contents[0] as { text: string }).text.match(/<script>([\s\S]*?)<\/script>/)![1]!;
+  new Script(script).runInContext(createContext({ window: win, document: doc, requestAnimationFrame: () => 0, Intl, URL, console }));
+  handlers.message!({ data: { jsonrpc: "2.0", method: "ui/notifications/tool-result", params: { structuredContent } } });
+  const all = (n: N): string => [n.text, ...n.children.map(all)].filter(Boolean).join(" ");
+  const walk = (n: N, f: (x: N) => void): void => { f(n); n.children.forEach((c) => walk(c, f)); };
+  const cards: string[] = [];
+  const flagBoxes: N[] = [];
+  walk(app, (n) => {
+    if (n.className.split(" ").includes("card")) cards.push(all(n));
+    if (n.className === "flag") flagBoxes.push(n);
+  });
+  return { text: all(app), cards, flagBoxes };
+}
+
+describe("offer cards: unknown values and flag boxes", () => {
+  const row = (id: string, net: number, flags: string[], extra: Record<string, unknown> = {}) => ({
+    id, bank: `Bank ${id}`, product_name: `Product ${id}`, headline: "h", commitment_months: 0,
+    requirements: { min_monthly_income_eur: null, new_customer_only: null, other: [] }, fees: { monthly_eur: 0 },
+    eligibility: { residents_only: null }, penalty: null, rate_tae: null, valid_until: null,
+    source_url: "https://example.com/x", verified_on: "2026-10-22", stale: false,
+    score: { net_value_eur: net, flags }, ...extra,
+  });
+  const base = { goal: "welcome", summary: "s", dataset: { latest_verified_on: "2026-10-22" } };
+
+  it("the flag strings the widget matches are the engine's own", async () => {
+    const { scoreOffer } = await import("../src/core/score");
+    const { makeProfile } = await import("../src/core/profile");
+    const { loadOffers } = await import("../src/server/data");
+    const o = loadOffers()[0]!;
+    const cash = { ...o, reward: { type: "cash" as const, value_eur: null, description: "d", paid_when: null } };
+    const rate = { ...o, reward: { type: "rate" as const, value_eur: null, description: "d", paid_when: null }, rate_tae: null };
+    const profile = makeProfile({ goal: o.goal });
+    expect(scoreOffer(cash, profile, "2026-10-22").flags).toContain("reward value unknown");
+    expect(scoreOffer(rate, profile, "2026-10-22").flags).toContain("rate unknown");
+  });
+
+  it("shows Value unknown instead of EUR 0 for an unknown reward or rate, in search", async () => {
+    const r = await renderCards({ ...base, total_offers: 3, excluded: [], offers: [
+      row("a", 0, []), row("b", 0, ["reward value unknown"]), row("c", 0, ["rate unknown"]),
+    ] });
+    expect(r.cards).toHaveLength(3);
+    expect(r.cards[0]).toContain("€0");
+    for (const i of [1, 2]) {
+      expect(r.cards[i]).toContain("Value unknown");
+      expect(r.cards[i]).not.toContain("€0");
+      expect(r.cards[i]).not.toContain("first-year net value");
+    }
+  });
+
+  it("in compare, unknowns never win Highest value here", async () => {
+    const withUnknown = await renderCards({ ...base, missing: [], offers: [
+      { ...row("a", 0, ["reward value unknown"]), not_eligible_reasons: [] },
+      { ...row("b", 300, []), not_eligible_reasons: [] },
+      { ...row("c", 200, []), not_eligible_reasons: [] },
+    ] });
+    expect(withUnknown.cards[0]).toContain("Value unknown");
+    expect(withUnknown.cards[0]).not.toContain("Highest value here");
+    expect(withUnknown.cards[1]).toContain("Highest value here");
+    // Only one known value left: nothing to compare, no badge.
+    const one = await renderCards({ ...base, missing: [], offers: [
+      { ...row("a", 0, ["reward value unknown"]), not_eligible_reasons: [] },
+      { ...row("b", 300, []), not_eligible_reasons: [] },
+    ] });
+    expect(one.text).not.toContain("Highest value here");
+  });
+
+  it("a penalty box clamps an inner element, so the padded box never cuts a line in half", async () => {
+    const r = await renderCards({ ...base, total_offers: 1, excluded: [], offers: [row("a", 5, ["penalty: x".repeat(60)])] });
+    expect(r.flagBoxes).toHaveLength(1);
+    expect(r.flagBoxes[0]!.text).toBe("");
+    expect(r.flagBoxes[0]!.children[0]!.className).toBe("clamp");
+    const read = await client.readResource({ uri: OFFER_WIDGET_URI });
+    const css = (read.contents[0] as { text: string }).text.match(/<style>([\s\S]*?)<\/style>/)![1]!;
+    expect(css).toMatch(/\.flag \.clamp \{[^}]*-webkit-line-clamp: 2[^}]*overflow: hidden/);
+    expect(css).not.toMatch(/\.flag \{[^}]*(line-clamp|overflow: hidden)/);
   });
 });
 
