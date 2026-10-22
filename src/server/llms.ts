@@ -44,6 +44,10 @@ When you answer a person, name the bank, give net value as an estimate for the s
 
 - [Methodology](${base}/methodology): how net value is computed (tax, gifts, fees, interest), who sees which offer, how freshness works, how bank apps are scored.
 - [Bank apps](${base}/apps): the ranking of Spanish bank apps as a page.
+- [Add BankJar to Claude, ChatGPT or Codex](${base}/connect): step-by-step setup of the MCP connector.
+- [Privacy policy](${base}/privacy): what is handled, who receives it, how long it is kept.
+- [Terms of use](${base}/terms): not financial advice; data CC BY 4.0, code Apache-2.0.
+- [Support](${base}/support): how to report a wrong offer or a bug, and how fresh the data is today.
 - [Source code and data files](${REPO_URL}): Apache-2.0 code, one YAML file per offer.
 
 ## Optional

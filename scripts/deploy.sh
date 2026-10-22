@@ -6,6 +6,10 @@
 #   ./scripts/deploy.sh --dry           print what would run; build and touch nothing
 #   ./scripts/deploy.sh --host user@h   another ssh target (default deploy@159.89.99.84)
 #
+# Optional build-time env: NEXT_PUBLIC_CONTACT_EMAIL=name@example.com ./scripts/deploy.sh puts a
+# contact address on /privacy, /terms and /support. Run-time env (the AI key, the OpenAI domain
+# challenge) lives in /srv/bankjar/.env on the server; see docs/DIRECTORY.md.
+#
 # Why a local build: the box has 1 GB of RAM and cannot run `next build`. The
 # shipped bundle is plain JavaScript, so the arm64 Mac and the x86_64 droplet
 # produce the same files. Safe to re-run: every step is idempotent.
@@ -28,7 +32,7 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --dry) DRY=1; shift ;;
     --host) HOST="${2:?--host needs user@host}"; shift 2 ;;
-    -h|--help) sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -h|--help) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) echo "unknown flag: $1 (try --help)" >&2; exit 64 ;;
   esac
 done
@@ -46,6 +50,9 @@ say() { printf '== %s\n' "$*"; }
 
 # --- 1. Build ----------------------------------------------------------------
 say "build (NEXT_PUBLIC_SITE_URL=${SITE_URL})"
+if [ -z "${NEXT_PUBLIC_CONTACT_EMAIL:-}" ]; then
+  echo "  note: NEXT_PUBLIC_CONTACT_EMAIL is unset; /privacy, /terms and /support will name GitHub issues as the only contact"
+fi
 if command -v teyla >/dev/null 2>&1; then
   run teyla load --wait --kind build
 fi
