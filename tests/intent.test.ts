@@ -166,6 +166,29 @@ describe("parseIntent: details", () => {
       expect(parseIntent("savings account with 0€ fees").profile.balance_eur).toBeUndefined();
     });
 
+    it.each([
+      ["I freelance, no fixed salary, and want somewhere my 30k emergency fund earns something without locking it up", "savings", 30000],
+      ["I don't get a salary, where can my 10k earn interest? savings", "savings", 10000],
+      ["sin nómina fija, fondo de emergencia de 8.000 €", "savings", 8000],
+      ["Где лучше держать подушку безопасности, чтобы капали проценты?", "savings", undefined],
+      ["нет постоянной зарплаты, подушка безопасности 15к евро", "savings", 15000],
+    ])("reads a negated salary and an emergency fund as savings, not salary: %s", (prompt, goal, balance) => {
+      const i = parseIntent(prompt);
+      expect(i.goal).toBe(goal);
+      expect(i.matched).not.toContain("goal:salary");
+      expect(i.profile.monthly_income_eur).toBeUndefined();
+      expect(i.profile.balance_eur).toBe(balance);
+    });
+
+    it("still reads 'earns' with an amount as income", () => {
+      expect(parseIntent("Which free account suits me if my partner earns €3,000 a month?").profile.monthly_income_eur).toBe(3000);
+    });
+
+    it("still reads a qualified salary as a salary when it is not negated", () => {
+      expect(parseIntent("I have a fixed salary of 2,000€ and want a payroll bonus").goal).toBe("salary");
+      expect(parseIntent("I have a fixed salary of 2,000€ and want a payroll bonus").profile.monthly_income_eur).toBe(2000);
+    });
+
     it("keeps an explicit goal when the person has no payroll", () => {
       expect(parseIntent("savings account without payroll").goal).toBe("savings");
       expect(parseIntent("term deposit sin nómina").goal).toBe("deposit");

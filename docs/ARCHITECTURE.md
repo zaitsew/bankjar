@@ -60,11 +60,11 @@ q ──► rule parser ──► confident? (goal found, confidence ≥ 0.8) �
 - **Privacy.** The hub sees `sha256(ip | BANKJAR_VISITOR_SALT | UTC day)` cut to 16 hex characters. The raw IP is neither stored nor sent, and the id changes every day. The question text goes to the hub and Anthropic; the privacy page must say so.
 - **Switches.** `ACCOUNTS_SERVICE_BANKJAR` unset: AI off, nothing else changes. `BANKJAR_AI=off`: AI off with the key present.
 
-### Hub setup (one-time, on the accounts side)
+### Hub setup (one-time, on the accounts side; done 2026-10-22)
 
 1. Add the product's service token as the hub secret `ACCOUNTS_SERVICE_BANKJAR` and the same value to the BankJar deployment.
 2. Set `ACCOUNTS_EXTERNAL_BUDGET_EUR` above 0. External callers resolve on the free plan, whose seeded budget is 0, so without it every call is a 402 and BankJar silently stays on the rule parser.
-3. The product-wide ceiling for external callers is 25 EUR a month by default (`ACCOUNTS_EXTERNAL_PRODUCT_BUDGET_EUR`). The visitor id changes daily, so the per-person budget rarely binds; the 25 EUR ceiling is the hard stop.
+3. BankJar's ceiling for all its visitors together is **15 EUR a month** (`ACCOUNTS_EXTERNAL_PRODUCT_BUDGET_EUR_BANKJAR=15`, approved by the owner on 2026-10-22). It overrides the hub's shared default of 25 EUR for BankJar only. The visitor id changes daily, so the per-person budget (1 EUR) rarely binds; the 15 EUR ceiling is the hard stop. Past it the hub answers 402 and the rule parser answers alone.
 
 ### Cost
 
@@ -76,7 +76,7 @@ Prices from the hub's `_shared/cost.ts` (EUR per million tokens): Haiku 5.5 inpu
 | Output (one tool call) | about 120 | 0.0000552 |
 | **One AI search** | | **about 0.00011** |
 
-At the 25 EUR ceiling that is about **226,000 AI searches a month**. If Haiku adds hidden thinking tokens and the output is five times larger (600 tokens), a search costs about 0.00033 EUR and the ceiling fits about 75,000. The hub reserves the estimate for the raised output ceiling before the call and settles to the real tokens afterwards, so the monthly sum follows real usage. Only questions the rules cannot place, and that miss the cache, reach the hub, so real traffic costs less than this. These are estimates from price tables, not an invoice; check `accounts.usage` after the first week.
+At the 15 EUR ceiling that is about **136,000 AI searches a month**. If Haiku adds hidden thinking tokens and the output is five times larger (600 tokens), a search costs about 0.00033 EUR and the ceiling fits about 45,000. The first live call (2026-10-22) cost 0.000153 EUR. The hub reserves the estimate for the raised output ceiling before the call and settles to the real tokens afterwards, so the monthly sum follows real usage. Only questions the rules cannot place, and that miss the cache, reach the hub, so real traffic costs less than this. These are estimates from price tables, not an invoice; check `accounts.usage` after the first week.
 
 ## For agents
 

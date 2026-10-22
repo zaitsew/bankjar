@@ -82,4 +82,4 @@ The default is no affiliate links until the owner decides.
 
 - **Stale data is the main risk.** Offers change monthly. Sprint 2 adds a verifier that re-reads every source page and opens a pull request when terms change.
 - **Wrong numbers.** The AI never writes a number; the table comes from the data. Every number links to its source.
-- **AI cost.** The hub caps the product at 25 EUR per month and each visitor at 1 EUR. The rule parser works without AI.
+- **AI cost.** The hub caps the product at 15 EUR per month and each visitor at 1 EUR. The rule parser works without AI.
