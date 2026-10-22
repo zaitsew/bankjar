@@ -159,7 +159,8 @@ export default function PrivacyPage() {
         </div>
         <p>
           The AI step is a fallback: the rule parser runs first on the server, and the AI is asked only when the rules cannot place the goal. If the AI is unavailable, over its limit or slow ({AI_TIMEOUT_S} seconds), the rule parser
-          answers and nothing leaves the server. The AI never writes a number you see; every euro figure comes from the dated data
+          answers. When the AI is over our limit or unavailable, nothing is sent. When it is slow, the question has already been sent,
+          and the provider handles it as the table above describes. The AI never writes a number you see; every euro figure comes from the dated data
           files in the repository.
         </p>
 
