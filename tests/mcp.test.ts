@@ -1,6 +1,6 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
-import { Script } from "node:vm";
+import { Script, createContext } from "node:vm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { DELETE, GET, OPTIONS, POST } from "../app/mcp/route";
 import { DISCLAIMER } from "../src/server/api";
@@ -257,6 +257,111 @@ describe("MCP App: offer cards", () => {
       expect(typeof o.score.net_value_eur).toBe("number");
       expect(o.source_url).toMatch(/^https:/);
     }
+  });
+});
+
+/** Runs the widget script against a tiny fake DOM and returns the text of each card. */
+async function renderCards(structuredContent: unknown) {
+  type N = { tag: string; className: string; text: string; children: N[]; [k: string]: any };
+  const node = (tag: string): N => {
+    const n: N = {
+      tag, className: "", text: "", children: [], style: {},
+      appendChild(c: N) { n.children.push(c); return c; },
+      addEventListener() {}, setAttribute() {},
+    };
+    Object.defineProperty(n, "textContent", { set(v: string) { n.text = v; if (v === "") n.children = []; }, get: () => n.text });
+    return n;
+  };
+  const app = node("div");
+  const handlers: Record<string, (e: unknown) => void> = {};
+  const win: Record<string, unknown> = {
+    addEventListener: (t: string, h: (e: unknown) => void) => { handlers[t] = h; },
+    requestAnimationFrame: () => 0, innerWidth: 400,
+  };
+  win.parent = win;
+  const doc = {
+    getElementById: () => app,
+    createElement: node,
+    createTextNode: (t: string) => Object.assign(node("#text"), { text: t }),
+    documentElement: { style: { setProperty() {} }, setAttribute() {}, getBoundingClientRect: () => ({ height: 0 }) },
+    body: {},
+  };
+  const read = await client.readResource({ uri: OFFER_WIDGET_URI });
+  const script = (read.contents[0] as { text: string }).text.match(/<script>([\s\S]*?)<\/script>/)![1]!;
+  new Script(script).runInContext(createContext({ window: win, document: doc, requestAnimationFrame: () => 0, Intl, URL, console }));
+  handlers.message!({ data: { jsonrpc: "2.0", method: "ui/notifications/tool-result", params: { structuredContent } } });
+  const all = (n: N): string => [n.text, ...n.children.map(all)].filter(Boolean).join(" ");
+  const walk = (n: N, f: (x: N) => void): void => { f(n); n.children.forEach((c) => walk(c, f)); };
+  const cards: string[] = [];
+  const flagBoxes: N[] = [];
+  walk(app, (n) => {
+    if (n.className.split(" ").includes("card")) cards.push(all(n));
+    if (n.className === "flag") flagBoxes.push(n);
+  });
+  return { text: all(app), cards, flagBoxes };
+}
+
+describe("offer cards: unknown values and flag boxes", () => {
+  const row = (id: string, net: number, flags: string[], extra: Record<string, unknown> = {}) => ({
+    id, bank: `Bank ${id}`, product_name: `Product ${id}`, headline: "h", commitment_months: 0,
+    requirements: { min_monthly_income_eur: null, new_customer_only: null, other: [] }, fees: { monthly_eur: 0 },
+    eligibility: { residents_only: null }, penalty: null, rate_tae: null, valid_until: null,
+    source_url: "https://example.com/x", verified_on: "2026-10-22", stale: false,
+    score: { net_value_eur: net, flags }, ...extra,
+  });
+  const base = { goal: "welcome", summary: "s", dataset: { latest_verified_on: "2026-10-22" } };
+
+  it("the flag strings the widget matches are the engine's own", async () => {
+    const { scoreOffer } = await import("../src/core/score");
+    const { makeProfile } = await import("../src/core/profile");
+    const { loadOffers } = await import("../src/server/data");
+    const o = loadOffers()[0]!;
+    const cash = { ...o, reward: { type: "cash" as const, value_eur: null, description: "d", paid_when: null } };
+    const rate = { ...o, reward: { type: "rate" as const, value_eur: null, description: "d", paid_when: null }, rate_tae: null };
+    const profile = makeProfile({ goal: o.goal });
+    expect(scoreOffer(cash, profile, "2026-10-22").flags).toContain("reward value unknown");
+    expect(scoreOffer(rate, profile, "2026-10-22").flags).toContain("rate unknown");
+  });
+
+  it("shows Value unknown instead of EUR 0 for an unknown reward or rate, in search", async () => {
+    const r = await renderCards({ ...base, total_offers: 3, excluded: [], offers: [
+      row("a", 0, []), row("b", 0, ["reward value unknown"]), row("c", 0, ["rate unknown"]),
+    ] });
+    expect(r.cards).toHaveLength(3);
+    expect(r.cards[0]).toContain("€0");
+    for (const i of [1, 2]) {
+      expect(r.cards[i]).toContain("Value unknown");
+      expect(r.cards[i]).not.toContain("€0");
+      expect(r.cards[i]).not.toContain("first-year net value");
+    }
+  });
+
+  it("in compare, unknowns never win Highest value here", async () => {
+    const withUnknown = await renderCards({ ...base, missing: [], offers: [
+      { ...row("a", 0, ["reward value unknown"]), not_eligible_reasons: [] },
+      { ...row("b", 300, []), not_eligible_reasons: [] },
+      { ...row("c", 200, []), not_eligible_reasons: [] },
+    ] });
+    expect(withUnknown.cards[0]).toContain("Value unknown");
+    expect(withUnknown.cards[0]).not.toContain("Highest value here");
+    expect(withUnknown.cards[1]).toContain("Highest value here");
+    // Only one known value left: nothing to compare, no badge.
+    const one = await renderCards({ ...base, missing: [], offers: [
+      { ...row("a", 0, ["reward value unknown"]), not_eligible_reasons: [] },
+      { ...row("b", 300, []), not_eligible_reasons: [] },
+    ] });
+    expect(one.text).not.toContain("Highest value here");
+  });
+
+  it("a penalty box clamps an inner element, so the padded box never cuts a line in half", async () => {
+    const r = await renderCards({ ...base, total_offers: 1, excluded: [], offers: [row("a", 5, ["penalty: x".repeat(60)])] });
+    expect(r.flagBoxes).toHaveLength(1);
+    expect(r.flagBoxes[0]!.text).toBe("");
+    expect(r.flagBoxes[0]!.children[0]!.className).toBe("clamp");
+    const read = await client.readResource({ uri: OFFER_WIDGET_URI });
+    const css = (read.contents[0] as { text: string }).text.match(/<style>([\s\S]*?)<\/style>/)![1]!;
+    expect(css).toMatch(/\.flag \.clamp \{[^}]*-webkit-line-clamp: 2[^}]*overflow: hidden/);
+    expect(css).not.toMatch(/\.flag \{[^}]*(line-clamp|overflow: hidden)/);
   });
 });
 

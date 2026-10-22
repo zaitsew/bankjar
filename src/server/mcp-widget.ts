@@ -99,6 +99,7 @@ ul.list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10
 .value { text-align: right; flex: 0 0 auto; margin-left: auto; }
 .value .n { font-size: var(--font-heading-xl-size, 24px); font-weight: 700; line-height: 1.1; color: var(--bj-good); font-variant-numeric: tabular-nums; }
 .value .n.neg { color: var(--bj-bad); }
+.value .n.unk { font-size: var(--font-heading-md-size, 16px); line-height: 1.3; font-weight: 600; color: var(--bj-muted); }
 .value .l { color: var(--bj-muted); font-size: var(--font-text-xs-size, 12px); }
 .headline { margin: 0; color: var(--bj-text-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
@@ -107,7 +108,8 @@ ul.list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10
 .chip.bad { background: var(--bj-bad-bg); color: var(--bj-bad); border-color: transparent; }
 .chip.good { background: var(--bj-good-bg); color: var(--bj-good); border-color: transparent; }
 .req { margin: 0; color: var(--bj-text-2); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.flag { margin: 0; padding: 5px 10px; border-radius: 8px; background: var(--bj-warn-bg); color: var(--bj-warn); font-size: var(--font-text-xs-size, 12px); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.flag { margin: 0; padding: 5px 10px; border-radius: 8px; background: var(--bj-warn-bg); color: var(--bj-warn); font-size: var(--font-text-xs-size, 12px); overflow-wrap: anywhere; }
+.flag .clamp { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .note { margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--bj-bad-bg); color: var(--bj-bad); overflow-wrap: anywhere; }
 .bottom { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between; }
 .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; color: var(--bj-muted); font-size: var(--font-text-xs-size, 12px); }
@@ -252,6 +254,12 @@ const JS = String.raw`
     list.appendChild(el("li", "chip" + (kind ? " " + kind : ""), text));
   }
 
+  // The engine scores an unknown reward or rate as 0 and says so in flags; a figure we do not know must not read as EUR 0.
+  function unknownValue(o) {
+    var flags = (o.score && o.score.flags) || [];
+    return flags.indexOf("reward value unknown") !== -1 || flags.indexOf("rate unknown") !== -1;
+  }
+
   // ---- one offer card ----
   function card(o, index, opts) {
     var score = o.score || {};
@@ -267,8 +275,13 @@ const JS = String.raw`
     who.appendChild(names);
     top.appendChild(who);
     var val = el("div", "value");
-    val.appendChild(el("div", "n" + (score.net_value_eur < 0 ? " neg" : ""), eur(score.net_value_eur)));
-    val.appendChild(el("div", "l", reasons.length ? "first-year net value, if eligible" : "first-year net value"));
+    if (unknownValue(o)) {
+      val.appendChild(el("div", "n unk", "Value unknown"));
+      val.appendChild(el("div", "l", "not published; see the bank"));
+    } else {
+      val.appendChild(el("div", "n" + (score.net_value_eur < 0 ? " neg" : ""), eur(score.net_value_eur)));
+      val.appendChild(el("div", "l", reasons.length ? "first-year net value, if eligible" : "first-year net value"));
+    }
     top.appendChild(val);
     li.appendChild(top);
 
@@ -296,7 +309,13 @@ const JS = String.raw`
 
     var flags = (score.flags || []).slice();
     if (o.penalty && !flags.some(function (f) { return f.indexOf(o.penalty) !== -1; })) flags.push("penalty: " + o.penalty);
-    flags.forEach(function (f) { f = f.charAt(0).toUpperCase() + f.slice(1); var fp = el("p", "flag", f); fp.title = f; li.appendChild(fp); });
+    flags.forEach(function (f) {
+      f = f.charAt(0).toUpperCase() + f.slice(1);
+      var fp = el("p", "flag");
+      fp.title = f;
+      fp.appendChild(el("span", "clamp", f));
+      li.appendChild(fp);
+    });
 
     if (reasons.length) li.appendChild(el("p", "note", "Not available to this profile: " + reasons.join("; ") + "."));
 
@@ -360,7 +379,7 @@ const JS = String.raw`
 
     var best = -1;
     if (isCompare) {
-      var eligible = offers.filter(function (o) { return !(o.not_eligible_reasons || []).length; });
+      var eligible = offers.filter(function (o) { return !(o.not_eligible_reasons || []).length && !unknownValue(o); });
       if (eligible.length > 1) {
         var top = eligible.reduce(function (m, o) { return o.score.net_value_eur > m.score.net_value_eur ? o : m; }, eligible[0]);
         var ties = eligible.filter(function (o) { return o.score.net_value_eur === top.score.net_value_eur; });
