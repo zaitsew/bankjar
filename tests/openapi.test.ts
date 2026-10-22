@@ -74,6 +74,16 @@ describe("openapi.json", () => {
     }
   });
 
+  it("documents the bank-app endpoints and derives the BankApp schema from the zod schema", () => {
+    expect(spec.paths["/api/v1/apps"].get.operationId).toBe("listBankApps");
+    expect(spec.paths["/api/v1/apps"].get.parameters.map((x: { name: string }) => x.name)).toEqual(["limit"]);
+    expect(spec.paths["/api/v1/apps/{id}"].get.responses["404"]).toBeDefined();
+    expect(spec.components.schemas.BankApp.required).toContain("features");
+    expect(spec.components.schemas.BankApp.properties.android.anyOf ?? spec.components.schemas.BankApp.properties.android.oneOf).toBeDefined();
+    expect(spec.paths["/mcp"].post.description).toContain("rank_bank_apps");
+    expect(spec.tags.map((t: { name: string }) => t.name)).toContain("apps");
+  });
+
   it("derives the Offer schema from the zod schema", () => {
     expect(spec.components.schemas.Offer.required).toContain("source_url");
     expect(spec.components.schemas.Offer.properties.goal.enum).toContain("salary");

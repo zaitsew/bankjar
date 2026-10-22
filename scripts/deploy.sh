@@ -63,7 +63,7 @@ if [ "$DRY" = 1 ]; then
 [dry] cp -R .next/standalone/. ${BUNDLE}/
 [dry] cp -R .next/static/. ${BUNDLE}/.next/static/
 [dry] cp -R public/. ${BUNDLE}/public/        (if public/ exists)
-[dry] cp -R data/offers ${BUNDLE}/data/ && cp docs/METHODOLOGY.md ${BUNDLE}/docs/
+[dry] cp -R data/offers data/apps ${BUNDLE}/data/ && cp docs/METHODOLOGY.md ${BUNDLE}/docs/
 [dry] rm -rf ${BUNDLE}/node_modules/sharp ${BUNDLE}/node_modules/@img       (the Mac's native binaries)
 [dry] cp deploy/droplet/Dockerfile ${BUNDLE}/Dockerfile
 DRYEOF
@@ -76,7 +76,7 @@ else
   [ -d public ] && cp -R public/. "$BUNDLE/public/"
   # Belt and braces: the loader reads these at run time, and file tracing only
   # copies the ones it sees at build time.
-  cp -R data/offers "$BUNDLE/data/"
+  cp -R data/offers data/apps "$BUNDLE/data/"
   cp docs/METHODOLOGY.md "$BUNDLE/docs/"
   # sharp is an optional dependency of next, traced for the image optimizer, which
   # next.config.ts turns off. Its binary is for this Mac, not for linux/amd64.

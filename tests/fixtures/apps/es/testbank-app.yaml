@@ -1,0 +1,27 @@
+# FAKE test fixture. Not a real app. Testbank does not exist.
+id: testbank-app
+bank: Testbank
+bank_slug: testbank
+country: ES
+app_name: "Testbank Mobile"
+ios:
+  app_id: 100000001
+  url: https://apps.apple.com/es/app/id100000001
+  rating: 4.7
+  ratings_count: 100000
+  updated_on: 2026-10-15
+  languages:
+    - EN
+    - ES
+android:
+  package: com.example.testbank
+  url: https://play.google.com/store/apps/details?id=com.example.testbank&gl=ES
+  rating: 4.6
+  ratings_count: 120000
+  updated_on: 2026-10-18
+features:
+  bizum: { value: true, source_url: "https://example.com/testbank/bizum" }
+  apple_pay: { value: true, source_url: "https://example.com/testbank/apple-pay" }
+  google_pay: { value: false, source_url: "https://example.com/testbank/google-pay" }
+verified_on: 2026-10-21
+notes: null

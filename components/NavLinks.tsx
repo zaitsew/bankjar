@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AgentIcon, BoardIcon, ColumnsIcon, ScaleIcon, SearchIcon } from "./icons";
+import { AgentIcon, BoardIcon, ColumnsIcon, PhoneIcon, ScaleIcon, SearchIcon } from "./icons";
 
 const ITEMS = [
   { href: "/", label: "Search", Icon: SearchIcon, match: (p: string) => p === "/" || p.startsWith("/search") },
   { href: "/leaderboard", label: "Leaderboards", Icon: BoardIcon, match: (p: string) => p.startsWith("/leaderboard") },
+  { href: "/apps", label: "Bank apps", Icon: PhoneIcon, match: (p: string) => p.startsWith("/apps") },
   { href: "/compare", label: "Side by side", Icon: ColumnsIcon, match: (p: string) => p.startsWith("/compare") },
   { href: "/agents", label: "For agents", Icon: AgentIcon, match: (p: string) => p.startsWith("/agents") },
   { href: "/methodology", label: "Methodology", Icon: ScaleIcon, match: (p: string) => p.startsWith("/methodology") },

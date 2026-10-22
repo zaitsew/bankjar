@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AppSchema } from "../core/app-schema";
 import { GOALS, OfferSchema } from "../core/schema";
 import pkg from "../../package.json";
 import { DISCLAIMER, LICENSE, PROFILE_PARAMS, REPO_URL, siteUrl } from "./api";
@@ -56,6 +57,8 @@ function ok(description: string, schema: Json): Json {
 
 export function buildOpenApi(): Json {
   const offer = jsonSchemaOf(OfferSchema) as { properties: Record<string, Json> } & Json;
+  const bankApp = jsonSchemaOf(AppSchema) as { properties: Record<string, Json> } & Json;
+  const ap = bankApp.properties;
   const p = offer.properties;
   const base = siteUrl();
   const profileRef = ref("Profile");
@@ -83,6 +86,7 @@ export function buildOpenApi(): Json {
     externalDocs: { description: "Agent guide: REST, MCP, llms.txt", url: `${REPO_URL}/blob/main/docs/AGENTS-API.md` },
     tags: [
       { name: "offers", description: "Ranked offers and one offer." },
+      { name: "apps", description: "Spanish bank mobile apps ranked by store numbers." },
       { name: "agents", description: "Machine-readable entry points." },
     ],
     paths: {
@@ -150,6 +154,36 @@ export function buildOpenApi(): Json {
           responses: { "200": ok("The goals.", ref("GoalsResponse")) },
         },
       },
+      "/api/v1/apps": {
+        get: {
+          tags: ["apps"],
+          operationId: "listBankApps",
+          summary: "Spanish bank apps ranked by score",
+          description:
+            "Bank mobile apps scored 0 to 100: store rating 60, release freshness 15, reach 10, features 15 (Bizum, Apple Pay, Google Pay, English). " +
+            "Ratings come from the App Store and Google Play and are pulled towards 3.0 stars when an app has few of them. " +
+            "A feature that is null is unknown and scores 0. Apps not re-checked for 60+ days are left out. The score is about the app, not about the bank's offers.",
+          parameters: [
+            { name: "limit", in: "query", required: false, description: "How many apps to return, best first, 1 to 50. Default all.", example: "10", schema: { type: "integer", minimum: 1, maximum: 50 } },
+          ],
+          responses: { "200": ok("Ranked bank apps.", ref("AppsResponse")), ...errorResponses },
+        },
+      },
+      "/api/v1/apps/{id}": {
+        get: {
+          tags: ["apps"],
+          operationId: "getBankApp",
+          summary: "One bank app with its score and the full data file",
+          parameters: [
+            { name: "id", in: "path", required: true, description: "App id, kebab-case; the same as the bank slug, e.g. bbva.", example: "bbva", schema: { type: "string", pattern: "^[a-z0-9]+(-[a-z0-9]+)*$" } },
+          ],
+          responses: {
+            "200": ok("The app.", ref("AppResponse")),
+            "404": { description: "No bank app with this id.", content: { "application/json": { schema: ref("Error") } } },
+            ...errorResponses,
+          },
+        },
+      },
       "/data/offers.json": {
         get: {
           tags: ["agents"],
@@ -165,7 +199,7 @@ export function buildOpenApi(): Json {
           operationId: "mcp",
           summary: "Model Context Protocol endpoint (Streamable HTTP, stateless)",
           description:
-            "JSON-RPC 2.0 over POST. Tools: search_offers, get_offer, compare_offers, list_goals. Send Accept: application/json, text/event-stream. " +
+            "JSON-RPC 2.0 over POST. Tools: search_offers, get_offer, compare_offers, list_goals, rank_bank_apps. Send Accept: application/json, text/event-stream. " +
             "Use an MCP client rather than calling this by hand; see /llms.txt for client setup.",
           requestBody: { required: true, content: { "application/json": { schema: { type: "object", description: "A JSON-RPC 2.0 request or notification." } } } },
           responses: { "200": { description: "A JSON-RPC 2.0 response.", content: { "application/json": { schema: { type: "object" } } } }, "202": { description: "Notification accepted." } },
@@ -330,6 +364,98 @@ export function buildOpenApi(): Json {
           properties: {
             goals: { type: "array", items: { type: "object", required: ["id", "label", "description", "example_prompt"], properties: { id: ref("Goal"), label: { type: "string" }, description: { type: "string" }, example_prompt: { type: "string" } } } },
             ...envelope,
+          },
+        },
+        AppsDataset: {
+          type: "object",
+          required: ["latest_verified_on", "count", "version"],
+          properties: {
+            latest_verified_on: { type: ["string", "null"], format: "date", description: "Newest verified_on among the app files." },
+            count: { type: "integer", description: "App files in the data, hidden ones included." },
+            version: { type: "string" },
+          },
+        },
+        AppStore: {
+          type: "object",
+          required: ["rating", "ratings_count", "updated_on", "url"],
+          properties: {
+            rating: { type: ["number", "null"], minimum: 0, maximum: 5, description: "Average stars as the store shows them. Google Play's average is the one shown in Spain; its count is worldwide." },
+            ratings_count: { type: "integer" },
+            updated_on: { type: ["string", "null"], format: "date", description: "Date of the latest release in this store." },
+            url: { type: "string", format: "uri", description: "The store listing. Cite it." },
+          },
+        },
+        AppScoreLine: {
+          type: "object",
+          required: ["label", "points", "max"],
+          properties: { label: { type: "string" }, points: { type: "number" }, max: { type: "number" } },
+        },
+        AppRow: {
+          type: "object",
+          required: ["rank", "id", "bank", "bank_slug", "app_name", "score", "adjusted_rating", "pooled_rating", "total_ratings", "ios", "android", "features", "feature_sources", "breakdown", "flags", "stale", "verified_on", "source_urls"],
+          properties: {
+            rank: { type: ["integer", "null"], description: "Place in the ranking; null for a hidden app." },
+            id: ap.id,
+            bank: ap.bank,
+            bank_slug: { ...ap.bank_slug, description: "Same slug as the bank's offers." },
+            app_name: ap.app_name,
+            score: { type: "number", minimum: 0, maximum: 100 },
+            adjusted_rating: { type: "number", description: "Stars after the pull towards 3.0. The score uses this one." },
+            pooled_rating: { type: ["number", "null"], description: "Both stores' ratings pooled by count, before the pull." },
+            total_ratings: { type: "integer" },
+            ios: { oneOf: [ref("AppStore"), { type: "null" }] },
+            android: { oneOf: [ref("AppStore"), { type: "null" }] },
+            features: {
+              type: "object",
+              required: ["bizum", "apple_pay", "google_pay", "english"],
+              description: "true, false or null (unknown). english comes from the App Store language list and is null without an App Store listing.",
+              properties: {
+                bizum: { type: ["boolean", "null"] },
+                apple_pay: { type: ["boolean", "null"] },
+                google_pay: { type: ["boolean", "null"] },
+                english: { type: ["boolean", "null"] },
+              },
+            },
+            feature_sources: {
+              type: "object",
+              required: ["bizum", "apple_pay", "google_pay"],
+              description: "The page that shows each feature; null while the feature is unknown.",
+              properties: {
+                bizum: { type: ["string", "null"], format: "uri" },
+                apple_pay: { type: ["string", "null"], format: "uri" },
+                google_pay: { type: ["string", "null"], format: "uri" },
+              },
+            },
+            breakdown: { type: "array", items: ref("AppScoreLine") },
+            flags: { type: "array", items: { type: "string" }, description: "Catches that do not change the number: few ratings, one store, unknown features." },
+            stale: { type: "boolean", description: "verified_on is more than 30 days ago." },
+            verified_on: { ...ap.verified_on, description: "Day the store numbers were fetched. Cite it." },
+            source_urls: { type: "array", items: { type: "string", format: "uri" }, description: "The store listings the numbers come from." },
+          },
+        },
+        BankApp: { ...bankApp, description: "One app data file, exactly as stored." },
+        AppsResponse: {
+          type: "object",
+          required: ["count", "total_apps", "apps", "dataset", "disclaimer", "license"],
+          properties: {
+            count: { type: "integer", description: "Rows returned." },
+            total_apps: { type: "integer", description: "Ranked apps before limit was applied." },
+            apps: { type: "array", items: ref("AppRow") },
+            dataset: ref("AppsDataset"),
+            disclaimer: { type: "string", const: DISCLAIMER },
+            license: { type: "string", const: LICENSE },
+          },
+        },
+        AppResponse: {
+          type: "object",
+          required: ["app", "full_app", "hidden", "dataset", "disclaimer", "license"],
+          properties: {
+            app: ref("AppRow"),
+            full_app: ref("BankApp"),
+            hidden: { type: "boolean", description: "Store numbers are 60+ days old: in no ranking." },
+            dataset: ref("AppsDataset"),
+            disclaimer: { type: "string", const: DISCLAIMER },
+            license: { type: "string", const: LICENSE },
           },
         },
         DatasetResponse: {

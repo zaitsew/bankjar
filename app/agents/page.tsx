@@ -14,6 +14,8 @@ const ENDPOINTS: Array<{ method: string; path: string; what: string }> = [
   { method: "GET", path: "/api/v1/offers", what: "Ranked offers for filters you already know: goal, income, max_commitment, residency, gift_factor." },
   { method: "GET", path: "/api/v1/offers/{id}", what: "One offer with every term, its score breakdown, verified_on and source_url." },
   { method: "GET", path: "/api/v1/compare?ids=a,b", what: "Two or three offers side by side." },
+  { method: "GET", path: "/api/v1/apps", what: "Spanish bank mobile apps ranked 0 to 100 by store ratings, freshness, reach and payment features. Not a ranking of offers." },
+  { method: "GET", path: "/api/v1/apps/{id}", what: "One bank app with its score breakdown, store numbers, feature sources and the full data file." },
   { method: "GET", path: "/openapi.json", what: "OpenAPI 3 description of the endpoints above." },
   { method: "GET", path: "/llms.txt", what: "What BankJar is and how to query it, in plain text for language models." },
   { method: "GET", path: "/data/offers.json", what: "The whole dataset, CC BY 4.0. The same files are in the repository." },
@@ -25,6 +27,7 @@ const TOOLS: Array<{ name: string; what: string }> = [
   { name: "get_offer", what: "One offer by id." },
   { name: "compare_offers", what: "Two or three offers in one grid." },
   { name: "list_goals", what: "The goals BankJar ranks: salary, savings, account, deposit, welcome." },
+  { name: "rank_bank_apps", what: "Bank mobile apps ranked by store ratings, freshness, reach and payment features." },
 ];
 
 export default function AgentsPage() {

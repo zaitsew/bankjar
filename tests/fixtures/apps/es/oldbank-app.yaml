@@ -1,0 +1,26 @@
+# FAKE test fixture. Not a real app. Oldbank does not exist.
+id: oldbank-app
+bank: Oldbank
+bank_slug: oldbank
+country: ES
+app_name: "Oldbank Online"
+ios:
+  app_id: 100000003
+  url: https://apps.apple.com/es/app/id100000003
+  rating: 3.5
+  ratings_count: 5000
+  updated_on: 2026-03-01
+  languages:
+    - EN
+android:
+  package: com.example.oldbank
+  url: https://play.google.com/store/apps/details?id=com.example.oldbank&gl=ES
+  rating: null
+  ratings_count: 0
+  updated_on: null
+features:
+  bizum: { value: false, source_url: "https://example.com/oldbank/bizum" }
+  apple_pay: { value: null, source_url: null }
+  google_pay: { value: null, source_url: null }
+verified_on: 2026-09-10
+notes: null

@@ -30,6 +30,8 @@ All endpoints are `GET`, return JSON, and send `Access-Control-Allow-Origin: *` 
 | `/api/v1/offers/{id}` | `{offer, full_offer, hidden, not_eligible_reasons}`. 404 JSON for an unknown id. |
 | `/api/v1/compare?ids=a,b,c` | `{offers[], missing[]}` in the order asked; offers the profile cannot take stay in, with `not_eligible_reasons`. |
 | `/api/v1/goals` | `[{id, label, description, example_prompt}]`. |
+| `/api/v1/apps?limit=` | Spanish bank mobile apps ranked 0 to 100 by store ratings, freshness, reach and payment features: `{dataset, count, total_apps, apps[]}`. `limit` is 1 to 50. About the app, not about the bank's offers. |
+| `/api/v1/apps/{id}` | `{app, full_app, hidden}`. 404 JSON for an unknown id. A hidden app (store numbers 60+ days old) returns `hidden: true` and `rank: null`. |
 
 Profile parameters, accepted by `search`, `offers`, `offers/{id}` and `compare`:
 
@@ -78,6 +80,24 @@ An offer row:
 `stale` is true when `verified_on` is more than 30 days old. Offers older than 60 days, or past `valid_until`, are in no ranking (`/api/v1/offers/{id}` still returns them with `hidden: true`).
 How `net_value_eur` is computed: [METHODOLOGY.md](./METHODOLOGY.md).
 
+A bank-app row (`/api/v1/apps`; its `dataset` is `{latest_verified_on, count, version}` over the app files):
+
+```json
+{
+  "rank": 4, "id": "bbva", "bank": "BBVA", "bank_slug": "bbva", "app_name": "BBVA España | Banca Online",
+  "score": 90.6, "adjusted_rating": 4.69, "pooled_rating": 4.69, "total_ratings": 508603,
+  "ios": { "rating": 4.76, "ratings_count": 178364, "updated_on": "2026-10-22", "url": "https://apps.apple.com/…" },
+  "android": { "rating": 4.65, "ratings_count": 330239, "updated_on": "2026-10-21", "url": "https://play.google.com/…" },
+  "features": { "bizum": true, "apple_pay": true, "google_pay": true, "english": true },
+  "feature_sources": { "bizum": "https://…", "apple_pay": "https://…", "google_pay": "https://…" },
+  "breakdown": [{ "label": "Rating 4.69 stars after adjustment", "points": 50.6, "max": 60 }, …],
+  "flags": [], "stale": false, "verified_on": "2026-10-22",
+  "source_urls": ["https://apps.apple.com/…", "https://play.google.com/…"]
+}
+```
+
+A feature is `true`, `false` or `null` (unknown, scores 0). `english` comes from the App Store language list. How the score adds up: the "Bank apps" section of [METHODOLOGY.md](./METHODOLOGY.md).
+
 ### Examples
 
 ```sh
@@ -87,6 +107,7 @@ curl -s 'https://bankjar.example/api/v1/offers?goal=account&residency=non_reside
 curl -s 'https://bankjar.example/api/v1/offers/<id>?income=2500'
 curl -s 'https://bankjar.example/api/v1/compare?ids=<id1>,<id2>&prefer=cash'
 curl -s 'https://bankjar.example/api/v1/goals'
+curl -s 'https://bankjar.example/api/v1/apps?limit=5' | jq '.apps[] | {rank, bank, score}'
 curl -s 'https://bankjar.example/data/offers.json' | jq '.offers | length'
 ```
 
@@ -101,6 +122,7 @@ Server name `bankjar`, version from `package.json`. Its `instructions` tell the 
 | `get_offer` | `id`, plus the profile fields | The full offer, its score breakdown, flags, `not_eligible_reasons`. |
 | `compare_offers` | `ids` (2 to 5), plus the profile fields | Rows in the order asked, `missing`, `not_eligible_reasons`. |
 | `list_goals` | none | The goals with an example question each. |
+| `rank_bank_apps` | `limit?` (1 to 50, default 24) | Bank apps ranked 0 to 100 with breakdown, per-store rating and count, store URLs. A score is about the app, not about offers. |
 
 Each result has a human-readable text block, the same data as JSON text, and `structuredContent`.
 
@@ -144,12 +166,12 @@ npm run mcp:smoke -- http://localhost:3000/mcp
 - REST and the text files are cached at the CDN for an hour, then served stale for up to a day while they refresh. A corrected offer shows within about an hour.
 - Errors are never cached.
 - There is no rate limit and no key: the routes are read-only over a small dataset. Be polite; one request per question is enough. `/data/offers.json` is the right way to mirror everything.
-- Local data: set `BANKJAR_OFFERS_DIR` to another folder of offer files (the tests use `tests/fixtures/offers`). `BANKJAR_TODAY=YYYY-MM-DD` pins the date used for stale and expiry checks.
+- Local data: set `BANKJAR_OFFERS_DIR` to another folder of offer files (the tests use `tests/fixtures/offers`), and `BANKJAR_APPS_DIR` for the app files (`tests/fixtures/apps`). `BANKJAR_TODAY=YYYY-MM-DD` pins the date used for stale and expiry checks.
 - Absolute links in responses use `NEXT_PUBLIC_SITE_URL`, else `VERCEL_PROJECT_PRODUCTION_URL`, else `http://localhost:3000`.
 
 ## Licence and attribution
 
-Data in `data/offers`: CC BY 4.0. Credit "BankJar (github.com/zaitsew/bankjar)" and link the offer's `source_url`.
+Data in `data/offers` and `data/apps`: CC BY 4.0. Credit "BankJar (github.com/zaitsew/bankjar)" and link the offer's `source_url`.
 Code: Apache-2.0.
 The disclaimer is part of the data you receive; keep it when you show the numbers.
 

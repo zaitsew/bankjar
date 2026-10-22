@@ -55,6 +55,7 @@ UI copy only. Social and marketing text follows the voice chart.
 | Home `/` | Turn a question into a ranked table in one step. | Find offers | yes / n/a (static data) / yes | not yet |
 | Search `/search` | Show the ranked table for the parsed intent and let the person adjust it. | Compare selected | yes / yes (skeleton) / yes | not yet |
 | Leaderboards `/leaderboard` | Show the top three of every goal. | Open a goal | yes / n/a / yes | not yet |
+| Bank apps `/apps` | Rank Spanish bank apps by store ratings, freshness, reach and payment features. | Open a store page | yes / n/a / n/a | not yet |
 | Goal board `/leaderboard/[goal]` | Rank every offer of one goal for a default profile. | Compare selected | yes / n/a / yes | not yet |
 | Offer `/offer/[id]` | Show every term, the score breakdown and the source of one offer. | Open the source | n/a / n/a / yes (404) | not yet |
 | Side by side `/compare` | Put two or three offers in one grid, best value marked. | Compare selected (picker) | yes / n/a / yes | not yet |
@@ -63,8 +64,8 @@ UI copy only. Social and marketing text follows the voice chart.
 
 ## Layout
 
-- **Desktop (768 px and up):** a 64 px icon rail on the left (Search, Leaderboards, Side by side, For agents,
-  Methodology) with tooltips on hover and focus. **Phone:** a top bar with the logo and the same five icons.
+- **Desktop (768 px and up):** a 64 px icon rail on the left (Search, Leaderboards, Bank apps, Side by side, For agents,
+  Methodology) with tooltips on hover and focus. **Phone:** a top bar with the logo and the same six icons.
   Tap targets are 44 px.
 - **Tables** keep real `<table>` markup. When the container is narrower than 62 rem (`full`) or 40 rem
   (`board`, `mini`), rows become stacked cards via a container query, so a 375 px phone reads cards and a

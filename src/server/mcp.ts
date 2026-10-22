@@ -12,9 +12,10 @@ import {
   searchBodyAsync,
   type OfferRow,
 } from "./api";
+import { appLine, appsBody } from "./apps-api";
 
 /**
- * The MCP server: four read-only tools over the same service functions as the REST
+ * The MCP server: five read-only tools over the same service functions as the REST
  * API, so an agent sees the table a person sees. A new server per request (stateless).
  */
 
@@ -24,6 +25,7 @@ export const MCP_INSTRUCTIONS = [
   "Never present the numbers as financial advice or a recommendation to sign; terms change, so tell the person to check source_url before signing.",
   "Ask for monthly income, balance, residency and the longest commitment the person accepts when they matter and are unknown; do not guess them.",
   "If an offer has stale=true, say its terms may have changed. Numbers come from the engine; never compute or invent your own.",
+  "rank_bank_apps ranks bank mobile apps by store ratings, release freshness, reach and payment features; an app score says nothing about how good a bank's offers are, so never use it to rank offers.",
 ].join(" ");
 
 const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false } as const;
@@ -136,6 +138,28 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
     () => {
       const body = goalsBody();
       const text = GOAL_INFO.map((g) => `${g.id}: ${g.label}. ${g.description} Example: "${g.example_prompt}"`).join("\n");
+      return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
+    },
+  );
+
+  server.registerTool(
+    "rank_bank_apps",
+    {
+      title: "Rank Spanish bank apps",
+      description:
+        "Rank Spanish bank mobile apps by store ratings, freshness, reach and payment features (Bizum, Apple Pay, Google Pay, English UI). " +
+        "Returns score 0-100 with breakdown, per-store rating and count, and store URLs. Ratings are pulled towards 3.0 stars when an app has few of them. " +
+        "A feature shown as null is unknown, not absent. The score is about the app, not about the bank's offers.",
+      inputSchema: { limit: z.number().int().min(1).max(50).optional().describe("How many apps to return, best first. Default 24.") },
+      annotations: { title: "Rank Spanish bank apps", ...READ_ONLY },
+    },
+    ({ limit }) => {
+      const body = appsBody({ limit: limit ?? 24 });
+      const text = [
+        body.apps.length ? `Top ${body.apps.length} of ${body.total_apps} bank apps:\n${body.apps.map((a) => appLine(a)).join("\n")}` : "No bank apps in the data.",
+        "Score = rating 60 + freshness 15 + reach 10 + features 15 points. ? means unknown and scores 0.",
+        `Store numbers checked up to ${body.dataset.latest_verified_on ?? "never"}. Cite the store URLs and verified_on. ${DISCLAIMER}`,
+      ].join("\n\n");
       return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
     },
   );
