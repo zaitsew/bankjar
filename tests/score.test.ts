@@ -28,6 +28,18 @@ describe("scoreOffer: cash", () => {
     expect(withPenalty.net_value_eur).toBe(without.net_value_eur);
   });
 
+  it("counts only the first 12 months of a bonus paid over 24 months", () => {
+    const s = scoreOffer(makeOffer({ reward: { value_eur: 840 }, promo_months: 24, commitment_months: 0 }), profile, TODAY);
+    expect(s.net_value_eur).toBe(340.2);
+    expect(s.breakdown).toContainEqual({ label: "Paid after month 12 (12 of 24 months)", eur: -340.2 });
+    expect(s.flags).toContain("paid over 24 months");
+  });
+
+  it("counts the whole spread bonus in value per month", () => {
+    const s = scoreOffer(makeOffer({ reward: { value_eur: 840 }, promo_months: 24, commitment_months: 24 }), profile, TODAY);
+    expect(s.value_per_month_eur).toBe(28.35);
+  });
+
   it("flags an unknown reward value and counts it as zero", () => {
     const s = scoreOffer(makeOffer({ reward: { value_eur: null } }), profile, TODAY);
     expect(s.flags).toContain("reward value unknown");

@@ -10,7 +10,8 @@
  *
  * Rules:
  *  1. Cash reward:  value x (1 - 0.19). Spanish bank bonuses are capital income
- *     and carry 19% withholding.
+ *     and carry 19% withholding. A bonus paid over promo_months > 12 counts
+ *     12/promo_months of it in net_value; value_per_month counts all of it.
  *  2. Gift reward:  value x gift_factor (default 0.8), minus 19% of the gift's
  *     retail value as tax on payment in kind. The schema has no field saying
  *     the bank pays that tax, so we always charge it and flag
@@ -97,6 +98,8 @@ export function scoreOffer(offer: Offer, profile: Profile, today: DateInput): Sc
     if (toReward) rewardNet += v;
   };
 
+  let deferredNet = 0;
+
   // 1-3. The reward itself.
   const value = offer.reward.value_eur;
   switch (offer.reward.type) {
@@ -105,6 +108,15 @@ export function scoreOffer(offer: Offer, profile: Profile, today: DateInput): Sc
       if (value === null) flags.push("reward value unknown");
       add(`Cash reward ${eur(v)}`, v);
       add("Withholding 19%", -v * WITHHOLDING_RATE);
+      // A bonus paid out over more than 12 months: only the first 12 months'
+      // share counts in year one; the rest still counts for value per month.
+      const payout = offer.promo_months ?? 12;
+      if (payout > 12) {
+        const later = cents(v * (1 - 12 / payout) * (1 - WITHHOLDING_RATE));
+        add(`Paid after month 12 (${payout - 12} of ${payout} months)`, -later);
+        deferredNet += later;
+        flags.push(`paid over ${payout} months`);
+      }
       break;
     }
     case "gift": {
@@ -152,7 +164,7 @@ export function scoreOffer(offer: Offer, profile: Profile, today: DateInput): Sc
   let perMonth: number | null = null;
   if (commitment !== null && commitment > 0) {
     const feesOverCommitment = monthlyFee * Math.max(commitment, 12);
-    perMonth = cents((rewardNet - feesOverCommitment) / commitment);
+    perMonth = cents((rewardNet + deferredNet - feesOverCommitment) / commitment);
   }
 
   // 7. Flags.

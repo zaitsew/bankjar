@@ -11,6 +11,7 @@ The code is `src/core/score.ts`. This page says the same thing in words. If they
 ## The rules
 
 1. **Cash.** Net = value × (1 − 0.19). Spanish banks withhold 19% on bonuses.
+   A bonus paid out over more than 12 months counts only its first 12 months in the first-year net value: €840 over 24 months counts €420 gross. Value per month counts all of it.
 2. **Gifts.** Net = value × gift factor − 0.19 × value.
    The gift factor is what the gift is worth to you. The default is 0.8. You can change it.
    The 19% is tax on payment in kind, charged on the retail value. We always charge it and flag "tax on gift: check terms", because the data does not say whether the bank pays it.
