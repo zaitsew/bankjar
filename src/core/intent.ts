@@ -9,8 +9,9 @@
  * How the goal is chosen: each goal has strong keywords and weak keywords.
  * A goal scores 10 for a strong hit and 1 for a weak hit. The top score wins.
  * On a tie the goal order is welcome, salary, deposit, savings, account.
- * "Without payroll", "sin nomina" and "bez zarplaty" count as a strong
- * welcome hit and are removed before salary words are looked for.
+ * "Without payroll", "no fixed salary", "I don't get a salary", "sin nomina"
+ * and "bez zarplaty" are removed before salary words are looked for; they
+ * count as a strong welcome hit only when no other goal word is present.
  *
  * Confidence is 0 with no goal. With a goal it starts at 0.7 (strong hit) or
  * 0.4 (weak hit only), loses 0.2 when another goal is just as strong, and gains
@@ -64,6 +65,8 @@ const STRONG: Record<Goal, RegExp[]> = {
     re(`${B0}(savings?|high[\\s-]?yield|interest[\\s-]?bearing)${B1}`),
     re(`${B0}(ahorr|remunerad)`),
     re("сбереж|накопит|накопл"),
+    re(`${B0}(emergency|rainy[\\s-]?day)\\s+(fund|savings|cushion)|${B0}(fondo\\s+de\\s+emergencia|colchon)${B1}`),
+    re("подушк\\p{L}*\\s+безопасност"),
   ],
   deposit: [
     re(`${B0}(term|time|fixed[\\s-]?term)\\s+deposits?${B1}`),
@@ -94,9 +97,14 @@ const WEAK: Record<Goal, RegExp[]> = {
   welcome: [re(`${B0}(bonus|bono)${B1}`), re("бонус")],
 };
 
-/** "No payroll", "sin nomina", "без зарплаты": the person does not move a salary. */
+/**
+ * "No payroll", "no fixed salary", "I don't get a salary", "sin nomina fija", "без зарплаты",
+ * "не получаю зарплату": the person does not move a salary.
+ */
+const SALARY_QUALIFIER =
+  "a|an|the|my|mi|any|una?|fixed|regular|steady|stable|monthly|official|fija|fijo|estable|mensual|постоянн\\p{L}*|официальн\\p{L}*|стабильн\\p{L}*|белой";
 const NO_SALARY = re(
-  `${B0}(without|with\\s+no|no|sin|без)\\s+(?:(?:a|an|the|my|mi|any)\\s+)?(payroll|salary|nomina|domiciliacion|direct\\s+deposit|зарплат\\p{L}*)`,
+  `${B0}(?:without|with\\s+no|no|sin|без|нет|(?:don['’]?t|do\\s+not|never)\\s+(?:have|get|receive|earn)|not\\s+on|no\\s+(?:tengo|cobro|recibo)|не\\s+получаю)\\s+(?:(?:${SALARY_QUALIFIER})\\s+){0,2}(payroll|salary|nomina|domiciliacion|direct\\s+deposit|зарплат\\p{L}*)`,
   "giu",
 );
 
@@ -153,11 +161,11 @@ const AMOUNT = new RegExp(
   "giu",
 );
 const INCOME_WORDS = re(
-  `${B0}(salary|salaries|payroll|paycheck|wages?|income|earn(?:s|ing)?|make|nomina|sueldo|ingresos?|gano|cobro|cobrar|net|neto|neta)${B1}|зарплат\\p{L}*|доход\\p{L}*|получаю|зарабатываю|нетто|на\\s+руки`,
+  `${B0}(salary|salaries|payroll|paycheck|wages?|income|earn(?:ing)?(?!\\s+(?:some\\s+)?(?:interest|something|anything|returns?|a\\s+return|more))|make|nomina|sueldo|ingresos?|gano|cobro|cobrar|net|neto|neta)${B1}|зарплат\\p{L}*|доход\\p{L}*|получаю|зарабатываю|нетто|на\\s+руки`,
   "giu",
 );
 const BALANCE_WORDS = re(
-  `${B0}(savings?|balance|deposit|deposito|saldo|park|put|save|have|hay|tengo|ahorr\\p{L}*|invest\\p{L}*)${B1}|накоплен\\p{L}*|вклад\\p{L}*|депозит\\p{L}*|сбереж\\p{L}*|размест\\p{L}*|положить|на\\s+счету`,
+  `${B0}(savings?|balance|deposit|deposito|saldo|park|put|save|have|hay|tengo|fund|fondo|cushion|colchon|ahorr\\p{L}*|invest\\p{L}*)${B1}|подушк\\p{L}*|накоплен\\p{L}*|вклад\\p{L}*|депозит\\p{L}*|сбереж\\p{L}*|размест\\p{L}*|положить|на\\s+счету`,
   "giu",
 );
 const ANNUAL_AFTER = re(
