@@ -73,7 +73,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
       description:
         "Find and rank Spanish bank offers for a person. Give a plain-language question in `query` (English, Spanish or Russian) and/or explicit fields; explicit fields win. " +
         "Returns the top 10 offers by first-year net value in EUR (after 19% withholding tax, gift value and fees), each with source_url, verified_on, requirements, penalties and flags, plus the offers excluded for this person and why. " +
-        "Use it for questions like 'best salary bonus for 2,500 a month', 'where to park 15,000 euros', 'free account for a non-resident'.",
+        "Example questions: 'best salary bonus for 2,500 a month', 'where to park 15,000 euros', 'free account for a non-resident'.",
       inputSchema: { query: z.string().max(500).optional().describe("The person's question in their own words."), ...ProfileToolShape },
       annotations: { title: "Search Spanish bank offers", ...READ_ONLY },
       _meta: offerWidgetToolMeta("Searching bank offers", "Ranked offers ready"),
@@ -100,8 +100,8 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
       title: "Get one bank offer",
       description:
         "Fetch one offer by id: the full terms, the net-value score with its line-by-line breakdown, flags (penalties, unknown facts), source_url and verified_on. " +
-        "Pass the profile fields to learn whether this person can take it (not_eligible_reasons). Ids come from search_offers results.",
-      inputSchema: { id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).describe("Offer id, e.g. an `id` from search_offers."), ...ProfileToolShape },
+        "Pass the profile fields to learn whether this person can take it (not_eligible_reasons).",
+      inputSchema: { id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).describe("Offer id, e.g. bbva-salary-cuenta-online."), ...ProfileToolShape },
       annotations: { title: "Get one bank offer", ...READ_ONLY },
     },
     ({ id, ...fields }) => {
@@ -155,7 +155,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
     {
       title: "List offer goals",
       description:
-        "List the goals offers are ranked for (salary, savings, account, deposit, welcome) with a description and an example question each. Call it first when the person's intent is unclear.",
+        "List the goals offers are ranked for (salary, savings, account, deposit, welcome) with a description and an example question each.",
       inputSchema: {},
       annotations: { title: "List offer goals", ...READ_ONLY },
     },
