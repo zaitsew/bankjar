@@ -8,7 +8,7 @@ ios:
   app_id: 1542078962
   url: https://apps.apple.com/es/app/id1542078962
   rating: 4.39
-  ratings_count: 10637
+  ratings_count: 10644
   updated_on: 2026-07-29
   languages:
     - CA
@@ -22,12 +22,12 @@ ios:
 android:
   package: com.abanca.bancamovil.particulares
   url: https://play.google.com/store/apps/details?id=com.abanca.bancamovil.particulares&gl=ES
-  rating: 4.32
-  ratings_count: 10002
+  rating: 4.31
+  ratings_count: 10014
   updated_on: 2026-08-03
 features:
   bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/abanca/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-10-22
+verified_on: 2026-10-24
 notes: null

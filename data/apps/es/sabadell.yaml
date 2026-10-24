@@ -8,7 +8,7 @@ ios:
   app_id: 347887638
   url: https://apps.apple.com/es/app/id347887638
   rating: 4.62
-  ratings_count: 347847
+  ratings_count: 348061
   updated_on: 2026-07-19
   languages:
     - CA
@@ -18,11 +18,11 @@ android:
   package: net.inverline.bancosabadell.officelocator.android
   url: https://play.google.com/store/apps/details?id=net.inverline.bancosabadell.officelocator.android&gl=ES
   rating: 4.51
-  ratings_count: 198581
+  ratings_count: 198582
   updated_on: 2026-07-22
 features:
   bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/banco-sabadell/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-10-22
+verified_on: 2026-10-24
 notes: null
