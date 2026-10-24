@@ -23,6 +23,7 @@ DRY=0
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 WT="$HOME/.worktrees/bankjar/app-refresh"
 LOCK="$HOME/.worktrees/bankjar/app-refresh.lock"
+PENDING="$HOME/.worktrees/bankjar/app-refresh.deploy-pending"
 SITE="https://bankjar.fabriquefutur.com"
 TODAY="$(date -u +%Y-%m-%d)"
 BRANCH="app-refresh-$(date -u +%Y%m%d-%H%M%S)"
@@ -88,9 +89,10 @@ if git diff --quiet -- data/apps; then
   # deploy), the live dataset version is behind main: deploy main now.
   repo_version="$(npx tsx scripts/apps-version.ts)"
   live_version="$(npx tsx scripts/apps-version.ts --live "$SITE" || echo unknown)"
-  if [ "$DRY" = 0 ] && [ "$repo_version" != "$live_version" ]; then
+  if [ "$DRY" = 0 ] && { [ -f "$PENDING" ] || [ "$repo_version" != "$live_version" ]; }; then
     log "no change, but the site serves ${live_version} and main has ${repo_version}: deploying main"
     ./scripts/deploy.sh
+    rm -f "$PENDING"
     log "deployed; done"
   else
     log "no change under data/apps; nothing to ship (site ${live_version})"
@@ -148,5 +150,7 @@ git push -q origin --delete "$BRANCH" || true
 # The merge commit is on origin/main; deploy exactly that.
 git fetch -q origin main
 git checkout -q --detach origin/main
+echo "$url" > "$PENDING"
 ./scripts/deploy.sh
+rm -f "$PENDING"
 log "deployed; done"
