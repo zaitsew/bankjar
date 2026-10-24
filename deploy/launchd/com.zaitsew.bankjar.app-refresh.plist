@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- BankJar: refresh the bank-app store numbers, open and merge the PR, deploy.
+     Every Monday at 07:30 local time; a missed run starts when the Mac wakes.
+     __HOME__ is replaced by scripts/install-launchd.sh when it installs this file. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.zaitsew.bankjar.app-refresh</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>exec "$HOME/repos/bankjar/scripts/refresh-apps.sh"</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>7</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>__HOME__/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>__HOME__</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>__HOME__/Library/Logs/bankjar-app-refresh.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/Library/Logs/bankjar-app-refresh.log</string>
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

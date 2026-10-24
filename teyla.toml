@@ -118,6 +118,17 @@ capabilities = ["fs.write:runs/**", "shell:echo"]
 caps = { max_minutes = 10, max_writes = 20, max_sends = 0 }
 
 
+# The weekly bank-app refresh: fetch store numbers, PR, merge after check.sh, deploy.
+# Install: scripts/install-launchd.sh. Without it the /apps rows go stale after 30
+# days and leave the ranking after 60.
+[[routine]]
+name = "app-refresh"
+kind = "launchd"
+label = "com.zaitsew.bankjar.app-refresh"
+every = "7d"
+log = "~/Library/Logs/bankjar-app-refresh.log"
+
+
 # ---------------------------------------------------------------------------
 # A legacy routine: scheduled somewhere else, reported on here.
 # kind = launchd | cron | pg_cron | github-actions | script

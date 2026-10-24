@@ -84,7 +84,7 @@ Where the numbers come from:
 
 - **App Store:** Apple's public lookup API, for the Spanish store. It gives the average rating, the number of ratings, the date of the latest release and the interface languages.
 - **Google Play:** the app's store page. The rating and the number of ratings come from the page's schema.org data; the release date is the "Updated on" line. The count is worldwide. The average is the one Google Play shows in Spain.
-- **Refresh:** `npm run fetch-apps` rewrites the store numbers and moves `verified_on` to the day it ran. A store that fails to answer keeps its old numbers and the old date.
+- **Refresh:** `npm run fetch-apps` rewrites the store numbers and moves `verified_on` to the day it ran. A store that fails to answer keeps its old numbers and the old date. Every Monday at 07:30 (Madrid) `scripts/refresh-apps.sh` runs it on the owner's Mac, opens a data-only pull request, merges it after `./check.sh` passes and redeploys the site.
 - **Features:** written by hand. Each one carries a `source_url`, the page that shows it. A feature without a source stays unknown.
 
 An app shows a "stale" badge when its store numbers are more than 30 days old. After 60 days it leaves the ranking.
