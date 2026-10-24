@@ -114,11 +114,20 @@ if ! ./check.sh; then
 fi
 
 git add data/apps
+commit_extra=""
+if [ -n "$problems" ]; then commit_extra=" Store problems (numbers kept from the last run):"$'\n'"${problems}"; fi
 git commit -q -m "Data: weekly app-store refresh ${TODAY}
 
-npm run fetch-apps, ${changed} file(s) changed.${problems:+ Store problems (numbers kept from the last run):
-${problems}}"
+npm run fetch-apps, ${changed} file(s) changed.${commit_extra}"
 
+# Built outside the heredoc: macOS /bin/bash 3.2 cannot parse a multi-line
+# ${var:+...} inside one.
+problems_md=""
+if [ -n "$problems" ]; then
+  FENCE='```'
+  NL=$'\n'
+  problems_md="${NL}**Store problems.** These apps keep the previous numbers and their old verified_on:${NL}${NL}${FENCE}${NL}${problems}${NL}${FENCE}"
+fi
 cat > pr-body.md <<EOF
 Weekly refresh of the bank-app store numbers by \`scripts/refresh-apps.sh\` (launchd \`com.zaitsew.bankjar.app-refresh\`).
 
@@ -132,12 +141,7 @@ Weekly refresh of the bank-app store numbers by \`scripts/refresh-apps.sh\` (lau
 $(cat fetch.log)
 \`\`\`
 </details>
-${problems:+
-**Store problems.** These apps keep last week's numbers and their old verified_on:
-
-\`\`\`
-${problems}
-\`\`\`}
+${problems_md}
 EOF
 
 git push -q -u origin "$BRANCH"
