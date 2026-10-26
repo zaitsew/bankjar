@@ -8,7 +8,7 @@ ios:
   app_id: 325813155
   url: https://apps.apple.com/es/app/id325813155
   rating: 4.76
-  ratings_count: 178550
+  ratings_count: 178678
   updated_on: 2026-10-22
   languages:
     - CA
@@ -20,11 +20,11 @@ android:
   package: com.bbva.bbvacontigo
   url: https://play.google.com/store/apps/details?id=com.bbva.bbvacontigo&gl=ES
   rating: 4.65
-  ratings_count: 330381
+  ratings_count: 330478
   updated_on: 2026-10-21
 features:
   bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/bbva/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-10-24
+verified_on: 2026-10-26
 notes: null

@@ -8,7 +8,7 @@ ios:
   app_id: 318806094
   url: https://apps.apple.com/es/app/id318806094
   rating: 4.74
-  ratings_count: 516270
+  ratings_count: 516931
   updated_on: 2026-10-22
   languages:
     - CA
@@ -20,11 +20,11 @@ android:
   package: es.lacaixa.mobile.android.newwapicon
   url: https://play.google.com/store/apps/details?id=es.lacaixa.mobile.android.newwapicon&gl=ES
   rating: 4.83
-  ratings_count: 1206436
+  ratings_count: 1207310
   updated_on: 2026-10-19
 features:
   bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/caixabank/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-10-24
+verified_on: 2026-10-26
 notes: null
