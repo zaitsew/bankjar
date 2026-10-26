@@ -8,7 +8,7 @@ ios:
   app_id: 820843957
   url: https://apps.apple.com/es/app/id820843957
   rating: 3.62
-  ratings_count: 4094
+  ratings_count: 4098
   updated_on: 2026-10-06
   languages:
     - ES
@@ -16,12 +16,12 @@ ios:
 android:
   package: com.kutxabank.android
   url: https://play.google.com/store/apps/details?id=com.kutxabank.android&gl=ES
-  rating: 3.58
-  ratings_count: 11532
+  rating: 3.57
+  ratings_count: 11538
   updated_on: 2026-10-14
 features:
   bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/kutxabank/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-10-24
+verified_on: 2026-10-26
 notes: null

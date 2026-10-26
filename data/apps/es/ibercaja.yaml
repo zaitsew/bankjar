@@ -8,19 +8,19 @@ ios:
   app_id: 515972019
   url: https://apps.apple.com/es/app/id515972019
   rating: 4.49
-  ratings_count: 20757
+  ratings_count: 20811
   updated_on: 2026-09-30
   languages:
     - ES
 android:
   package: es.ibercaja.ibercajaapp
   url: https://play.google.com/store/apps/details?id=es.ibercaja.ibercajaapp&gl=ES
-  rating: 4.51
-  ratings_count: 44751
+  rating: 4.52
+  ratings_count: 44755
   updated_on: 2026-09-29
 features:
   bizum: { value: null, source_url: null }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-10-24
+verified_on: 2026-10-26
 notes: null

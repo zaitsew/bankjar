@@ -15,12 +15,12 @@ ios:
 android:
   package: com.db.pbc.mibanco
   url: https://play.google.com/store/apps/details?id=com.db.pbc.mibanco&gl=ES
-  rating: 3.14
-  ratings_count: 8092
+  rating: 3.15
+  ratings_count: 8094
   updated_on: 2026-10-08
 features:
   bizum: { value: true, source_url: https://finantres.com/bizum-deutsche-bank/ }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: null, source_url: null }
-verified_on: 2026-10-24
+verified_on: 2026-10-26
 notes: null

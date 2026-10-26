@@ -8,7 +8,7 @@ ios:
   app_id: 1217874244
   url: https://apps.apple.com/es/app/id1217874244
   rating: 4.28
-  ratings_count: 15197
+  ratings_count: 15206
   updated_on: 2026-07-30
   languages:
     - DE
@@ -20,11 +20,11 @@ android:
   package: es.openbank.mobile
   url: https://play.google.com/store/apps/details?id=es.openbank.mobile&gl=ES
   rating: 4.03
-  ratings_count: 29462
+  ratings_count: 29494
   updated_on: 2026-07-31
 features:
   bizum: { value: true, source_url: https://www.openbank.es/open-to-learn/como-funciona-bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-10-24
+verified_on: 2026-10-26
 notes: null
