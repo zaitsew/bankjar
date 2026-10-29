@@ -1,6 +1,6 @@
 ---
 name: bank-offers
-description: Answer questions about Spanish bank offers with the BankJar tools: which bank pays most for a salary, where to park savings, which account a non-resident can open, how two offers compare, which bank apps rate best. Use for any question about bank bonuses, savings rates, accounts or deposits in Spain.
+description: Answer questions about Spanish bank offers with the BankJar tools, such as which bank pays most for a salary, where to park savings, which account a non-resident can open, how two offers compare, which bank apps rate best. Use for any question about bank bonuses, savings rates, accounts or deposits in Spain.
 ---
 
 # Spanish bank offers with BankJar

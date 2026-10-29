@@ -390,6 +390,7 @@ describe("the Claude plugin bundle", () => {
     const fm = skill.match(/^---\nname: ([a-z0-9-]+)\ndescription: (.+)\n---\n/);
     expect(fm, "front matter").toBeTruthy();
     expect(fm![1]).toBe("bank-offers");
+    expect(fm![2], "a plain YAML scalar must not contain ': '").not.toContain(": ");
     const named = [...skill.matchAll(/`([a-z]+_[a-z_]+)`/g)].map((m) => m[1]!).filter((t) => !t.endsWith("_on") && !t.startsWith("source"));
     for (const t of new Set(named)) expect(registered, t).toContain(t);
     for (const t of registered) expect(skill, t).toContain(`\`${t}\``);
