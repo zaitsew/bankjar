@@ -273,7 +273,7 @@ Why: the data covers Spain, but the people who ask about Spanish banks are often
 2. **Server instructions wording.** `MCP_INSTRUCTIONS` in `src/server/mcp.ts` tells the model how to behave ("Always cite...", "Never present..."). Claude's criteria reject descriptions that tell Claude how to behave. These lines are accuracy and safety guidance about this tool's own output, not about other tools, but a strict reviewer may flag them. `src/server/mcp.ts` is outside this change; if flagged, move the wording into the result text as plain statements.
 3. **Token use.** `search_offers` returns a text block and the same data again as JSON text, besides `structuredContent`. Claude's policy asks for frugal responses (5.B). Also outside this change.
 4. **Tool metadata is scanned live.** OpenAI scans the hosted server and holds changed tool metadata for review after approval. The widget work is merged and live (checked 2026-10-29), so the metadata a reviewer sees is the final one. Do not change tool names, titles, descriptions or hints between submitting and approval.
-5. **Contact.** Claude's policy asks for verified contact information. Until `NEXT_PUBLIC_CONTACT_EMAIL` is set at deploy time, the pages name only GitHub issues. Set it before submitting.
+5. **Contact.** Claude's policy asks for verified contact information. `scripts/deploy.sh` sets `NEXT_PUBLIC_CONTACT_EMAIL` to `info@fafutur.com` by default; the pages show it since 2026-10-29.
 
 ## Gemini Connected Apps
 
@@ -313,7 +313,7 @@ Each step is one store. Dates are the earliest days; if Loco takes a slot, keep 
 ### 1. Before any portal (10 minutes)
 
 1. Deploy `main`: `./scripts/deploy.sh`. The pages `/privacy`, `/data-deletion`, `/terms`, `/support` and `/connect` must return 200 (the listings link to them), and `/data-deletion` is new in this change.
-2. **Set the public contact e-mail and redeploy:** `NEXT_PUBLIC_CONTACT_EMAIL=<address you want public> ./scripts/deploy.sh`. It appears on the privacy, terms, support and deletion pages. All three programs ask for a contact; Claude's policy asks for a verified one.
+2. **Public contact e-mail:** done. `info@fafutur.com` is the default in `scripts/deploy.sh` and live since 2026-10-29. It appears on the privacy, terms, support and deletion pages. All three programs ask for a contact; Claude's policy asks for a verified one.
 3. Read `/privacy` and `/terms` once. They describe the code as it is; the operator line and the legal-basis sentence are yours to confirm (the repo has no postal address, so none is given).
 4. Check the live metadata matches this file: a `tools/list` call returns five tools with four hints each.
 

@@ -50,6 +50,8 @@ say() { printf '== %s\n' "$*"; }
 
 # --- 1. Build ----------------------------------------------------------------
 say "build (NEXT_PUBLIC_SITE_URL=${SITE_URL})"
+# The public contact on /privacy, /terms, /support and /data-deletion (Ivan, 2026-10-29).
+export NEXT_PUBLIC_CONTACT_EMAIL="${NEXT_PUBLIC_CONTACT_EMAIL:-info@fafutur.com}"
 if [ -z "${NEXT_PUBLIC_CONTACT_EMAIL:-}" ]; then
   echo "  note: NEXT_PUBLIC_CONTACT_EMAIL is unset; /privacy, /terms and /support will name GitHub issues as the only contact"
 fi
