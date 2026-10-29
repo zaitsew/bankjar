@@ -1,15 +1,37 @@
 # Directory listing pack
 
-Everything needed to submit BankJar to the Claude Connectors Directory and to the ChatGPT / Codex plugin directory. The text below is paste-ready. The submission itself is an account action: Ivan does it from the morning checklist at the end of this file.
+Everything needed to submit BankJar to four listings: the Claude connector, the Claude plugin bundle, the ChatGPT / Codex plugin directory and Gemini Connected Apps. The text below is paste-ready. The submissions are account actions: Ivan does them from the checklist at the end of this file, in the order given there.
 
-- Server: `https://bankjar.fabriquefutur.com/mcp` (Streamable HTTP, stateless, no authentication, five read-only tools).
-- Public pages the listings link to: [/connect](https://bankjar.fabriquefutur.com/connect) (documentation), [/privacy](https://bankjar.fabriquefutur.com/privacy), [/terms](https://bankjar.fabriquefutur.com/terms), [/support](https://bankjar.fabriquefutur.com/support).
-- Icon: `public/brand/icon-512.png` and `public/brand/icon-1024.png`, rendered from `app/icon.svg` (the SVG is `public/brand/icon.svg`). Rounded corners are transparent.
+- Server: `https://bankjar.fabriquefutur.com/mcp` (Streamable HTTP, stateless, no authentication, five read-only tools, one offer-cards widget).
+- Public pages the listings link to: [/connect](https://bankjar.fabriquefutur.com/connect) (documentation), [/privacy](https://bankjar.fabriquefutur.com/privacy), [/data-deletion](https://bankjar.fabriquefutur.com/data-deletion), [/terms](https://bankjar.fabriquefutur.com/terms), [/support](https://bankjar.fabriquefutur.com/support).
+- Icon: `public/brand/icon-512.png` and `public/brand/icon-1024.png`, rendered from `app/icon.svg` (the SVG is `public/brand/icon.svg`). Rounded corners are transparent. Square SVG logo for Google: `public/brand/logo.svg` (512 by 512, no rounded corners).
+- Claude plugin bundle: `plugin/` (manifest, skill, MCP URL, README, LICENSE), listed by `.claude-plugin/marketplace.json`.
 - OpenAI package: `directory/openai-plugin/` (Codex-format manifest, `.mcp.json`, icons). `./scripts/build-plugin-zip.sh` builds `dist/bankjar-openai-plugin.zip`.
+
+## Pack status against the store rules
+
+Checked 2026-10-29 against the roadmap rules (`~/ops/startup/ai-integrations/ROADMAP.md` section 1) and the live server (`tools/list`, `resources/list`).
+
+| Rule | Status | Evidence |
+|---|---|---|
+| `title` on every tool | Done | Live `tools/list`: all five tools carry a `title`, also repeated in `annotations.title`. `tests/mcp.test.ts` pins it. |
+| Explicit `readOnlyHint`, `destructiveHint`, `openWorldHint` | Done | All five: `readOnlyHint: true`, `destructiveHint: false`, `openWorldHint: false`, plus `idempotentHint: true`. Same test. |
+| Reads and writes are separate tools | Done | There is no write tool. |
+| MCP App widget | Shipped and live | `ui://bankjar/offer-cards-v1.html` (`text/html;profile=mcp-app`), bound to `search_offers` and `compare_offers` through `_meta.ui.resourceUri`. Empty CSP lists: it loads nothing. Live `resources/list` returns it. The earlier "submit after the widget has merged" condition is met. |
+| OpenAI domain token at `/.well-known/openai-apps-challenge` | Route done, token is Ivan's | The route is live and answers 404 until `OPENAI_APPS_CHALLENGE` is set. OpenAI shows the token only inside its portal, so no session can set it ahead of time. |
+| Demo video | Script ready, recording is Ivan's | It must show ChatGPT with Ivan's account. Script at the end of this file. |
+| 5 positive and 3 negative test cases | Done | In `plugin.json`, pasted below, tested for drift. Each positive case's tool chain ran on the live server on 2026-10-23. |
+| Release notes | Done | OpenAI: `publication.release_notes`. Claude connector and plugin: text below. |
+| Country availability | Done | OpenAI `publication.countries` is now an explicit `[]` (an omitted key keeps existing targeting; an empty list removes restrictions). |
+| Claude plugin bundle from a public repo | Done | `plugin/` plus `.claude-plugin/marketplace.json`. `claude plugin validate ./plugin` passes. The repo is public, Apache-2.0. |
+| Gemini: logo, privacy policy, data-deletion page | Done | `public/brand/logo.svg`, `/privacy`, `/data-deletion`. |
+| Gemini: domain verification | Ivan's step | Google shows the method in its console. See the Gemini section. |
+| No OAuth, so no DCR rule | Not applicable | The server has no authentication. |
+| Global-residency OpenAI project | Ivan's step, not verified | The roadmap lists it as a review need; OpenAI's submission page does not mention it. Choose a project with global data residency when you upload. |
 
 ## Requirements this pack was written against
 
-Fetched 2026-10-23.
+Fetched 2026-10-23; the plugin and Google rows 2026-10-29.
 
 | Source | What it sets |
 |---|---|
@@ -17,9 +39,11 @@ Fetched 2026-10-23.
 | [Connector review criteria](https://claude.com/docs/connectors/building/review-criteria.md) | Every tool has a `title` and `readOnlyHint` or `destructiveHint`; tool names up to 64 characters; descriptions match behavior and do not tell Claude how to behave; useful error messages; no collection of conversation data beyond the tool's need; own first-party API; no money transfers. Test credentials are required (none apply here). |
 | [Anthropic Software Directory Policy](https://support.claude.com/en/articles/13145358-anthropic-software-directory-policy) | Privacy policy link; verified contact and support channels; documentation; at least three example prompts; no advertisements, sponsored content or paid placement (4.C); no financial transactions (4.A); frugal token use for MCP servers (5.B). |
 | [Plugin guidelines](https://developers.openai.com/plugins/plugin-guidelines) (also served at [developers.openai.com/apps-sdk/app-submission-guidelines](https://developers.openai.com/apps-sdk/app-submission-guidelines)) | Names: no "MCP" or "Plugin" suffix, no single dictionary word; descriptions: no comparisons, no unverifiable claims, no pricing or promotions; a published privacy policy (data categories, purposes, recipients, retention, user controls); minimal inputs and responses; `readOnlyHint`, `destructiveHint` and `openWorldHint` set to explicit booleans; verified developer identity; support contact; no execution of money transfers or trades; no advertising. |
+| [Submit your plugin](https://claude.com/docs/plugins/submit.md) and [pre-submission checklist](https://claude.com/docs/plugins/pre-submission-checklist.md) | A plugin bundle is submitted from a GitHub repository (it may stay private until the listing goes live; this one is public). Needs `.claude-plugin/plugin.json`, a README of at least 40 words outside code blocks, a `LICENSE`, valid skill front matter. A remote MCP server needs `type` (`http`, `sse` or `ws`) and an absolute `https://` URL. No `.DS_Store` files, no symlinks, no non-text files other than PNG, JPEG, GIF, WebP and fonts. The portal's **Validate** runs the same checks plus more. Up to 10 submissions per organization per day. Claude asks you to submit the MCP server as a connector too. |
+| [Google Connected Apps](https://developers.google.com/connected-apps) and its [MCP](https://developers.google.com/connected-apps/mcp) and [OAuth](https://developers.google.com/connected-apps/mcp/oauth) guides | Preview; apply through the Google Connected Console, where tools are registered, usage analysed and the app reviewed and published. Needs a remote MCP server on public HTTPS. Mark read-only tools `readOnlyHint=True`. A UI is optional and bound with `_meta.ui.resourceUri`. The public guides do not state the domain-verification method, the logo rules, the privacy and deletion requirements, or whether a server with no authentication is accepted; the roadmap (domain verification, square SVG logo of 500 pixels or more, privacy policy, data-deletion page) is the source for those, and the console is the check. |
 | [Upload and submit your plugin](https://developers.openai.com/plugins/deploy/submission.md) | ZIP upload at platform.openai.com/plugins; limits: display name 30 characters, subtitle 30, long description 4,000, up to three starter prompts of 128 characters; four public URLs required (website, support, privacy, terms); exactly five positive and three negative test cases; a demo recording URL; domain verification through `/.well-known/openai-apps-challenge`. |
 
-## Listing text (both directories)
+## Listing text (all listings)
 
 **Name** (7 characters; no suffix, not a dictionary word)
 
@@ -81,9 +105,49 @@ I'm a non-resident. Which everyday bank account without fees can I open in Spain
 Where can I park 15,000 euros in Spain for a year at the highest savings rate?
 ```
 
+### Release notes (version 1.0.0)
+
+```
+Initial release. Five read-only tools: search_offers, get_offer, compare_offers, list_goals and rank_bank_apps. Offer cards render in hosts that support MCP Apps. No sign-in.
+```
+
+## Claude plugin bundle listing
+
+The portal reads the listing from `plugin/.claude-plugin/plugin.json` and `plugin/README.md`; edit those files, not the portal, and push. The text here matches them (`tests/directory.test.ts` pins it).
+
+| Field | Value |
+|---|---|
+| Name | `bankjar` (display name BankJar) |
+| Repository | `zaitsew/bankjar`, public, Apache-2.0 |
+| Plugin path | `plugin` |
+| Tracked branch | `main` |
+| Version | 1.0.0 (raise it with every release) |
+| Install line | `/plugin install bankjar --marketplace zaitsew/bankjar` |
+| Documentation | https://bankjar.fabriquefutur.com/connect |
+| Support | https://bankjar.fabriquefutur.com/support |
+| Privacy policy | https://bankjar.fabriquefutur.com/privacy |
+| Contents | one skill (`bank-offers`), one remote MCP server entry; no hooks, no scripts, no executables |
+
+**Description** (matches `plugin.json`)
+
+```
+Rank Spanish bank offers by net value in euros for your goal: salary bonus, savings rate, account, deposit or welcome bonus. Every offer has a source link and a verification date. Read-only, no account.
+```
+
+**Data handling answers (Claude portal, plugin step 4)**
+
+| Question | Answer |
+|---|---|
+| Does it read or store personal data? | No. The plugin has no code. A tool call sends the connector its arguments (an optional question and profile figures such as income and balance); the privacy policy covers them. Nothing is stored against a person. |
+| Does it send data to services other than its declared connectors? | No. It declares one server, `https://bankjar.fabriquefutur.com/mcp`, which is the operator's own. |
+| Retention | Not kept. Details at https://bankjar.fabriquefutur.com/data-deletion. |
+| Intended for people under 18? | No. |
+
+The plugin and the connector are two submissions that share one server. Submit the connector first; the plugin's README and the portal both point back to it.
+
 ## Test cases (five positive, three negative)
 
-Used by both portals. The OpenAI package imports them from `plugin.json`; for Claude, paste them as the example prompts and reviewer instructions. Each tool chain in P1 to P5 was run against the live server on 2026-10-23 (tool calls made directly, with the arguments the prompt implies) and returned results. The negatives are prompts that must not trigger BankJar.
+Used by the Claude and ChatGPT portals. The OpenAI package imports them from `plugin.json`; for Claude, paste them as the example prompts and reviewer instructions. Each tool chain in P1 to P5 was run against the live server on 2026-10-23 (tool calls made directly, with the arguments the prompt implies) and returned results. The negatives are prompts that must not trigger BankJar.
 
 ### Positive
 
@@ -208,18 +272,54 @@ Why: the data covers Spain, but the people who ask about Spanish banks are often
 1. **Third-party source links.** 9 of 69 offers cite kelisto.es, finect.com or raisin.com instead of the bank. A reviewer may read that as a comparison-site relay. The claim "BankJar earns nothing from these links" is true. Replacing the kelisto.es and finect.com sources with the banks' own pages would remove the question.
 2. **Server instructions wording.** `MCP_INSTRUCTIONS` in `src/server/mcp.ts` tells the model how to behave ("Always cite...", "Never present..."). Claude's criteria reject descriptions that tell Claude how to behave. These lines are accuracy and safety guidance about this tool's own output, not about other tools, but a strict reviewer may flag them. `src/server/mcp.ts` is outside this change; if flagged, move the wording into the result text as plain statements.
 3. **Token use.** `search_offers` returns a text block and the same data again as JSON text, besides `structuredContent`. Claude's policy asks for frugal responses (5.B). Also outside this change.
-4. **Tool metadata is scanned live.** OpenAI scans the hosted server and holds changed tool metadata for review after approval. Submit after the MCP App widget work has merged and deployed, so the approved metadata is the final one.
+4. **Tool metadata is scanned live.** OpenAI scans the hosted server and holds changed tool metadata for review after approval. The widget work is merged and live (checked 2026-10-29), so the metadata a reviewer sees is the final one. Do not change tool names, titles, descriptions or hints between submitting and approval.
 5. **Contact.** Claude's policy asks for verified contact information. Until `NEXT_PUBLIC_CONTACT_EMAIL` is set at deploy time, the pages name only GitHub issues. Set it before submitting.
 
-## Morning checklist for Ivan
+## Gemini Connected Apps
 
-### 0. Before either portal (10 minutes)
+Preview program. The application goes through the Google Connected Console (linked from https://developers.google.com/connected-apps). The listing text is the one above; Google's character limits are not public, so the console may ask for shorter versions of the one-liner and description.
 
-1. Confirm the PR is merged and deployed (`./scripts/deploy.sh`): https://bankjar.fabriquefutur.com/privacy, `/terms`, `/support` and `/connect` return 200.
-2. **Set the public contact e-mail and redeploy:** `NEXT_PUBLIC_CONTACT_EMAIL=<address you want public> ./scripts/deploy.sh`. It appears on the privacy, terms and support pages. Both portals ask for a contact; Claude's policy asks for a verified one.
+BankJar has no authentication, so the rule that an OAuth server must offer dynamic client registration (`registration_endpoint`) does not apply. Google's public guides describe only the OAuth path and are silent about a server with no authentication. Whether the console accepts one is **not verified**; the application will show it.
+
+| Item | Answer |
+|---|---|
+| MCP server | `https://bankjar.fabriquefutur.com/mcp`, remote, public HTTPS, Streamable HTTP, authentication: none |
+| Tool hints | All five tools: `readOnlyHint: true`, `destructiveHint: false`, `openWorldHint: false`. No tool needs a confirmation, so mark none in the console. |
+| UI | Optional card widget `ui://bankjar/offer-cards-v1.html`, bound through `_meta.ui.resourceUri` (the key Google's guide shows). It loads nothing from the network. |
+| Domain verification | The console shows the method when you apply. The domain is `bankjar.fabriquefutur.com`; its parent `fabriquefutur.com` is the fallback. A DNS TXT record needs no deploy. A meta tag or a file needs a small PR; ask a session to add it. |
+| IP allowlist | Nothing to configure. The server has no IP filter (`deploy/droplet/Caddyfile.fragment` has none) and the site is open to all addresses, so Google's ranges already reach it. |
+| Logo | `public/brand/logo.svg`: square SVG, 512 by 512, full-bleed (no transparent corners). Use `public/brand/icon-512.png` if the console wants a raster. |
+| Privacy policy | https://bankjar.fabriquefutur.com/privacy |
+| Data-deletion page | https://bankjar.fabriquefutur.com/data-deletion. There is no account: it lists what exists about a search, when it goes and how to ask. |
+| Terms and support | https://bankjar.fabriquefutur.com/terms, https://bankjar.fabriquefutur.com/support |
+| Authentication | None |
+
+Fit with the rejection rules in the roadmap: it wraps no third-party API (the server reads its own dataset); it has no advertising or paid placement; a near-duplicate is the open risk, because Spanish bank comparison sites exist (kelisto.es, finect.com). None is known to be a Gemini app. If a reviewer asks, the difference is the one in the description: one scale in euros after tax and fees, a source link and a date on every offer, open data and code.
+
+Sequence: Loco is the first app on Fabrique Futur's preview application. Submit BankJar after Loco's is accepted, as a second app under the same application, so Google sees one publisher.
+
+## Checklist for Ivan: only the submission clicks remain
+
+### Submission order, one store per day
+
+Each step is one store. Dates are the earliest days; if Loco takes a slot, keep the order and slide the dates.
+
+| Day | Store | What | Why in this order |
+|---|---|---|---|
+| Mon 2026-11-02 | Claude | Connector, then plugin bundle (section 2 below) | Fastest to review: no domain token, no video. The plugin points to the connector. Two submissions in one portal; if the "one a day across all products" rule is strict, put the plugin on Tuesday and move ChatGPT back a day. |
+| Tue 2026-11-03 | ChatGPT | Plugin directory (section 3) | Needs the video, the organization verification and the domain token, so it takes the longest to prepare; the extra days are the video. |
+| Wed 2026-11-04, or when Loco's Gemini application is accepted | Gemini | Connected Console (section 4) | A preview program, and Loco is the first app. Last, and not before Loco's. |
+
+### 1. Before any portal (10 minutes)
+
+1. Deploy `main`: `./scripts/deploy.sh`. The pages `/privacy`, `/data-deletion`, `/terms`, `/support` and `/connect` must return 200 (the listings link to them), and `/data-deletion` is new in this change.
+2. **Set the public contact e-mail and redeploy:** `NEXT_PUBLIC_CONTACT_EMAIL=<address you want public> ./scripts/deploy.sh`. It appears on the privacy, terms, support and deletion pages. All three programs ask for a contact; Claude's policy asks for a verified one.
 3. Read `/privacy` and `/terms` once. They describe the code as it is; the operator line and the legal-basis sentence are yours to confirm (the repo has no postal address, so none is given).
+4. Check the live metadata matches this file: a `tools/list` call returns five tools with four hints each.
 
-### 1. Claude Connectors Directory
+### 2. Claude: connector, then plugin bundle
+
+#### 2a. Connector
 
 You need a paid Claude plan. Time: about 20 minutes.
 
@@ -233,11 +333,23 @@ You need a paid Claude plan. Time: about 20 minutes.
 8. Step 9: tick all seven acknowledgments (answers above). Step 10: read the warnings, submit.
 9. Status and reviewer feedback appear at the same portal. Escalations: mcp-review@anthropic.com.
 
-### 2. ChatGPT / Codex plugin directory
+#### 2b. Plugin bundle
+
+Time: about 10 minutes. Needs your GitHub account connected on claude.ai (the portal checks that it can push to `zaitsew/bankjar`).
+
+1. Optional local check: `claude plugin validate ./plugin` from the repo root. It passed on 2026-10-29.
+2. At https://claude.ai/directory/manage choose **Submit new**, then **Plugin bundle**.
+3. Source step: repository `zaitsew/bankjar`, plugin path `plugin`, tracked branch `main`. Select **Validate**. A finding marked **Blocks** stops the submission; send it to a session. The plugin has no hooks, scripts or executables, so the security scan has little to read.
+4. Listing details step: read from the plugin files; compare with the table above.
+5. Data handling step: use the plugin answers above. Compliance step: contact e-mail, then the four acknowledgements (read each).
+6. Review and submit step: keep **GitHub push webhook**, switch **Auto-publish** off for the first version, submit.
+7. Install check after approval: `/plugin install bankjar --marketplace zaitsew/bankjar` in Claude Code, then ask P1.
+
+### 3. ChatGPT / Codex plugin directory
 
 Time: about 30 minutes, plus the video.
 
-1. **Verify the organization.** https://platform.openai.com/settings/organization/general: complete individual or business verification. Without it the developer identity cannot be chosen. Only an organization owner, or a member with Apps Management Write, can submit.
+1. **Verify the organization**, and pick a project with global data residency (a review need in the roadmap; OpenAI's submission page does not mention it). https://platform.openai.com/settings/organization/general: complete individual or business verification. Without it the developer identity cannot be chosen. Only an organization owner, or a member with Apps Management Write, can submit.
 2. **Build the ZIP** from a checkout of this repo: `./scripts/build-plugin-zip.sh`. The result is `dist/bankjar-openai-plugin.zip`. Open `directory/openai-plugin/.codex-plugin/plugin.json` first and change `category` if the dashboard's name differs; add `"email"` under `author` if you want one shown.
 3. **Record the demo video** (required for MCP review, one to two minutes; script below). Upload it somewhere a reviewer can open without signing in (an unlisted video) and add the address to `plugin.json` under `extensions.com.openai.review` as `"demo_recording_url": "<url>"`, then rebuild the ZIP. Or add the address in the portal's Review details.
 4. Open https://platform.openai.com/plugins, **Upload new or existing plugin**, choose your verified developer identity, upload the ZIP. Fix anything under *Metadata & Skills* > **Issues** (use **Copy issues**), then rebuild and upload again.
@@ -253,6 +365,16 @@ Time: about 30 minutes, plus the video.
 7. *Metadata & Skills* > **Review information** > **Review details**: check that the five positive and three negative cases imported (they are read-only; edit `plugin.json` and re-upload to change them). Reviewer credentials: none (the server needs no sign-in); put "No sign-in required" in the instructions field if it insists on text, and paste the reviewer notes. Save.
 8. **Submit for review**, tick the attestations (answers above). Feedback comes by e-mail; reply to appeal.
 9. When approved, open the package version and **Publish plugin**. Later changes to the MCP server are scanned daily; use **Rescan** after a deploy.
+
+### 4. Gemini Connected Apps
+
+Time: about 30 minutes, after Loco's application is in.
+
+1. Open https://developers.google.com/connected-apps and follow **Apply for preview** to the Google Connected Console.
+2. Add the server: URL `https://bankjar.fabriquefutur.com/mcp`, authentication none. The console syncs the five tools; check the hints show as read-only.
+3. Verify the domain with the method the console shows. For a DNS TXT record, add it at the DNS provider for `fabriquefutur.com`. For a meta tag or a file, tell a session the exact value; it is a small PR and a deploy.
+4. Listing: name, one-liner and description from above; logo `public/brand/logo.svg`; privacy `/privacy`; data deletion `/data-deletion`; terms and support from the table.
+5. Submit for review. If the console says it needs OAuth or a registration endpoint, stop and send the message to a session: the answer decides whether BankJar can be listed there at all.
 
 ### Demo video script (about 90 seconds)
 

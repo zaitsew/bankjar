@@ -98,7 +98,8 @@
         "commerce_description": "BankJar does not sell products or process payments. It ranks public bank offers and links to the page where each offer's terms were read."
       },
       "publication": {
-        "release_notes": "Initial release: five read-only tools for Spanish bank offers and bank apps."
+        "release_notes": "Initial release: five read-only tools for Spanish bank offers and bank apps.",
+        "countries": []
       }
     }
   }

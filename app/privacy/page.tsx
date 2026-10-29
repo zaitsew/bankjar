@@ -186,7 +186,12 @@ export default function PrivacyPage() {
           <li>
             Because there is no account and no stored profile, there is usually nothing of yours to look up or delete. You still have the
             rights the GDPR gives you (access, correction, deletion, objection, restriction, portability) and the right to complain to
-            your data protection authority. Write to the contact below and we answer within one month.
+            your data protection authority. Write to the contact below and we answer within one month. What exists and when it goes is
+            listed on{" "}
+            <a className={link} href="/data-deletion">
+              /data-deletion
+            </a>
+            .
           </li>
         </ul>
 
