@@ -18,7 +18,7 @@ Checked 2026-10-29 against the roadmap rules (`~/ops/startup/ai-integrations/ROA
 | Explicit `readOnlyHint`, `destructiveHint`, `openWorldHint` | Done | All five: `readOnlyHint: true`, `destructiveHint: false`, `openWorldHint: false`, plus `idempotentHint: true`. Same test. |
 | Reads and writes are separate tools | Done | There is no write tool. |
 | MCP App widget | Shipped and live | `ui://bankjar/offer-cards-v1.html` (`text/html;profile=mcp-app`), bound to `search_offers` and `compare_offers` through `_meta.ui.resourceUri`. Empty CSP lists: it loads nothing. Live `resources/list` returns it. The earlier "submit after the widget has merged" condition is met. |
-| OpenAI domain token at `/.well-known/openai-apps-challenge` | Route done, token is Ivan's | The route is live and answers 404 until `OPENAI_APPS_CHALLENGE` is set. OpenAI shows the token only inside its portal, so no session can set it ahead of time. |
+| OpenAI domain token at `/.well-known/openai-apps-challenge` | Done 2026-10-29 | `OPENAI_APPS_CHALLENGE` is set in `/srv/bankjar/.env`; the portal shows "Domain verified". |
 | Demo video | Script ready, recording is Ivan's | It must show ChatGPT with Ivan's account. Script at the end of this file. |
 | 5 positive and 3 negative test cases | Done | In `plugin.json`, pasted below, tested for drift. Each positive case's tool chain ran on the live server on 2026-10-23. |
 | Release notes | Done | OpenAI: `publication.release_notes`. Claude connector and plugin: text below. |
@@ -300,15 +300,14 @@ Sequence: Loco is the first app on Fabrique Futur's preview application. Submit 
 
 ## Checklist for Ivan: only the submission clicks remain
 
-### Submission order, one store per day
+### Where each store stands (2026-10-29)
 
-Each step is one store. Dates are the earliest days; if Loco takes a slot, keep the order and slide the dates.
-
-| Day | Store | What | Why in this order |
-|---|---|---|---|
-| Mon 2026-11-02 | Claude | Connector, then plugin bundle (section 2 below) | Fastest to review: no domain token, no video. The plugin points to the connector. Two submissions in one portal; if the "one a day across all products" rule is strict, put the plugin on Tuesday and move ChatGPT back a day. |
-| Tue 2026-11-03 | ChatGPT | Plugin directory (section 3) | Needs the video, the organization verification and the domain token, so it takes the longest to prepare; the extra days are the video. |
-| Wed 2026-11-04, or when Loco's Gemini application is accepted | Gemini | Connected Console (section 4) | A preview program, and Loco is the first app. Last, and not before Loco's. |
+| Store | State | What is left |
+|---|---|---|
+| Claude connector | In review since about 2026-10-23 (claude.ai/directory/manage/bankjar) | Nothing. Answer the reviewer if they e-mail. |
+| Claude plugin bundle | Not submitted | Section 2b, after the connector is live. |
+| ChatGPT | Draft 1.0.0: metadata has no findings; MCP "Configured", domain verified, 5 tools scanned with no findings; countries and the 5+3 test cases filled | Only the demo video URL blocks it (Review information > Supporting content). Then **Submit for review**, on or after 2026-10-30 (Loco's ChatGPT submission took 2026-10-29). |
+| Gemini | Not applied | Section 4, after Loco's application is accepted. |
 
 ### 1. Before any portal (10 minutes)
 
