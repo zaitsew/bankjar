@@ -47,6 +47,7 @@ When you answer a person, name the bank, give net value as an estimate for the s
 - [Add BankJar to Claude, ChatGPT or Codex](${base}/connect): step-by-step setup of the MCP connector.
 - [Privacy policy](${base}/privacy): what is handled, who receives it, how long it is kept.
 - [Terms of use](${base}/terms): not financial advice; data CC BY 4.0, code Apache-2.0.
+- [Delete your data](${base}/data-deletion): there is no account; what exists about a search and when it goes.
 - [Support](${base}/support): how to report a wrong offer or a bug, and how fresh the data is today.
 - [Source code and data files](${REPO_URL}): Apache-2.0 code, one YAML file per offer.
 

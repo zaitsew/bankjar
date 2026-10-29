@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const offers = allOffers();
   const latest = datasetVersion(offers).latest_verified_on;
   const lastModified = latest ? new Date(`${latest}T00:00:00Z`) : undefined;
-  const fixed = ["/", "/leaderboard", "/apps", "/methodology", "/agents", "/connect", "/support", "/privacy", "/terms"].map((p) => ({
+  const fixed = ["/", "/leaderboard", "/apps", "/methodology", "/agents", "/connect", "/support", "/privacy", "/data-deletion", "/terms"].map((p) => ({
     url: absolute(p),
     lastModified,
     changeFrequency: "daily" as const,

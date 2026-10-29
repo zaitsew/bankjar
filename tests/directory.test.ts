@@ -8,6 +8,7 @@ import { GET as llmsGET } from "../app/llms.txt/route";
 import ConnectPage from "../app/connect/page";
 import PrivacyPage from "../app/privacy/page";
 import sitemap from "../app/sitemap";
+import DataDeletionPage from "../app/data-deletion/page";
 import SupportPage from "../app/support/page";
 import TermsPage from "../app/terms/page";
 import { Footer } from "../components/Footer";
@@ -353,5 +354,91 @@ describe("the directory listing pack", () => {
     const ratio = (a: string, b: string) => (Math.max(lum(a), lum(b)) + 0.05) / (Math.min(lum(a), lum(b)) + 0.05);
     expect(ratio(ui.brandColor, "#ffffff")).toBeGreaterThanOrEqual(2);
     expect(ratio(ui.brandColorDark, "#212121")).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe("the Claude plugin bundle", () => {
+  const manifest = JSON.parse(read("plugin", ".claude-plugin", "plugin.json"));
+  const marketplace = JSON.parse(read(".claude-plugin", "marketplace.json"));
+  const registered = [...read("src/server/mcp.ts").matchAll(/registerTool\(\s*"([a-z_]+)"/g)].map((m) => m[1]);
+
+  it("has a valid manifest with the fields the directory reads", () => {
+    expect(manifest.name).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+    expect(manifest.name.length).toBeLessThanOrEqual(64);
+    expect(manifest.license).toBe("Apache-2.0");
+    expect(manifest.version).toMatch(/^\d+\.\d+\.\d+$/);
+    for (const k of ["description", "author", "repository", "documentationUrl", "supportUrl", "privacyPolicyUrl"]) expect(manifest[k], k).toBeTruthy();
+    for (const k of ["documentationUrl", "supportUrl", "privacyPolicyUrl"]) expect(manifest[k]).toMatch(/^https:\/\/bankjar\.fabriquefutur\.com\//);
+  });
+
+  it("has a README of at least 40 words outside code blocks, and a licence", () => {
+    const words = read("plugin", "README.md").replace(/```[\s\S]*?```/g, " ").split(/\s+/).filter(Boolean).length;
+    expect(words).toBeGreaterThanOrEqual(40);
+    expect(read("plugin", "LICENSE")).toBe(read("LICENSE"));
+  });
+
+  it("declares exactly the live remote server over https and no secrets", () => {
+    const mcp = JSON.parse(read("plugin", ".mcp.json"));
+    expect(mcp.mcpServers).toEqual({ bankjar: { type: "http", url: "https://bankjar.fabriquefutur.com/mcp" } });
+    const all = ["plugin/.claude-plugin/plugin.json", "plugin/.mcp.json", "plugin/skills/bank-offers/SKILL.md", "plugin/README.md"].map((f) => read(f)).join("\n");
+    expect(all).not.toMatch(/clientSecret|api[_-]?key|bearer|password|token/i);
+    expect(fs.existsSync(path.join(process.cwd(), "plugin", "hooks"))).toBe(false);
+  });
+
+  it("ships a skill whose tools all exist", () => {
+    const skill = read("plugin", "skills", "bank-offers", "SKILL.md");
+    const fm = skill.match(/^---\nname: ([a-z0-9-]+)\ndescription: (.+)\n---\n/);
+    expect(fm, "front matter").toBeTruthy();
+    expect(fm![1]).toBe("bank-offers");
+    expect(fm![2], "a plain YAML scalar must not contain ': '").not.toContain(": ");
+    const named = [...skill.matchAll(/`([a-z]+_[a-z_]+)`/g)].map((m) => m[1]!).filter((t) => !t.endsWith("_on") && !t.startsWith("source"));
+    for (const t of new Set(named)) expect(registered, t).toContain(t);
+    for (const t of registered) expect(skill, t).toContain(`\`${t}\``);
+  });
+
+  it("is listed by the marketplace file at the folder the plugin lives in", () => {
+    expect(marketplace.plugins).toHaveLength(1);
+    const entry = marketplace.plugins[0];
+    expect(entry.name).toBe(manifest.name);
+    expect(fs.existsSync(path.join(process.cwd(), entry.source, ".claude-plugin", "plugin.json"))).toBe(true);
+  });
+
+  it("is written up in docs/DIRECTORY.md", () => {
+    const doc = read("docs", "DIRECTORY.md");
+    expect(doc).toContain("/plugin install bankjar --marketplace zaitsew/bankjar");
+    expect(doc).toContain(manifest.description);
+  });
+});
+
+describe("the Gemini Connected Apps pack", () => {
+  it("has a square SVG logo of 500 pixels or more", () => {
+    const svg = read("public", "brand", "logo.svg");
+    const [, w, h] = svg.match(/viewBox="0 0 (\d+) (\d+)"/)!.map(Number);
+    expect(w).toBe(h);
+    expect(w).toBeGreaterThanOrEqual(500);
+    const root = svg.match(/<svg[^>]*>/)![0];
+    expect(Number(root.match(/ width="(\d+)"/)![1])).toBeGreaterThanOrEqual(500);
+    expect(Number(root.match(/ height="(\d+)"/)![1])).toBe(Number(root.match(/ width="(\d+)"/)![1]));
+    expect(svg).toMatch(/<rect width="32" height="32" fill="#0b0b0c"\/>/); // full-bleed background: no rx, no transparent corners
+  });
+
+  it("serves a data-deletion page that says there is no account and how to ask", () => {
+    const t = text(html(DataDeletionPage));
+    expect(t).toContain("no accounts");
+    expect(t).toContain("Ask for deletion");
+    expect(t).toContain("within one month");
+    expect(t).toContain(`${CACHE_TTL_MS / 3_600_000} hours`);
+  });
+
+  it("links the deletion page from the privacy policy and the sitemap", () => {
+    expect(html(PrivacyPage)).toContain('href="/data-deletion"');
+    expect(sitemap().map((e) => e.url)).toContain(`${SITE}/data-deletion`);
+  });
+
+  it("is documented in docs/DIRECTORY.md", () => {
+    const doc = read("docs", "DIRECTORY.md");
+    expect(doc).toContain("Gemini Connected Apps");
+    expect(doc).toContain("public/brand/logo.svg");
+    expect(doc).toContain("https://bankjar.fabriquefutur.com/data-deletion");
   });
 });

@@ -7,7 +7,7 @@ export const SECURITY_URL = `${REPO_URL}/security/advisories/new`;
 /** Who runs the site. The LICENSE names the copyright holder; the domain is Fabrique Futur's. */
 export const OPERATOR = "Ivan Zaitsev (Fabrique Futur)";
 /** The day the privacy policy and the terms were last edited. */
-export const LEGAL_UPDATED = "23 October 2026";
+export const LEGAL_UPDATED = "29 October 2026";
 export const TAGLINE = "Find the bank offer that pays you most";
 export const DESCRIPTION =
   "Compare Spanish bank offers by goal: salary bonus, savings, free accounts and deposits. Open data, open ranking, dated sources.";

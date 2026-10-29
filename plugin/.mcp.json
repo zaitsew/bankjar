@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "bankjar": {
+      "type": "http",
+      "url": "https://bankjar.fabriquefutur.com/mcp"
+    }
+  }
+}

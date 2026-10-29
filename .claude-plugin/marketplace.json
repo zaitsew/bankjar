@@ -1,0 +1,12 @@
+{
+  "name": "bankjar",
+  "owner": { "name": "Ivan Zaitsev" },
+  "metadata": { "description": "BankJar: compare Spanish bank offers by goal, from open data." },
+  "plugins": [
+    {
+      "name": "bankjar",
+      "source": "./plugin",
+      "description": "Rank Spanish bank offers by net value in euros: salary bonus, savings, account, deposit. Read-only MCP server and a skill that cites every source."
+    }
+  ]
+}

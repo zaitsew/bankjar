@@ -1,0 +1,17 @@
+{
+  "name": "bankjar",
+  "displayName": "BankJar",
+  "version": "1.0.0",
+  "description": "Rank Spanish bank offers by net value in euros for your goal: salary bonus, savings rate, account, deposit or welcome bonus. Every offer has a source link and a verification date. Read-only, no account.",
+  "author": {
+    "name": "Ivan Zaitsev (Fabrique Futur)",
+    "url": "https://bankjar.fabriquefutur.com"
+  },
+  "homepage": "https://bankjar.fabriquefutur.com",
+  "repository": "https://github.com/zaitsew/bankjar",
+  "license": "Apache-2.0",
+  "documentationUrl": "https://bankjar.fabriquefutur.com/connect",
+  "supportUrl": "https://bankjar.fabriquefutur.com/support",
+  "privacyPolicyUrl": "https://bankjar.fabriquefutur.com/privacy",
+  "keywords": ["banking", "spain", "offers", "savings", "salary", "comparison"]
+}
