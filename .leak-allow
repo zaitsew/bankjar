@@ -1,0 +1,9 @@
+[exceptions]
+term components/site.ts the legal operator named in the privacy and terms pages
+term directory/openai-plugin/.codex-plugin/plugin.json the legal operator named in the directory listing
+term plugin/LICENSE copyright holder
+term tests/directory.test.ts the operator named in the directory test fixtures
+term scripts/deploy.sh the legal operator named in the privacy and terms pages
+email scripts/deploy.sh the public contact address of the operator
+harness-config plugin/.mcp.json the public MCP endpoint of this product
+harness-config directory/openai-plugin/.mcp.json the public MCP endpoint of this product

@@ -62,7 +62,7 @@ q ──► rule parser ──► confident? (goal found, confidence ≥ 0.8) �
 
 ### Hub setup (one-time, on the accounts side; done 2026-10-22)
 
-1. Add the product's service token as the hub secret `ACCOUNTS_SERVICE_BANKJAR` and the same value to the BankJar deployment.
+1. Add the product's service token as the hub secret `ACCOUNTS_SERVICE_BANKJAR` and the same value to the BankJar deployment. Set `ACCOUNTS_URL` (the hub's base URL) in the same deployment env: it has no default, and without it the rule parser answers alone.
 2. Set `ACCOUNTS_EXTERNAL_BUDGET_EUR` above 0. External callers resolve on the free plan, whose seeded budget is 0, so without it every call is a 402 and BankJar silently stays on the rule parser.
 3. BankJar's ceiling for all its visitors together is **15 EUR a month** (`ACCOUNTS_EXTERNAL_PRODUCT_BUDGET_EUR_BANKJAR=15`, approved by the owner on 2026-10-22). It overrides the hub's shared default of 25 EUR for BankJar only. The visitor id changes daily, so the per-person budget (1 EUR) rarely binds; the 15 EUR ceiling is the hard stop. Past it the hub answers 402 and the rule parser answers alone.
 
