@@ -1,6 +1,6 @@
 # Directory listing pack
 
-Everything needed to submit BankJar to four listings: the Claude connector, the Claude plugin bundle, the ChatGPT / Codex plugin directory and Gemini Connected Apps. The text below is paste-ready. The submissions are account actions: Ivan does them from the checklist at the end of this file, in the order given there.
+Everything needed to submit BankJar to four listings: the Claude connector, the Claude plugin bundle, the ChatGPT / Codex plugin directory and Gemini Connected Apps. The text below is paste-ready. The submissions are account actions: the owner does them from the checklist at the end of this file, in the order given there.
 
 - Server: `https://bankjar.fabriquefutur.com/mcp` (Streamable HTTP, stateless, no authentication, five read-only tools, one offer-cards widget).
 - Public pages the listings link to: [/connect](https://bankjar.fabriquefutur.com/connect) (documentation), [/privacy](https://bankjar.fabriquefutur.com/privacy), [/data-deletion](https://bankjar.fabriquefutur.com/data-deletion), [/terms](https://bankjar.fabriquefutur.com/terms), [/support](https://bankjar.fabriquefutur.com/support).
@@ -19,15 +19,15 @@ Checked 2026-10-29 against the roadmap rules (`~/ops/startup/ai-integrations/ROA
 | Reads and writes are separate tools | Done | There is no write tool. |
 | MCP App widget | Shipped and live | `ui://bankjar/offer-cards-v1.html` (`text/html;profile=mcp-app`), bound to `search_offers` and `compare_offers` through `_meta.ui.resourceUri`. Empty CSP lists: it loads nothing. Live `resources/list` returns it. The earlier "submit after the widget has merged" condition is met. |
 | OpenAI domain token at `/.well-known/openai-apps-challenge` | Done 2026-10-29 | `OPENAI_APPS_CHALLENGE` is set in `/srv/bankjar/.env`; the portal shows "Domain verified". |
-| Demo video | Script ready, recording is Ivan's | It must show ChatGPT with Ivan's account. Script at the end of this file. |
+| Demo video | Script ready, recording is the owner's | It must show ChatGPT with the owner's account. Script at the end of this file. |
 | 5 positive and 3 negative test cases | Done | In `plugin.json`, pasted below, tested for drift. Each positive case's tool chain ran on the live server on 2026-10-23. |
 | Release notes | Done | OpenAI: `publication.release_notes`. Claude connector and plugin: text below. |
 | Country availability | Done | OpenAI `publication.countries` is now an explicit `[]` (an omitted key keeps existing targeting; an empty list removes restrictions). |
 | Claude plugin bundle from a public repo | Done | `plugin/` plus `.claude-plugin/marketplace.json`. `claude plugin validate ./plugin` passes. The repo is public, Apache-2.0. |
 | Gemini: logo, privacy policy, data-deletion page | Done | `public/brand/logo.svg`, `/privacy`, `/data-deletion`. |
-| Gemini: domain verification | Ivan's step | Google shows the method in its console. See the Gemini section. |
+| Gemini: domain verification | The owner's step | Google shows the method in its console. See the Gemini section. |
 | No OAuth, so no DCR rule | Not applicable | The server has no authentication. |
-| Global-residency OpenAI project | Ivan's step, not verified | The roadmap lists it as a review need; OpenAI's submission page does not mention it. Choose a project with global data residency when you upload. |
+| Global-residency OpenAI project | The owner's step, not verified | The roadmap lists it as a review need; OpenAI's submission page does not mention it. Choose a project with global data residency when you upload. |
 
 ## Requirements this pack was written against
 
@@ -237,7 +237,7 @@ Test prompts and expected results are in the listing: five positive, three negat
 
 **Claude portal, step 4 (Use cases)**: primary use cases: (1) rank Spanish bank offers for a goal and a profile (salary bonus, savings, account, deposit, welcome bonus); (2) read and compare the terms of specific offers; (3) rank Spanish bank mobile apps. Users need nothing before connecting: no account, plan or setup. Reads data only.
 
-**Claude portal, step 5 (Company)**: company name: Fabrique Futur (operator Ivan Zaitsev); website: https://www.fafutur.com (fabriquefutur.com redirects there; confirm this is the right public page) or https://bankjar.fabriquefutur.com; primary contact for review updates: Ivan's e-mail (TODO, below).
+**Claude portal, step 5 (Company)**: company name: Fabrique Futur (operator: the name in `OPERATOR`, components/site.ts); website: https://www.fafutur.com (fabriquefutur.com redirects there; confirm this is the right public page) or https://bankjar.fabriquefutur.com; primary contact for review updates: the owner's e-mail (TODO, below).
 
 **Claude portal, step 6 (Authentication)**: **No authentication.**
 
@@ -265,7 +265,7 @@ Test prompts and expected results are in the listing: five positive, three negat
 
 **No restriction** for both directories (OpenAI: omit `publication.countries`, or set `[]`; Claude: the portal has no country step).
 
-Why: the data covers Spain, but the people who ask about Spanish banks are often elsewhere: expats, non-residents and people planning a move. A country allowlist would exclude exactly them. BankJar provides no regulated service in any country, because it does not transact, so nothing legal depends on the user's country. Claude's policy requires compliance with Anthropic's supported-countries list; that is Anthropic's rule for Claude, not a setting here. China: Ivan's store policy excludes mainland China from App Store listings because of the AI-permit rule for apps; it does not apply to these two directories, and ChatGPT and Claude are not offered there. If you want the same stance anyway, set an OpenAI allowlist that leaves CN out; that is your decision.
+Why: the data covers Spain, but the people who ask about Spanish banks are often elsewhere: expats, non-residents and people planning a move. A country allowlist would exclude exactly them. BankJar provides no regulated service in any country, because it does not transact, so nothing legal depends on the user's country. Claude's policy requires compliance with Anthropic's supported-countries list; that is Anthropic's rule for Claude, not a setting here. China: the owner's store policy excludes mainland China from App Store listings because of the AI-permit rule for apps; it does not apply to these two directories, and ChatGPT and Claude are not offered there. If you want the same stance anyway, set an OpenAI allowlist that leaves CN out; that is your decision.
 
 ## Review risks to know before you submit
 
@@ -273,7 +273,7 @@ Why: the data covers Spain, but the people who ask about Spanish banks are often
 2. **Server instructions wording.** `MCP_INSTRUCTIONS` in `src/server/mcp.ts` tells the model how to behave ("Always cite...", "Never present..."). Claude's criteria reject descriptions that tell Claude how to behave. These lines are accuracy and safety guidance about this tool's own output, not about other tools, but a strict reviewer may flag them. `src/server/mcp.ts` is outside this change; if flagged, move the wording into the result text as plain statements.
 3. **Token use.** `search_offers` returns a text block and the same data again as JSON text, besides `structuredContent`. Claude's policy asks for frugal responses (5.B). Also outside this change.
 4. **Tool metadata is scanned live.** OpenAI scans the hosted server and holds changed tool metadata for review after approval. The widget work is merged and live (checked 2026-10-29), so the metadata a reviewer sees is the final one. Do not change tool names, titles, descriptions or hints between submitting and approval.
-5. **Contact.** Claude's policy asks for verified contact information. `scripts/deploy.sh` sets `NEXT_PUBLIC_CONTACT_EMAIL` to `info@fafutur.com` by default; the pages show it since 2026-10-29.
+5. **Contact.** Claude's policy asks for verified contact information. `scripts/deploy.sh` sets `NEXT_PUBLIC_CONTACT_EMAIL` to the public contact address by default; the pages show it since 2026-10-29.
 
 ## Gemini Connected Apps
 
@@ -298,7 +298,7 @@ Fit with the rejection rules in the roadmap: it wraps no third-party API (the se
 
 Sequence: Loco is the first app on Fabrique Futur's preview application. Submit BankJar after Loco's is accepted, as a second app under the same application, so Google sees one publisher.
 
-## Checklist for Ivan: only the submission clicks remain
+## Checklist for the owner: only the submission clicks remain
 
 ### Where each store stands (2026-10-29)
 
@@ -312,7 +312,7 @@ Sequence: Loco is the first app on Fabrique Futur's preview application. Submit 
 ### 1. Before any portal (10 minutes)
 
 1. Deploy `main`: `./scripts/deploy.sh`. The pages `/privacy`, `/data-deletion`, `/terms`, `/support` and `/connect` must return 200 (the listings link to them), and `/data-deletion` is new in this change.
-2. **Public contact e-mail:** done. `info@fafutur.com` is the default in `scripts/deploy.sh` and live since 2026-10-29. It appears on the privacy, terms, support and deletion pages. All three programs ask for a contact; Claude's policy asks for a verified one.
+2. **Public contact e-mail:** done. The public contact address is the default in `scripts/deploy.sh` and live since 2026-10-29. It appears on the privacy, terms, support and deletion pages. All three programs ask for a contact; Claude's policy asks for a verified one.
 3. Read `/privacy` and `/terms` once. They describe the code as it is; the operator line and the legal-basis sentence are yours to confirm (the repo has no postal address, so none is given).
 4. Check the live metadata matches this file: a `tools/list` call returns five tools with four hints each.
 
@@ -330,7 +330,7 @@ You need a paid Claude plan. Time: about 20 minutes.
 6. Steps 4 to 7: use the answers above (no authentication; own API; no health data; no sponsored content).
 7. Step 8 Test & launch: paste the reviewer notes; credentials: none needed; tick that you ran every tool.
 8. Step 9: tick all seven acknowledgments (answers above). Step 10: read the warnings, submit.
-9. Status and reviewer feedback appear at the same portal. Escalations: mcp-review@anthropic.com.
+9. Status and reviewer feedback appear at the same portal. Escalations: the review address shown in the portal.
 
 #### 2b. Plugin bundle
 

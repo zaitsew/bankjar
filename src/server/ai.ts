@@ -15,7 +15,6 @@ import { GOALS, GoalSchema, type Goal } from "../core/schema";
  * answer that fails validation all return null and log one line, and the rule parser answers.
  */
 
-const DEFAULT_ACCOUNTS_URL = "https://swgxlydagofazjtlqeiu.supabase.co";
 export const AI_MODEL = "claude-haiku-5-5";
 export const AI_TOOL = "set_search_filters";
 export const AI_TIMEOUT_MS = 4000;
@@ -142,7 +141,13 @@ interface ChatCompletion {
 export async function parseIntentWithAI(text: string, opts: AiOptions): Promise<Intent | null> {
   const token = process.env.ACCOUNTS_SERVICE_BANKJAR?.trim();
   if (!token) return null;
-  const base = (process.env.ACCOUNTS_URL?.trim() || DEFAULT_ACCOUNTS_URL).replace(/\/+$/, "");
+  // No default: the hub's address is deployment config (`ACCOUNTS_URL`), not code. Unset means AI off.
+  const hub = process.env.ACCOUNTS_URL?.trim();
+  if (!hub) {
+    log("ACCOUNTS_URL is not set");
+    return null;
+  }
+  const base = hub.replace(/\/+$/, "");
   try {
     const res = await fetch(`${base}/functions/v1/ai`, {
       method: "POST",

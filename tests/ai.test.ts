@@ -35,7 +35,7 @@ beforeEach(() => {
   vi.spyOn(console, "warn").mockImplementation(() => undefined);
   process.env.ACCOUNTS_SERVICE_BANKJAR = KEY;
   delete process.env.BANKJAR_AI;
-  delete process.env.ACCOUNTS_URL;
+  process.env.ACCOUNTS_URL = "https://hub.example.com";
   intentCache.clear();
   aiLimiter.reset();
 });
@@ -75,7 +75,7 @@ describe("parseIntentWithAI", () => {
     });
 
     const [url, init] = fetchMock.mock.calls[0]!;
-    expect(url).toBe("https://swgxlydagofazjtlqeiu.supabase.co/functions/v1/ai");
+    expect(url).toBe("https://hub.example.com/functions/v1/ai");
     expect(init.method).toBe("POST");
     expect(init.headers).toMatchObject({
       "x-accounts-service": KEY,
@@ -105,6 +105,12 @@ describe("parseIntentWithAI", () => {
     fetchMock.mockImplementation(async () => completion({ goal: "account" }));
     await parseIntentWithAI("x", { visitorId: "v" });
     expect(fetchMock.mock.calls[0]![0]).toBe("https://hub.test/functions/v1/ai");
+  });
+
+  it("returns null without calling the hub when ACCOUNTS_URL is not set", async () => {
+    delete process.env.ACCOUNTS_URL;
+    expect(await parseIntentWithAI("anything", { visitorId: "v" })).toBeNull();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("returns null without calling the hub when there is no key", async () => {
