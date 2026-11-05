@@ -156,6 +156,9 @@ describe("false ok guards (review of the first version)", () => {
     ["display none", '<div style="color:red; display: none">500 €</div>'],
     ["visibility hidden", "<p style='visibility:hidden'>500 €</p>"],
     ["nested elements", "<div hidden><div>x</div><div>500 €</div></div>"],
+    ["unquoted style", "<div style=display:none>500 €</div>"],
+    ["a quoted > before hidden", '<div title="a > b" hidden>500 €</div>'],
+    ["a trailing slash on a non-void element", "<div hidden/>500 €</div>"],
   ])("a number in hidden HTML is not found: %s", (_, hidden) => {
     const text = htmlToText(`<main><p>300 €</p>${hidden}<p>${PAD}</p></main>`);
     expect(text).toContain("300 €");
@@ -194,6 +197,12 @@ describe("false ok guards (review of the first version)", () => {
     expect(findPercentages("rentabilidad −2,5 %")).toEqual([]);
     expect(findPercentages("TAE 2,5 %")).toEqual([2.5]);
     expect(findEuroAmounts("comisión -500 €")).toEqual([]);
+    expect(findPercentages(htmlToText("<span>−</span><span>2,5 %</span>"))).toEqual([]);
+    expect(findPercentages("rentabilidad - 2,5 %")).toEqual([]);
+  });
+
+  it("a quoted > inside an attribute never leaks the attribute's text", () => {
+    expect(htmlToText('<a title="x > 500 €">link</a>')).toBe("link");
   });
 });
 
