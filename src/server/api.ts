@@ -166,7 +166,7 @@ export const GOAL_INFO: readonly GoalInfo[] = [
   {
     id: "welcome",
     label: "Welcome bonus",
-    description: "Sign-up bonuses for new customers that do not depend on moving a payroll.",
+    description: "Sign-up bonuses for new customers with no payroll move required.",
     example_prompt: "Welcome bonus without payroll",
   },
 ];
