@@ -1,0 +1,48 @@
+name: Report a wrong offer
+description: An offer on BankJar shows terms that differ from the bank's page.
+title: "Wrong offer: "
+labels: ["wrong-offer"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Do not write personal data here: no account numbers, no IBAN, no ID or NIE number, no name, no email address.
+        Only the offer and the bank's public page matter.
+  - type: input
+    id: offer-id
+    attributes:
+      label: Offer id
+      description: The last part of the offer page address, for example `bbva-salary-cuenta-online`.
+      placeholder: bbva-salary-cuenta-online
+    validations:
+      required: true
+  - type: textarea
+    id: site-shows
+    attributes:
+      label: What BankJar shows
+      description: The number or term on the offer page that looks wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: bank-says
+    attributes:
+      label: What the bank's page says
+      description: The number or term as the bank states it. Quote the line if you can.
+    validations:
+      required: true
+  - type: input
+    id: bank-page
+    attributes:
+      label: Link to the bank's page
+      description: The public page that shows the correct terms.
+      placeholder: https://
+    validations:
+      required: true
+  - type: input
+    id: date-seen
+    attributes:
+      label: Date you saw it
+      description: The day you read the bank's page, as YYYY-MM-DD.
+      placeholder: "2026-11-05"
+    validations:
+      required: true

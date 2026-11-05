@@ -3,6 +3,11 @@ import { siteUrl as apiSiteUrl } from "../src/server/api";
 export const SITE_NAME = "BankJar";
 export const REPO_URL = "https://github.com/zaitsew/bankjar";
 export const ISSUES_URL = `${REPO_URL}/issues`;
+/** The issue form for a wrong offer. The offer id fills the form's `offer-id` field. */
+export function wrongOfferUrl(offerId?: string): string {
+  const base = `${ISSUES_URL}/new?template=wrong-offer.yml`;
+  return offerId ? `${base}&offer-id=${encodeURIComponent(offerId)}` : base;
+}
 export const SECURITY_URL = `${REPO_URL}/security/advisories/new`;
 /** Who runs the site. The LICENSE names the copyright holder; the domain is Fabrique Futur's. */
 export const OPERATOR = "Ivan Zaitsev (Fabrique Futur)";
