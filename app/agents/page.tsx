@@ -121,7 +121,7 @@ export default function AgentsPage() {
           <li>
             Say when an offer was checked (<code className="inline">verified_on</code>) and link <code className="inline">source_url</code>.
           </li>
-          <li>Offers marked stale were not re-checked for 30 days. Say so.</li>
+          <li>Offers marked stale were not re-checked for 30 days, so their terms may have changed.</li>
           <li>
             Data is CC BY 4.0: credit BankJar. Code is Apache-2.0 on{" "}
             <a className="underline underline-offset-4" href={REPO_URL} rel="noopener">
