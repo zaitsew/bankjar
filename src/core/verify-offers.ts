@@ -35,23 +35,27 @@ export interface Verdict {
 
 /** A page with less visible text than this is a shell or a wall, not an offer page. */
 export const MIN_TEXT_CHARS = 400;
-/** Below this length, a bot-wall phrase marks the page as blocked. */
-const WALL_MAX_CHARS = 2500;
+/** These phrases mark a page as blocked at any length. A false `blocked` only sends the page to a person. */
 const WALL_PHRASES = [
-  "enable javascript",
-  "javascript is disabled",
-  "please enable cookies",
   "access denied",
+  "acceso denegado",
   "just a moment",
   "verify you are human",
   "verifying you are human",
   "are you a robot",
-  "captcha",
   "request blocked",
   "attention required",
+];
+/** These also appear on real offer pages (a form's captcha), so they count only on a short page or at the top of one. */
+const WEAK_WALL_MAX_CHARS = 2500;
+const WEAK_WALL_TOP_CHARS = 600;
+const WEAK_WALL_PHRASES = [
+  "enable javascript",
+  "javascript is disabled",
+  "please enable cookies",
+  "captcha",
   "activa javascript",
   "habilita javascript",
-  "acceso denegado",
 ];
 
 const ENTITIES: Record<string, string> = {
@@ -71,11 +75,54 @@ const ENTITIES: Record<string, string> = {
   Ntilde: "Ñ",
 };
 
+const VOID_TAGS = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
+
+function isHiddenByAttributes(attrs: string): boolean {
+  const withoutValues = attrs.replace(/=\s*("[^"]*"|'[^']*'|[^\s>]+)/g, "=");
+  if (/\shidden\b/i.test(withoutValues)) return true;
+  if (/\saria-hidden\s*=\s*["']?true/i.test(attrs)) return true;
+  return /\sstyle\s*=\s*("[^"]*"|'[^']*')/i.test(attrs) && /(display\s*:\s*none|visibility\s*:\s*hidden)/i.test(attrs);
+}
+
+/**
+ * Removes elements hidden by an attribute, with their nested content. A reader cannot see their
+ * numbers, so they must not count as found. Hiding through a CSS class cannot be seen from the HTML.
+ */
+function stripHiddenElements(html: string): string {
+  const tag = /<(\/?)([a-z][a-z0-9-]*)((?:\s[^>]*)?)>/gi;
+  let out = "";
+  let copiedTo = 0;
+  let skipName: string | null = null;
+  let depth = 0;
+  for (const m of html.matchAll(tag)) {
+    const closing = m[1] === "/";
+    const name = (m[2] ?? "").toLowerCase();
+    const attrs = m[3] ?? "";
+    const selfClosed = VOID_TAGS.has(name) || attrs.endsWith("/");
+    if (skipName !== null) {
+      if (name !== skipName || selfClosed) continue;
+      depth += closing ? -1 : 1;
+      if (depth === 0) {
+        copiedTo = m.index + m[0].length;
+        skipName = null;
+      }
+      continue;
+    }
+    if (closing || selfClosed || !isHiddenByAttributes(attrs)) continue;
+    out += html.slice(copiedTo, m.index) + " ";
+    skipName = name;
+    depth = 1;
+  }
+  // An element that never closes hides the rest of the page.
+  return skipName !== null ? out : out + html.slice(copiedTo);
+}
+
 /** Reduces an HTML page to the text a reader sees. */
 export function htmlToText(html: string): string {
-  return html
+  const withoutBlocks = html
     .replace(/<!--[\s\S]*?-->/g, " ")
-    .replace(/<(script|style|noscript|svg|template|head)\b[\s\S]*?<\/\1\s*>/gi, " ")
+    .replace(/<(script|style|noscript|svg|template|head)\b[\s\S]*?<\/\1\s*>/gi, " ");
+  return stripHiddenElements(withoutBlocks)
     .replace(/<[^>]*>/g, " ")
     .replace(/&#x([0-9a-f]+);/gi, (_, h: string) => safeChar(parseInt(h, 16)))
     .replace(/&#(\d+);/g, (_, d: string) => safeChar(parseInt(d, 10)))
@@ -143,14 +190,14 @@ function numbersMatching(text: string, re: RegExp, group: string): number[] {
 
 /** Amounts in euros: a number next to €, EUR or "euros", before or after. */
 export function findEuroAmounts(text: string): number[] {
-  const after = new RegExp(String.raw`(?<![\d.,])(?<n>${NUM})\s?(?:€|eur\b|euros?\b)`, "gi");
+  const after = new RegExp(String.raw`(?<![\d.,\-−])(?<n>${NUM})\s?(?:€|eur\b|euros?\b)`, "gi");
   const before = new RegExp(String.raw`(?:€|\beur\b)\s?(?<n>${NUM})(?![\d])`, "gi");
   return [...numbersMatching(text, after, "n"), ...numbersMatching(text, before, "n")];
 }
 
-/** Percentages: a number followed by %. */
+/** Percentages: a number followed by %. A negative rate does not confirm a positive one. */
 export function findPercentages(text: string): number[] {
-  const re = new RegExp(String.raw`(?<![\d.,])(?<n>${NUM})\s?%`, "g");
+  const re = new RegExp(String.raw`(?<![\d.,\-−])(?<n>${NUM})\s?%`, "g");
   return numbersMatching(text, re, "n");
 }
 
@@ -180,12 +227,10 @@ export function checkableNumbers(offer: Offer): { field: CheckField; expected: n
 /** Why a page cannot count as an offer page; null when it can. */
 export function blockedReason(text: string): string | null {
   if (text.length < MIN_TEXT_CHARS) return `page text too short (${text.length} characters)`;
-  if (text.length < WALL_MAX_CHARS) {
-    const lower = text.toLowerCase();
-    const hit = WALL_PHRASES.find((p) => lower.includes(p));
-    if (hit) return `looks like a bot wall or script shell ("${hit}")`;
-  }
-  return null;
+  const lower = text.toLowerCase();
+  const scope = lower.length < WEAK_WALL_MAX_CHARS ? lower : lower.slice(0, WEAK_WALL_TOP_CHARS);
+  const hit = WALL_PHRASES.find((p) => lower.includes(p)) ?? WEAK_WALL_PHRASES.find((p) => scope.includes(p));
+  return hit ? `looks like a bot wall or script shell ("${hit}")` : null;
 }
 
 /** Compares the offer's numbers with the page text. */

@@ -134,6 +134,69 @@ describe("checkText statuses", () => {
   });
 });
 
+describe("false ok guards (review of the first version)", () => {
+  const only500 = makeOffer({
+    reward: { type: "cash", value_eur: 500, description: "d", paid_when: null },
+    rate_tae: null,
+    commitment_months: 0,
+    requirements: { min_monthly_income_eur: null },
+    fees: { monthly_eur: 0, notes: null },
+  } as never);
+
+  it("the fixture has exactly one checkable number, so a mismatch below can only come from it", () => {
+    expect(checkableNumbers(only500)).toEqual([{ field: "reward.value_eur", expected: 500 }]);
+    expect(checkText(only500, htmlToText(`<p>500 €</p><p>${PAD}</p>`)).status).toBe("ok");
+  });
+
+
+  it.each([
+    ["hidden attribute", '<div hidden>500 €</div>'],
+    ["bare hidden with other attributes", '<div class="x" hidden data-y="1">500 €</div>'],
+    ["aria-hidden", '<span aria-hidden="true">500 €</span>'],
+    ["display none", '<div style="color:red; display: none">500 €</div>'],
+    ["visibility hidden", "<p style='visibility:hidden'>500 €</p>"],
+    ["nested elements", "<div hidden><div>x</div><div>500 €</div></div>"],
+  ])("a number in hidden HTML is not found: %s", (_, hidden) => {
+    const text = htmlToText(`<main><p>300 €</p>${hidden}<p>${PAD}</p></main>`);
+    expect(text).toContain("300 €");
+    expect(text).not.toContain("500");
+    expect(checkText(only500, text).status).toBe("mismatch");
+  });
+
+  it("keeps visible text around a hidden element, and text after it", () => {
+    const text = htmlToText("<p>before</p><div hidden><br>gone</div><p>after</p>");
+    expect(text).toBe("before after");
+  });
+
+  it("a class or value containing the word hidden hides nothing", () => {
+    const text = htmlToText('<div class="hidden sm:block" title="hidden">500 €</div>');
+    expect(text).toContain("500 €");
+  });
+
+  it("an element that never closes hides the rest of the page", () => {
+    expect(htmlToText("<p>before</p><div hidden><p>500 €</p>")).toBe("before");
+  });
+
+  it("a long access-denied page is blocked, even with the numbers on it", () => {
+    const wall = "Access denied. " + "Gana 500 € con esta cuenta. ".repeat(200);
+    expect(wall.length).toBeGreaterThan(2500);
+    expect(checkText(only500, wall).status).toBe("blocked");
+  });
+
+  it("a captcha at the foot of a long real page does not block it, but one at the top does", () => {
+    const body = "Gana 500 € con esta cuenta. ".repeat(200);
+    expect(checkText(only500, `${body} Protected by captcha.`).status).toBe("ok");
+    expect(checkText(only500, `Solve the captcha to continue. ${body}`).status).toBe("blocked");
+  });
+
+  it("a negative figure does not confirm a positive one", () => {
+    expect(findPercentages("rentabilidad -2,5 %")).toEqual([]);
+    expect(findPercentages("rentabilidad −2,5 %")).toEqual([]);
+    expect(findPercentages("TAE 2,5 %")).toEqual([2.5]);
+    expect(findEuroAmounts("comisión -500 €")).toEqual([]);
+  });
+});
+
 describe("report", () => {
   const row = (id: string, status: OfferReport["status"]): OfferReport => ({
     id,
