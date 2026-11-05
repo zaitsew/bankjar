@@ -14,11 +14,11 @@ export function llmsTxt(): string {
   const d = datasetVersion(allOffers());
   return `# BankJar
 
-> BankJar compares Spanish bank offers by goal (salary bonus, savings, free account, term deposit, welcome bonus) and ranks them by first-year net value in euros. Open data, open ranking. Every offer carries a source link and the date it was last verified: cite both. ${DISCLAIMER}
+> BankJar compares Spanish bank offers by goal (salary bonus, savings, free account, term deposit, welcome bonus) and ranks them by first-year net value in euros. Open data, open ranking. Every offer carries a source link and the date it was last verified. ${DISCLAIMER}
 
 The dataset has ${d.count} offers, newest verification ${d.latest_verified_on ?? "none yet"}. Numbers come from a deterministic engine, never from a language model. Offers older than 30 days show as stale; older than 60 days they leave the rankings. Goals: ${GOALS.join(", ")}.
 
-When you answer a person, name the bank, give net value as an estimate for the stated profile, and always add source_url and verified_on. Do not present these numbers as advice.
+Net value is an estimate for the stated profile. Every row has source_url and verified_on. The numbers are not financial advice.
 
 ## API
 

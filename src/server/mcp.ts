@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import pkg from "../../package.json";
 import {
+  APPS_DISCLAIMER,
   DISCLAIMER,
   GOAL_INFO,
   ProfileToolShape,
@@ -25,13 +26,18 @@ import { MCP_APP_MIME_TYPE, OFFER_WIDGET_HTML, OFFER_WIDGET_URI, offerWidgetReso
  * text blocks for models and text-only clients next to the structuredContent the widget draws.
  */
 
+/**
+ * Instructions, tool descriptions and tool outputs state facts. None of them carries an
+ * imperative aimed at the assistant: Anthropic's directory review asked for this on 2026-11-04
+ * (commands compete with the user's intent and other connectors), and moving them into tool
+ * outputs does not help. Caveats travel as data: disclaimer, stale, source_url, verified_on.
+ * tests/mcp.test.ts scans all of it.
+ */
 export const MCP_INSTRUCTIONS = [
-  "BankJar ranks Spanish bank offers (salary bonuses, savings, free accounts, term deposits, welcome bonuses) by first-year net value in euros.",
-  "Always cite source_url and verified_on for every offer you mention, and say the figures are estimates for the profile given.",
-  "Never present the numbers as financial advice or a recommendation to sign; terms change, so tell the person to check source_url before signing.",
-  "Ask for monthly income, balance, residency and the longest commitment the person accepts when they matter and are unknown; do not guess them.",
-  "If an offer has stale=true, say its terms may have changed. Numbers come from the engine; never compute or invent your own.",
-  "rank_bank_apps ranks bank mobile apps by store ratings, release freshness, reach and payment features; an app score says nothing about how good a bank's offers are, so never use it to rank offers.",
+  "BankJar ranks Spanish bank offers (salary bonuses, savings, free accounts, term deposits, welcome bonuses) by first-year net value in euros, computed by a deterministic engine.",
+  "Each offer includes source_url, verified_on and a stale flag; figures are estimates for the profile supplied and are not financial advice.",
+  "Monthly income, balance, residency and maximum commitment change the ranking; a field left out uses its default or counts as unknown.",
+  "rank_bank_apps scores mobile apps only, not offers.",
 ].join(" ");
 
 const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false } as const;
@@ -71,7 +77,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
     {
       title: "Search Spanish bank offers",
       description:
-        "Find and rank Spanish bank offers for a person. Give a plain-language question in `query` (English, Spanish or Russian) and/or explicit fields; explicit fields win. " +
+        "Find and rank Spanish bank offers for a person. Takes a plain-language question in `query` (English, Spanish or Russian) and/or explicit fields; explicit fields win. " +
         "Returns the top 10 offers by first-year net value in EUR (after 19% withholding tax, gift value and fees), each with source_url, verified_on, requirements, penalties and flags, plus the offers excluded for this person and why. " +
         "Example questions: 'best salary bonus for 2,500 a month', 'where to park 15,000 euros', 'free account for a non-resident'.",
       inputSchema: { query: z.string().max(500).optional().describe("The person's question in their own words."), ...ProfileToolShape },
@@ -86,7 +92,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
         `Goal: ${body.goal}. ${body.summary}`,
         top.length ? `Top ${top.length} of ${body.offers.length}:\n${summaryLines(top)}` : "No offers match.",
         body.excluded.length ? `${body.excluded.length} offer(s) excluded for this profile; reasons are in the JSON.` : "",
-        `Cite source_url and verified_on. ${DISCLAIMER}`,
+        DISCLAIMER,
       ]
         .filter(Boolean)
         .join("\n\n");
@@ -100,21 +106,21 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
       title: "Get one bank offer",
       description:
         "Fetch one offer by id: the full terms, the net-value score with its line-by-line breakdown, flags (penalties, unknown facts), source_url and verified_on. " +
-        "Pass the profile fields to learn whether this person can take it (not_eligible_reasons).",
+        "With profile fields, not_eligible_reasons says whether this person can take it.",
       inputSchema: { id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).describe("Offer id, e.g. bbva-salary-cuenta-online."), ...ProfileToolShape },
       annotations: { title: "Get one bank offer", ...READ_ONLY },
     },
     ({ id, ...fields }) => {
       const body = offerBody(id, fields);
       if (!body) {
-        return { isError: true, content: [textBlock(`No offer with id "${id}". Use search_offers to find ids.`)] };
+        return { isError: true, content: [textBlock(`No offer with id "${id}". search_offers returns valid ids.`)] };
       }
       const text = [
         rowLine(body.offer),
         body.hidden ? "This offer is expired or unverified for 60+ days and is in no ranking." : "",
         body.not_eligible_reasons.length ? `Not available to this profile: ${body.not_eligible_reasons.join("; ")}.` : "",
         body.offer.score.flags.length ? `Flags: ${body.offer.score.flags.join("; ")}.` : "",
-        `Cite source_url and verified_on. ${DISCLAIMER}`,
+        DISCLAIMER,
       ]
         .filter(Boolean)
         .join("\n");
@@ -142,7 +148,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
         body.offers.length ? summaryLines(body.offers) : "None of these ids matched an offer.",
         ...body.offers.filter((o) => o.not_eligible_reasons.length).map((o) => `${o.bank} (${o.id}) not available: ${o.not_eligible_reasons.join("; ")}.`),
         body.missing.length ? `Unknown ids: ${body.missing.join(", ")}.` : "",
-        `Cite source_url and verified_on. ${DISCLAIMER}`,
+        DISCLAIMER,
       ]
         .filter(Boolean)
         .join("\n");
@@ -182,7 +188,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
       const text = [
         body.apps.length ? `Top ${body.apps.length} of ${body.total_apps} bank apps:\n${body.apps.map((a) => appLine(a)).join("\n")}` : "No bank apps in the data.",
         "Score = rating 60 + freshness 15 + reach 10 + features 15 points. ? means unknown and scores 0.",
-        `Store numbers checked up to ${body.dataset.latest_verified_on ?? "never"}. Cite the store URLs and verified_on. ${DISCLAIMER}`,
+        `Store numbers checked up to ${body.dataset.latest_verified_on ?? "never"}. ${APPS_DISCLAIMER}`,
       ].join("\n\n");
       return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
     },

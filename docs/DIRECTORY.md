@@ -259,7 +259,7 @@ Test prompts and expected results are in the listing: five positive, three negat
 
 - BankJar is an information service. It does not open accounts, take deposits, execute transfers, trades or payments, or act for the user. It has no write tool and no payment flow.
 - Links go to the page where each offer's terms were read: the bank's own page for 60 of 69 offers, a third-party page (kelisto.es, finect.com, a Raisin deposit marketplace page) for 9. A check on 2026-10-23 found no affiliate or tracking parameter in any `source_url` (the `cid=` in two Kutxabank links is the bank's own content id). BankJar earns nothing from any link, takes no payment from banks and has no affiliate arrangement; `docs/PLAN.md` keeps affiliate links off until the owner decides.
-- Every result includes the line "Not financial advice. Terms change; check source_url before signing."
+- Every result includes the line "Not financial advice. Figures are estimates for the profile supplied. Terms can change; source_url is the page they were read from."
 
 ## Country availability proposal
 
@@ -270,7 +270,7 @@ Why: the data covers Spain, but the people who ask about Spanish banks are often
 ## Review risks to know before you submit
 
 1. **Third-party source links.** 9 of 69 offers cite kelisto.es, finect.com or raisin.com instead of the bank. A reviewer may read that as a comparison-site relay. The claim "BankJar earns nothing from these links" is true. Replacing the kelisto.es and finect.com sources with the banks' own pages would remove the question.
-2. **Server instructions wording.** `MCP_INSTRUCTIONS` in `src/server/mcp.ts` tells the model how to behave ("Always cite...", "Never present..."). Claude's criteria reject descriptions that tell Claude how to behave. These lines are accuracy and safety guidance about this tool's own output, not about other tools, but a strict reviewer may flag them. `src/server/mcp.ts` is outside this change; if flagged, move the wording into the result text as plain statements.
+2. **Server instructions wording: flagged, then fixed.** Anthropic's review (2026-11-04) approved the connector with one suggestion: instructions, tool descriptions and tool outputs describe and carry data; they hold no imperatives aimed at the assistant, and moving the same imperatives into tool outputs does not resolve it. `MCP_INSTRUCTIONS`, every tool and parameter description and every text block are now statements. Caveats travel as data (`disclaimer`, `stale`, `source_url`, `verified_on`). `tests/mcp.test.ts` scans all of it for command words. The plugin skill (`plugin/skills/bank-offers`) stays a procedure: a skill is instructions the person installs on purpose.
 3. **Token use.** `search_offers` returns a text block and the same data again as JSON text, besides `structuredContent`. Claude's policy asks for frugal responses (5.B). Also outside this change.
 4. **Tool metadata is scanned live.** OpenAI scans the hosted server and holds changed tool metadata for review after approval. The widget work is merged and live (checked 2026-10-29), so the metadata a reviewer sees is the final one. Do not change tool names, titles, descriptions or hints between submitting and approval.
 5. **Contact.** Claude's policy asks for verified contact information. `scripts/deploy.sh` sets `NEXT_PUBLIC_CONTACT_EMAIL` to the public contact address by default; the pages show it since 2026-10-29.
@@ -300,13 +300,13 @@ Sequence: Loco is the first app on Fabrique Futur's preview application. Submit 
 
 ## Checklist for the owner: only the submission clicks remain
 
-### Where each store stands (2026-10-29)
+### Where each store stands (2026-11-05)
 
 | Store | State | What is left |
 |---|---|---|
-| Claude connector | In review since about 2026-10-23 (claude.ai/directory/manage/bankjar) | Nothing. Answer the reviewer if they e-mail. |
+| Claude connector | Approved 2026-11-04 as a community connector, with one suggestion (risk 2 above, fixed). Not published yet | The owner's **Publish** at https://claude.ai/admin-settings/directory/submissions/bankjar. The listing then goes live at https://claude.ai/directory/connectors/bankjar. |
 | Claude plugin bundle | Not submitted | Section 2b, after the connector is live. |
-| ChatGPT | Draft 1.0.0: metadata has no findings; MCP "Configured", domain verified, 5 tools scanned with no findings; countries and the 5+3 test cases filled | Only the demo video URL blocks it (Review information > Supporting content). Then **Submit for review**, on or after 2026-10-30 (Loco's ChatGPT submission took 2026-10-29). |
+| ChatGPT | Draft 1.0.0: metadata has no findings; MCP "Configured", domain verified, 5 tools scanned with no findings; countries and the 5+3 test cases filled | **Rescan** first: tool descriptions changed on 2026-11-05. Then only the demo video URL blocks it (Review information > Supporting content). Then **Submit for review**, on or after 2026-10-30 (Loco's ChatGPT submission took 2026-10-29). |
 | Gemini | Not applied | Section 4, after Loco's application is accepted. |
 
 ### 1. Before any portal (10 minutes)

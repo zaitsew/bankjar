@@ -134,7 +134,7 @@ const JS = String.raw`
 (function () {
   "use strict";
   var PROTOCOL = "__PROTOCOL__";
-  var DISCLAIMER = "Not financial advice. Terms change; check source_url before signing.";
+  var DISCLAIMER = "Not financial advice. Figures are estimates for the profile supplied. Terms can change; source_url is the page they were read from.";
   var VISIBLE = 3;
   var GOALS = { salary: "salary bonus", savings: "savings", account: "free account", deposit: "term deposit", welcome: "welcome bonus" };
   var app = document.getElementById("app");

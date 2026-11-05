@@ -50,7 +50,7 @@ export function templateSummary(goal: Goal, result: RankResult): string {
   const months = first.offer.commitment_months;
   const commit =
     months == null
-      ? " (commitment not stated; check the source)"
+      ? " (commitment not stated in the data)"
       : months > 0
         ? ` for a ${months}-month commitment`
         : " with no commitment";

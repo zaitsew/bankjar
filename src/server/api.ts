@@ -15,7 +15,9 @@ import { search, searchAsync, type SearchResult } from "./search";
  * comes from the engine in src/core.
  */
 
-export const DISCLAIMER = "Not financial advice. Terms change; check source_url before signing.";
+export const DISCLAIMER = "Not financial advice. Figures are estimates for the profile supplied. Terms can change; source_url is the page they were read from.";
+/** App scores have their own caveat: there is no profile and no source_url on an app row. */
+export const APPS_DISCLAIMER = "Not financial advice. An app score describes the mobile app only, not the bank's offers.";
 export const LICENSE = "Data CC BY 4.0, attribution: BankJar (github.com/zaitsew/bankjar)";
 export const REPO_URL = "https://github.com/zaitsew/bankjar";
 export const CACHE_CONTROL = "public, s-maxage=3600, stale-while-revalidate=86400";
@@ -146,7 +148,7 @@ export const GOAL_INFO: readonly GoalInfo[] = [
   {
     id: "savings",
     label: "Park my savings",
-    description: "Savings accounts with a promotional rate, no fixed term. Interest counts on the balance you give.",
+    description: "Savings accounts with a promotional rate, no fixed term. Interest is computed on the balance supplied.",
     example_prompt: "Best savings account for 15,000 euros with no commitment",
   },
   {
@@ -164,7 +166,7 @@ export const GOAL_INFO: readonly GoalInfo[] = [
   {
     id: "welcome",
     label: "Welcome bonus",
-    description: "Sign-up bonuses for new customers that do not depend on moving a payroll.",
+    description: "Sign-up bonuses for new customers with no payroll move required.",
     example_prompt: "Welcome bonus without payroll",
   },
 ];
@@ -332,11 +334,11 @@ export function overridesFromQuery(q: {
 
 /** The same fields as the engine's names; the MCP tools take these as JSON. */
 export const ProfileToolShape = {
-  goal: GoalSchema.optional().describe(`Which kind of offer: ${GOALS.join(", ")}. Leave out to let the query decide.`),
+  goal: GoalSchema.optional().describe(`Which kind of offer: ${GOALS.join(", ")}. Left out, the query decides.`),
   monthly_income_eur: z.number().nonnegative().max(10_000_000).optional().describe("The person's net monthly income in EUR. Offers needing more are excluded."),
   balance_eur: z.number().nonnegative().max(1_000_000_000).optional().describe("Money to move or park, in EUR. Default 10000. Drives interest on savings and deposits."),
   max_commitment_months: z.number().int().nonnegative().max(600).optional().describe("Longest commitment accepted, in months. 0 means none."),
-  residency: z.enum(["resident", "nie_tie", "non_resident", "unknown"]).optional().describe("Residency in Spain. Leave out when unknown; unknown facts are flagged, not excluded."),
+  residency: z.enum(["resident", "nie_tie", "non_resident", "unknown"]).optional().describe("Residency in Spain. Left out, it counts as unknown; unknown facts are flagged, not excluded."),
   gift_factor: z.number().min(0).max(1).optional().describe("Share of retail value a gift is worth to the person, 0 to 1. Default 0.8."),
   prefer: z.enum(["cash", "any"]).optional().describe("cash leaves out gift rewards. Default any."),
   existing_customer_of: z.array(z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)).max(20).optional().describe("Bank slugs where the person already banks, e.g. [\"bbva\"]."),
@@ -483,6 +485,6 @@ export function commitmentText(months: number | null): string {
 /** One line per row: "1. Bank - headline | net EUR 648 | commitment 12 months | verified 2026-10-18 | source https://..." */
 export function rowLine(row: OfferRow, rank?: number): string {
   const prefix = rank === undefined ? "-" : `${rank}.`;
-  const stale = row.stale ? " (STALE: re-check)" : "";
+  const stale = row.stale ? " (stale: terms may have changed)" : "";
   return `${prefix} ${row.bank} - ${row.headline} | net value ${eur(row.score.net_value_eur)} | commitment ${commitmentText(row.commitment_months)} | verified ${row.verified_on}${stale} | source ${row.source_url}`;
 }

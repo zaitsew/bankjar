@@ -45,7 +45,7 @@ export default function AgentsPage() {
       <h1 className="t-title">For AI agents</h1>
       <p className="muted mt-2 max-w-2xl">
         Every number on this site comes from a dated, sourced data file. An agent gets the same table as a person, with{" "}
-        <code className="inline">verified_on</code> and <code className="inline">source_url</code> on every row. Cite both.
+        <code className="inline">verified_on</code> and <code className="inline">source_url</code> on every row.
         BankJar is not financial advice.
       </p>
 
@@ -121,7 +121,7 @@ export default function AgentsPage() {
           <li>
             Say when an offer was checked (<code className="inline">verified_on</code>) and link <code className="inline">source_url</code>.
           </li>
-          <li>Offers marked stale were not re-checked for 30 days. Say so.</li>
+          <li>Offers marked stale were not re-checked for 30 days, so their terms may have changed.</li>
           <li>
             Data is CC BY 4.0: credit BankJar. Code is Apache-2.0 on{" "}
             <a className="underline underline-offset-4" href={REPO_URL} rel="noopener">
