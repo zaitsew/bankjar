@@ -45,7 +45,7 @@ export default function AgentsPage() {
       <h1 className="t-title">For AI agents</h1>
       <p className="muted mt-2 max-w-2xl">
         Every number on this site comes from a dated, sourced data file. An agent gets the same table as a person, with{" "}
-        <code className="inline">verified_on</code> and <code className="inline">source_url</code> on every row. Cite both.
+        <code className="inline">verified_on</code> and <code className="inline">source_url</code> on every row.
         BankJar is not financial advice.
       </p>
 

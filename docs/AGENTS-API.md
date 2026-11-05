@@ -1,7 +1,7 @@
 # Agent API
 
 BankJar answers the same question for people and for AI agents, from the same engine.
-Everything below is read-only, needs no key, and returns `source_url` and `verified_on` on every offer row. Cite both.
+Everything below is read-only, needs no key, and returns `source_url` and `verified_on` on every offer row.
 
 > Not financial advice. Terms change; check `source_url` before signing.
 
@@ -114,7 +114,7 @@ curl -s 'https://bankjar.example/data/offers.json' | jq '.offers | length'
 ## MCP
 
 `POST /mcp` is a stateless Streamable HTTP server (no session id, JSON replies). `GET /mcp` answers `405` with a short JSON description.
-Server name `bankjar`, version from `package.json`. Its `instructions` tell the model to cite `source_url` and `verified_on` and never to present numbers as advice.
+Server name `bankjar`, version from `package.json`. Its `instructions` describe what the server does, as facts. Caveats travel as data: `disclaimer`, `stale`, `source_url` and `verified_on` on the response (Anthropic directory feedback, 2026-11-04).
 
 | Tool | Input | Returns |
 |---|---|---|

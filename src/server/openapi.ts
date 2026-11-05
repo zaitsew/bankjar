@@ -2,7 +2,7 @@ import { z } from "zod";
 import { AppSchema } from "../core/app-schema";
 import { GOALS, OfferSchema } from "../core/schema";
 import pkg from "../../package.json";
-import { DISCLAIMER, LICENSE, PROFILE_PARAMS, REPO_URL, siteUrl } from "./api";
+import { APPS_DISCLAIMER, DISCLAIMER, LICENSE, PROFILE_PARAMS, REPO_URL, siteUrl } from "./api";
 
 /**
  * The OpenAPI 3.1 document served at /openapi.json. Written by hand over the same
@@ -289,8 +289,8 @@ export function buildOpenApi(): Json {
             penalty: p.penalty,
             eligibility: ref("Eligibility"),
             valid_until: p.valid_until,
-            source_url: { ...p.source_url, description: "The bank's page for this offer. Cite it." },
-            verified_on: { ...p.verified_on, description: "Date a person or the daily check last confirmed the terms. Cite it." },
+            source_url: { ...p.source_url, description: "The page this offer's terms were read from." },
+            verified_on: { ...p.verified_on, description: "Date a person or the daily check last confirmed the terms." },
             stale: { type: "boolean", description: "verified_on is more than 30 days ago." },
             score: ref("Score"),
             url: { type: "string", format: "uri", description: "The offer page on this site." },
@@ -382,7 +382,7 @@ export function buildOpenApi(): Json {
             rating: { type: ["number", "null"], minimum: 0, maximum: 5, description: "Average stars as the store shows them. Google Play's average is the one shown in Spain; its count is worldwide." },
             ratings_count: { type: "integer" },
             updated_on: { type: ["string", "null"], format: "date", description: "Date of the latest release in this store." },
-            url: { type: "string", format: "uri", description: "The store listing. Cite it." },
+            url: { type: "string", format: "uri", description: "The store listing." },
           },
         },
         AppScoreLine: {
@@ -429,7 +429,7 @@ export function buildOpenApi(): Json {
             breakdown: { type: "array", items: ref("AppScoreLine") },
             flags: { type: "array", items: { type: "string" }, description: "Catches that do not change the number: few ratings, one store, unknown features." },
             stale: { type: "boolean", description: "verified_on is more than 30 days ago." },
-            verified_on: { ...ap.verified_on, description: "Day the store numbers were fetched. Cite it." },
+            verified_on: { ...ap.verified_on, description: "Day the store numbers were fetched." },
             source_urls: { type: "array", items: { type: "string", format: "uri" }, description: "The store listings the numbers come from." },
           },
         },
@@ -442,7 +442,7 @@ export function buildOpenApi(): Json {
             total_apps: { type: "integer", description: "Ranked apps before limit was applied." },
             apps: { type: "array", items: ref("AppRow") },
             dataset: ref("AppsDataset"),
-            disclaimer: { type: "string", const: DISCLAIMER },
+            disclaimer: { type: "string", const: APPS_DISCLAIMER },
             license: { type: "string", const: LICENSE },
           },
         },
@@ -454,7 +454,7 @@ export function buildOpenApi(): Json {
             full_app: ref("BankApp"),
             hidden: { type: "boolean", description: "Store numbers are 60+ days old: in no ranking." },
             dataset: ref("AppsDataset"),
-            disclaimer: { type: "string", const: DISCLAIMER },
+            disclaimer: { type: "string", const: APPS_DISCLAIMER },
             license: { type: "string", const: LICENSE },
           },
         },

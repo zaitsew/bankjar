@@ -15,7 +15,7 @@
  *  2. Gift reward:  value x gift_factor (default 0.8), minus 19% of the gift's
  *     retail value as tax on payment in kind. The schema has no field saying
  *     the bank pays that tax, so we always charge it and flag
- *     "tax on gift: check terms".
+ *     "tax on gift: depends on the terms".
  *  3. Fee waiver:   value counts as is. A saved fee is not income, so no tax.
  *  4. Interest:     min(balance, balance_cap) x TAE/100 x min(promo_months, 12)/12,
  *     then minus 19% withholding. Counted for reward.type "rate" and for any

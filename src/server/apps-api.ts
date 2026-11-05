@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { BankApp } from "../core/app-schema";
 import { SCORED_FEATURES, rankApps, scoreApp, type AppScore, type RankedApp, type ScoredFeature } from "../core/app-score";
-import { DISCLAIMER, LICENSE, todayIso } from "./api";
+import { APPS_DISCLAIMER, LICENSE, todayIso } from "./api";
 import { allApps } from "./apps";
 
 /**
@@ -60,7 +60,7 @@ export function appsDatasetVersion(apps: readonly BankApp[] = allApps()): AppsDa
 }
 
 export function appsEnvelope(): AppsEnvelope {
-  return { dataset: appsDatasetVersion(), disclaimer: DISCLAIMER, license: LICENSE };
+  return { dataset: appsDatasetVersion(), disclaimer: APPS_DISCLAIMER, license: LICENSE };
 }
 
 function storeRow(s: NonNullable<BankApp["ios"]> | NonNullable<BankApp["android"]> | null): AppStoreRow | null {

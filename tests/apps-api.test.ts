@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { GET as appGET } from "../app/api/v1/apps/[id]/route";
 import { GET as appsGET, OPTIONS as appsOPTIONS } from "../app/api/v1/apps/route";
 import { GET as notFoundGET } from "../app/api/v1/[[...path]]/route";
-import { DISCLAIMER, LICENSE } from "../src/server/api";
+import { APPS_DISCLAIMER, LICENSE } from "../src/server/api";
 import { appLine, appsBody, appsDatasetVersion } from "../src/server/apps-api";
 import { buildOpenApi } from "../src/server/openapi";
 import { fixtureApps } from "./helpers/apps";
@@ -36,7 +36,7 @@ describe("GET /api/v1/apps", () => {
     expect(body.dataset).toEqual({ latest_verified_on: "2026-10-21", count: 4, version: "2026-10-21+4" });
     expect(body.count).toBe(3);
     expect(body.total_apps).toBe(3);
-    expect(body.disclaimer).toBe(DISCLAIMER);
+    expect(body.disclaimer).toBe(APPS_DISCLAIMER);
     expect(body.license).toBe(LICENSE);
   });
 
@@ -104,7 +104,7 @@ describe("GET /api/v1/apps/{id}", () => {
     expect(body.full_app.features.bizum.source_url).toBe("https://example.com/testbank/bizum");
     expect(Object.keys(body.app).sort()).toEqual([...ROW_KEYS].sort());
     expect(body.dataset.count).toBe(4);
-    expect(body.disclaimer).toBe(DISCLAIMER);
+    expect(body.disclaimer).toBe(APPS_DISCLAIMER);
   });
 
   it("returns a hidden app with hidden: true and no rank, like a hidden offer", async () => {

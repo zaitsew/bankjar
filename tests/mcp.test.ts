@@ -3,7 +3,7 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 import { Script, createContext } from "node:vm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { DELETE, GET, OPTIONS, POST } from "../app/mcp/route";
-import { DISCLAIMER } from "../src/server/api";
+import { APPS_DISCLAIMER, DISCLAIMER } from "../src/server/api";
 import { MCP_INSTRUCTIONS } from "../src/server/mcp";
 import { MCP_APP_MIME_TYPE, MCP_APPS_PROTOCOL_VERSION, OFFER_WIDGET_URI } from "../src/server/mcp-widget";
 import pkg from "../package.json";
@@ -114,7 +114,7 @@ describe("MCP server", () => {
     expect(summary).toContain("1. Testbank - Testbank Mobile | score ");
     expect(summary).toContain(s.apps[0].source_urls[0]);
     expect(summary).toContain("? means unknown and scores 0.");
-    expect(summary).toContain(DISCLAIMER);
+    expect(summary).toContain(APPS_DISCLAIMER);
     expect(JSON.parse(raw!).apps).toHaveLength(3);
   });
 
@@ -132,9 +132,53 @@ describe("MCP server", () => {
     expect(t.description).toContain("Bizum, Apple Pay, Google Pay, English UI");
   });
 
-  it("tells the model that an app score says nothing about offers", () => {
-    expect(MCP_INSTRUCTIONS).toContain("rank_bank_apps");
-    expect(MCP_INSTRUCTIONS).toContain("says nothing about how good a bank's offers are");
+  it("says that an app score covers the app, not the offers", async () => {
+    expect(MCP_INSTRUCTIONS).toContain("rank_bank_apps scores mobile apps only, not offers");
+    const res = await client.callTool({ name: "rank_bank_apps", arguments: {} });
+    expect(structured(res).disclaimer).toBe(APPS_DISCLAIMER);
+  });
+
+  // Anthropic directory review, 2026-11-04: instructions, descriptions and outputs describe;
+  // they do not command the assistant. Fixture offers are written to stay clear of these words.
+  const COMMANDS = /\b(always|never|must|should|cite|tell|ask|say|do not|don't|make sure|remember|check|use|pass|give|leave|recommend)\b/i;
+
+  it("instructions, tool metadata and parameter docs carry no commands to the assistant", async () => {
+    expect(MCP_INSTRUCTIONS).not.toMatch(COMMANDS);
+    const { tools } = await client.listTools();
+    for (const t of tools) {
+      expect(t.description, t.name).not.toMatch(COMMANDS);
+      const props = (t.inputSchema.properties ?? {}) as Record<string, { description?: string }>;
+      for (const [name, p] of Object.entries(props)) expect(p.description ?? "", `${t.name}.${name}`).not.toMatch(COMMANDS);
+    }
+    const { resources } = await client.listResources();
+    for (const r of resources) expect(r.description ?? "", r.uri).not.toMatch(COMMANDS);
+  });
+
+  it("tool outputs carry caveats as data, with no commands to the assistant", async () => {
+    const calls: Array<[string, Record<string, unknown>]> = [
+      ["search_offers", { query: "best salary bonus", monthly_income_eur: 2500 }],
+      ["search_offers", { goal: "savings", balance_eur: 20000 }],
+      ["get_offer", { id: "testbank-saver" }],
+      ["get_offer", { id: "ghost" }],
+      ["compare_offers", { ids: ["testbank-saver", "testbank-payroll-cash", "ghost"], monthly_income_eur: 100 }],
+      ["list_goals", {}],
+      ["rank_bank_apps", {}],
+    ];
+    for (const [name, args] of calls) {
+      const res = await client.callTool({ name, arguments: args });
+      const label = `${name} ${JSON.stringify(args)}`;
+      expect(texts(res)[0], label).not.toMatch(COMMANDS);
+      if (!res.isError) expect(typeof structured(res).dataset, label).toBe("object");
+    }
+    const s = structured(await client.callTool({ name: "search_offers", arguments: { goal: "savings" } }));
+    expect(s.disclaimer).toBe(DISCLAIMER);
+    expect(DISCLAIMER).not.toMatch(COMMANDS);
+    expect(APPS_DISCLAIMER).not.toMatch(COMMANDS);
+    for (const o of s.offers) {
+      expect(typeof o.stale).toBe("boolean");
+      expect(o.source_url).toMatch(/^https:/);
+      expect(o.verified_on).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
   });
 
   it("list_goals lists five goals", async () => {
