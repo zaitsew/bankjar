@@ -91,6 +91,28 @@ An app shows a "stale" badge when its store numbers are more than 30 days old. A
 
 Order: highest score first. A tie goes to the app with more ratings in total, then to the bank name. No paid placement exists for apps.
 
+## What the offer verifier proves
+
+`npm run verify-offers` fetches each offer's `source_url`, reduces the page to text and looks for the numbers the YAML states: `reward.value_eur`, `rate_tae`, `commitment_months`, `requirements.min_monthly_income_eur` and `fees.monthly_eur`. Null and zero values are skipped, because a zero proves nothing. Spanish and English formats match (1.200, 1,200 and 1200; 2,5 % and 2.5%). It writes a JSON and a Markdown report to `runs/verify-offers/` and prints one count per status.
+
+| Status | Meaning |
+|---|---|
+| `ok` | Every checkable number appears on the page, and at least one was checkable. |
+| `mismatch` | One or more numbers were not found. The report lists which. |
+| `unverifiable` | The page loaded and held nothing checkable. |
+| `blocked` | HTTP error, timeout, or text too short to be a real page (a script shell or a bot wall). |
+
+What it proves: a number from the YAML appears somewhere on the page the offer cites.
+
+What it does not prove:
+
+- That the number means what the YAML says. `ok` can match an unrelated figure with the same value.
+- That a `mismatch` is wrong. `reward.value_eur` is often a derived figure (net, or first-year value) that the page never prints. A mismatch means a person must read the page.
+- Anything about a `blocked` page. A failed fetch is not a verification.
+- Anything the page shows only after JavaScript runs.
+
+The script is read-only. It never edits a file in `data/` and never changes `verified_on`. Renewing `verified_on` stays a person's decision after reading the page.
+
 ## Not advice
 
 BankJar is not financial advice. Terms change. Open the source link and read the bank's page before you sign.
