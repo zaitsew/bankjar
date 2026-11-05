@@ -81,15 +81,19 @@ function isHiddenByAttributes(attrs: string): boolean {
   const withoutValues = attrs.replace(/=\s*("[^"]*"|'[^']*'|[^\s>]+)/g, "=");
   if (/\shidden\b/i.test(withoutValues)) return true;
   if (/\saria-hidden\s*=\s*["']?true/i.test(attrs)) return true;
-  return /\sstyle\s*=\s*("[^"]*"|'[^']*')/i.test(attrs) && /(display\s*:\s*none|visibility\s*:\s*hidden)/i.test(attrs);
+  // Any attribute that says so, quoted or not: hiding too much only sends the page to a person.
+  return /(display\s*:\s*none|visibility\s*:\s*hidden)/i.test(attrs);
 }
+
+/** One tag. Attribute values may hold `>` inside quotes. */
+const TAG = String.raw`<(\/?)([a-z][a-z0-9-]*)((?:"[^"]*"|'[^']*'|[^'">])*)>`;
 
 /**
  * Removes elements hidden by an attribute, with their nested content. A reader cannot see their
  * numbers, so they must not count as found. Hiding through a CSS class cannot be seen from the HTML.
  */
 function stripHiddenElements(html: string): string {
-  const tag = /<(\/?)([a-z][a-z0-9-]*)((?:\s[^>]*)?)>/gi;
+  const tag = new RegExp(TAG, "gi");
   let out = "";
   let copiedTo = 0;
   let skipName: string | null = null;
@@ -98,7 +102,8 @@ function stripHiddenElements(html: string): string {
     const closing = m[1] === "/";
     const name = (m[2] ?? "").toLowerCase();
     const attrs = m[3] ?? "";
-    const selfClosed = VOID_TAGS.has(name) || attrs.endsWith("/");
+    // Browsers ignore a trailing slash on a non-void element: `<div hidden/>` still opens a hidden div.
+    const selfClosed = VOID_TAGS.has(name);
     if (skipName !== null) {
       if (name !== skipName || selfClosed) continue;
       depth += closing ? -1 : 1;
@@ -123,7 +128,8 @@ export function htmlToText(html: string): string {
     .replace(/<!--[\s\S]*?-->/g, " ")
     .replace(/<(script|style|noscript|svg|template|head)\b[\s\S]*?<\/\1\s*>/gi, " ");
   return stripHiddenElements(withoutBlocks)
-    .replace(/<[^>]*>/g, " ")
+    .replace(new RegExp(TAG, "gi"), " ")
+    .replace(/<\/?[a-z!][^>]*>/gi, " ")
     .replace(/&#x([0-9a-f]+);/gi, (_, h: string) => safeChar(parseInt(h, 16)))
     .replace(/&#(\d+);/g, (_, d: string) => safeChar(parseInt(d, 10)))
     .replace(/&([a-z]+);/gi, (m, n: string) => ENTITIES[n] ?? m)
@@ -190,14 +196,14 @@ function numbersMatching(text: string, re: RegExp, group: string): number[] {
 
 /** Amounts in euros: a number next to €, EUR or "euros", before or after. */
 export function findEuroAmounts(text: string): number[] {
-  const after = new RegExp(String.raw`(?<![\d.,\-−])(?<n>${NUM})\s?(?:€|eur\b|euros?\b)`, "gi");
+  const after = new RegExp(String.raw`(?<![\d.,])(?<![\-−]\s*)(?<n>${NUM})\s?(?:€|eur\b|euros?\b)`, "gi");
   const before = new RegExp(String.raw`(?:€|\beur\b)\s?(?<n>${NUM})(?![\d])`, "gi");
   return [...numbersMatching(text, after, "n"), ...numbersMatching(text, before, "n")];
 }
 
 /** Percentages: a number followed by %. A negative rate does not confirm a positive one. */
 export function findPercentages(text: string): number[] {
-  const re = new RegExp(String.raw`(?<![\d.,\-−])(?<n>${NUM})\s?%`, "g");
+  const re = new RegExp(String.raw`(?<![\d.,])(?<![\-−]\s*)(?<n>${NUM})\s?%`, "g");
   return numbersMatching(text, re, "n");
 }
 
