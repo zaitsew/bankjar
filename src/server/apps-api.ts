@@ -165,6 +165,6 @@ export function appLine(row: AppRow, rank?: number | null): string {
   const n = rank === undefined ? row.rank : rank;
   const prefix = n === null || n === undefined ? "-" : `${n}.`;
   const features = SCORED_FEATURES.map((f) => `${FEATURE_NAMES[f]} ${mark(row.features[f])}`).join(", ");
-  const stale = row.stale ? " (STALE: re-check)" : "";
+  const stale = row.stale ? " (stale: store numbers may have changed)" : "";
   return `${prefix} ${row.bank} - ${row.app_name} | score ${row.score}/100 | ${storeText("App Store", row.ios)} | ${storeText("Google Play", row.android)} | ${features} | verified ${row.verified_on}${stale} | ${row.source_urls.join(" ")}`;
 }
