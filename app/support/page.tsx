@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContactLine } from "../../components/Contact";
 import { dateLabel } from "../../components/format";
-import { ISSUES_URL, REPO_URL, SECURITY_URL } from "../../components/site";
+import { REPO_URL, SECURITY_URL, wrongOfferUrl } from "../../components/site";
 import { HIDDEN_AFTER_DAYS, STALE_AFTER_DAYS, daysBetween, isHidden, isStale } from "../../src/core/score";
 import { todayIso } from "../../src/server/api";
 import { allOffers, datasetVersion } from "../../src/server/data";
@@ -43,14 +43,15 @@ export default function SupportPage() {
         <ol>
           <li>
             Open{" "}
-            <a className={link} href={`${ISSUES_URL}/new`} rel="noopener">
-              a GitHub issue
-            </a>
-            .
+            <a className={link} href={wrongOfferUrl()} rel="noopener">
+              the wrong-offer form
+            </a>{" "}
+            on GitHub. Each offer page also has a &ldquo;Report a wrong offer&rdquo; link that fills in the offer id.
           </li>
           <li>Give the offer id (the last part of its page address, for example <code className="inline">/offer/bbva-salary-cuenta-online</code>) or the bank and product.</li>
-          <li>Say what is wrong and link the bank&rsquo;s page that shows the correct terms.</li>
+          <li>Say what BankJar shows, what the bank&rsquo;s page says, and link that page.</li>
         </ol>
+        <p>The issue is public. Leave out personal data such as account numbers, IBANs and ID numbers.</p>
         <p>
           Offers are plain files, so you can also fix one yourself: see &ldquo;Contributing an offer&rdquo; in the{" "}
           <a className={link} href={`${REPO_URL}#contributing-an-offer`} rel="noopener">

@@ -192,7 +192,7 @@ describe("/terms", () => {
 describe("/support", () => {
   it("links the issue tracker and the private security form", () => {
     const h = html(SupportPage);
-    expect(h).toContain('href="https://github.com/zaitsew/bankjar/issues/new"');
+    expect(h).toContain('href="https://github.com/zaitsew/bankjar/issues/new?template=wrong-offer.yml"');
     expect(h).toContain("https://github.com/zaitsew/bankjar/security/advisories/new");
     expect(h).toContain('href="/connect"');
   });

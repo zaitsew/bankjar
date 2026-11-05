@@ -15,6 +15,7 @@ import {
   yesNo,
 } from "../../../components/format";
 import { ExternalIcon } from "../../../components/icons";
+import { wrongOfferUrl } from "../../../components/site";
 import { makeProfile } from "../../../src/core/profile";
 import { scoreOffer } from "../../../src/core/score";
 import { allOffers } from "../../../src/server/data";
@@ -279,6 +280,11 @@ export default async function OfferPage({ params }: Props) {
       </section>
 
       <p className="t-caption muted mt-8">Not financial advice. Terms change: read the bank&apos;s page before you sign.</p>
+      <p className="t-caption muted mt-2">
+        <a href={wrongOfferUrl(offer.id)} rel="noopener" className="underline underline-offset-4">
+          Report a wrong offer
+        </a>
+      </p>
     </div>
   );
 }

@@ -65,3 +65,29 @@ describe("parseBlocks", () => {
     expect(list).toEqual({ t: "list", ordered: true, items: ["one still one", "two"] });
   });
 });
+
+describe("report a wrong offer", () => {
+  it("links the offer page to the issue form with the encoded offer id", async () => {
+    const { renderToStaticMarkup } = await import("react-dom/server");
+    const { default: OfferPage } = await import("../app/offer/[id]/page");
+    const { wrongOfferUrl } = await import("../components/site");
+    const file = fs.readdirSync("data/offers/es").filter((f) => f.endsWith(".yaml"))[0];
+    const id = parse(fs.readFileSync(`data/offers/es/${file}`, "utf8")).id as string;
+    const html: string = renderToStaticMarkup(await OfferPage({ params: Promise.resolve({ id }) }));
+    const m = html.match(/<a href="([^"]*)"[^>]*>\s*Report a wrong offer/);
+    expect(m).not.toBeNull();
+    const href = (m?.[1] ?? "").replace(/&amp;/g, "&");
+    expect(href).toBe(`https://github.com/zaitsew/bankjar/issues/new?template=wrong-offer.yml&offer-id=${id}`);
+    expect(href).toBe(wrongOfferUrl(id));
+  });
+  it("encodes characters that would break the query", async () => {
+    const { wrongOfferUrl } = await import("../components/site");
+    expect(wrongOfferUrl("a b&c=d/é")).toContain("&offer-id=a%20b%26c%3Dd%2F%C3%A9");
+    expect(wrongOfferUrl()).not.toContain("offer-id");
+  });
+  it("ships a form whose offer-id field matches the link and the label", () => {
+    const form = parse(fs.readFileSync(".github/ISSUE_TEMPLATE/wrong-offer.yml", "utf8"));
+    expect(form.labels).toEqual(["wrong-offer"]);
+    expect(form.body.some((b: { id?: string }) => b.id === "offer-id")).toBe(true);
+  });
+});
