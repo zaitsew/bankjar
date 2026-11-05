@@ -25,14 +25,13 @@ All 69 offers carry `verified_on: 2026-10-22`. They all go stale on 2026-11-21 a
 
 - [ ] Deploy #30, and confirm the new instructions on the live `/mcp`.
 - [ ] `scripts/verify-offers.ts`: fetch each `source_url`, compare the numbers in the YAML with the page text, report ok, mismatch or blocked.
-- [ ] Re-verify all 69 offers. A person or an agent reads every mismatch. BBVA and Bankinter (5 offers) block fetches and need another route.
+- [ ] Re-verify all 69 offers. A person or an agent reads every mismatch. BBVA and Bankinter (5 offers) block fetches and need another route. A failed fetch never renews `verified_on`.
 - [ ] Weekly verifier run that opens a pull request. A changed number is reviewed and never merged automatically.
-- [ ] Change history from the data's git log, on the offer page and in the API ("BBVA: €800 → €600 on 2026-11-03").
 - [ ] "Report a wrong offer" issue form, linked from each offer page.
 
-## Owner's step — the legal question
+## Owner's step, this week — the legal question
 
-`docs/LEGAL-FEE-COMPARISON.md` holds the open question and the text to send a lawyer. Until it is answered, no new feature adds fee comparison. Nothing is removed on a guess either.
+`docs/LEGAL-FEE-COMPARISON.md` holds the open question and the text to send a lawyer. It runs beside Sprint 2. Until it is answered, no new feature adds fee comparison. Nothing is removed on a guess either.
 
 ## Sprint 3 — first attempts to sell
 
@@ -45,13 +44,15 @@ All 69 offers carry `verified_on: 2026-10-22`. They all go stale on 2026-11-21 a
 - [ ] Real usage counters. `./check.sh usage` counts the dataset, so today nobody can tell whether anyone uses BankJar. The privacy page changes in the same PR.
 - [ ] Post drafts fed by real events: an offer change, a new top offer, a stale bonus that disappeared.
 
-## Sprint 4 — Blind pick and Spanish
+## Sprint 4 — Spanish, then Blind pick
 
 > "It should be similar to https://arena.ai/"
 
+- [ ] Spanish interface. Watch five target users run a comparison and count how many finish.
 - [ ] Blind pick: two offers without bank names, then the reveal; a people's-choice ranking. The home page says "Coming soon" today.
 - [ ] Saved profile in the browser and shareable result links.
-- [ ] Spanish interface, then Russian.
+- [ ] Change history on the offer page and in the API ("BBVA: €800 → €600 on 2026-11-03"). The data's git log already holds it.
+- [ ] Russian interface.
 
 ## Later — only when the verifier keeps Spain fresh unattended
 
