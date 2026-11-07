@@ -36,19 +36,37 @@ The droplet has 1 GB of RAM and cannot compile Next, so the script builds on you
 - Also: rank Spanish bank mobile apps (0 to 100 from store ratings, release freshness, reach and Bizum / Apple Pay / Google Pay / English) on `/apps`, at `/api/v1/apps` and with the MCP tool `rank_bank_apps`. One YAML per app in `data/apps/es/`; `npm run fetch-apps` refreshes the store numbers.
 - Doesn't: take paid placement, give personal financial advice, or invent numbers — the AI only parses your question and summarises rows from `data/`.
 
+## For Claude
+
+```sh
+/plugin install bankjar --marketplace zaitsew/bankjar
+```
+
+The plugin in `plugin/` adds the `bank-offers` skill and connects the public MCP server. No account or key. Details: [plugin/README.md](plugin/README.md).
+
 ## For agents
 
 See `docs/ARCHITECTURE.md` → "For agents": `/api/v1/search`, `/api/v1/offers`, `/api/v1/apps`, `/openapi.json`, `/llms.txt`, `/data/offers.json`, and the MCP endpoint `/mcp`.
 
+## Report a wrong offer
+
+Every offer page links to a "Report a wrong offer" form with the offer id filled in. It asks for the source link and the date you saw. Issues are public. [Open the form](https://github.com/zaitsew/bankjar/issues/new?template=wrong-offer.yml).
+
 ## Contributing an offer
 
 One offer is one YAML file in `data/offers/es/`. Copy a neighbour, change the terms, put the bank's page in `source_url`, and open a pull request. `./check.sh` validates the file.
+
+Check offers against their sources with `npm run verify-offers` (one bank: `npm run verify-offers -- bbva`). It fetches each `source_url`, looks for the numbers the YAML states and writes a report to `runs/verify-offers/`. It is read-only: it never edits `data/` or `verified_on`, and a page it cannot fetch counts as not verified.
 
 ## Contributing an app feature
 
 Store numbers are written by `npm run fetch-apps`. Bizum, Apple Pay and Google Pay are filled in by hand in `data/apps/es/<bank>.yaml`: set `value` to `true` or `false` and put the page that shows it in `source_url`. A known value without a source fails `./check.sh`.
 
 The store numbers refresh every Monday: `scripts/refresh-apps.sh` fetches them, opens and merges a data-only PR after `./check.sh`, and deploys. `scripts/install-launchd.sh` installs the job (`--remove` uninstalls it); `scripts/refresh-apps.sh --dry` shows the diff without shipping. Log: `~/Library/Logs/bankjar-app-refresh.log`.
+
+## Legal pages
+
+The site has [privacy](https://bankjar.fabriquefutur.com/privacy), [terms](https://bankjar.fabriquefutur.com/terms), [support](https://bankjar.fabriquefutur.com/support) and [data deletion](https://bankjar.fabriquefutur.com/data-deletion) pages. BankJar has no accounts and stores no profile.
 
 ## Docs
 
