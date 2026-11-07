@@ -151,3 +151,25 @@ name = "first-run check passes on a clean machine"
 how = "clone the repo, run ./check.sh, read what it says"
 status = "untested"                     # ok | broken | untested
 # confirmed = 2026-01-01
+
+# AI directory listings, shown as platforms by `teyla portfolio`. Copied from the portals by hand: update
+# `state` and `as_of` whenever a portal changes. docs/DIRECTORY.md holds the submission history.
+[directories.claude]
+state = "approved"
+kind = "connector"
+as_of = 2026-11-07
+link = "https://claude.ai/admin-settings/directory/submissions/bankjar"
+note = "Approved 2026-11-04; waiting for the owner's Publish"
+
+[directories.chatgpt]
+state = "draft"
+kind = "plugin"
+version = "1.0.0"
+as_of = 2026-11-05
+note = "Draft: rescan, add the demo video, then submit for review"
+
+[directories.gemini]
+state = "draft"
+kind = "connector"
+as_of = 2026-10-29
+note = "Not applied; after Loco's application is accepted"
