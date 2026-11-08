@@ -155,11 +155,11 @@ status = "untested"                     # ok | broken | untested
 # AI directory listings, shown as platforms by `teyla portfolio`. Copied from the portals by hand: update
 # `state` and `as_of` whenever a portal changes. docs/DIRECTORY.md holds the submission history.
 [directories.claude]
-state = "approved"
+state = "published"
 kind = "connector"
-as_of = 2026-11-07
-link = "https://claude.ai/admin-settings/directory/submissions/bankjar"
-note = "Approved 2026-11-04; waiting for the owner's Publish"
+as_of = 2026-11-08
+link = "https://claude.ai/directory/connectors/bankjar"
+note = "Published 2026-11-08"
 
 [directories.chatgpt]
 state = "draft"
