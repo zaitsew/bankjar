@@ -7,21 +7,21 @@ app_name: "MyInvestor · Banco & Inversión"
 ios:
   app_id: 1587906669
   url: https://apps.apple.com/es/app/id1587906669
-  rating: 3.56
-  ratings_count: 4606
-  updated_on: 2026-10-27
+  rating: 3.57
+  ratings_count: 4658
+  updated_on: 2026-11-06
   languages:
     - EN
     - ES
 android:
   package: com.myinvestor.es
   url: https://play.google.com/store/apps/details?id=com.myinvestor.es&gl=ES
-  rating: 4.54
-  ratings_count: 6712
-  updated_on: 2026-10-27
+  rating: 4.58
+  ratings_count: 6798
+  updated_on: 2026-11-05
 features:
   bizum: { value: true, source_url: https://myinvestor.es/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-11-02
+verified_on: 2026-11-09
 notes: null
