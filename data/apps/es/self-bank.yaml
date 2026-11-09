@@ -23,5 +23,5 @@ features:
   bizum: { value: null, source_url: null }
   apple_pay: { value: null, source_url: null }
   google_pay: { value: null, source_url: null }
-verified_on: 2026-11-02
+verified_on: 2026-11-09
 notes: null

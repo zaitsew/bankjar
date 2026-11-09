@@ -7,9 +7,9 @@ app_name: "imagin: Banco Móvil y Finanzas"
 ios:
   app_id: 1069665204
   url: https://apps.apple.com/es/app/id1069665204
-  rating: 4.66
-  ratings_count: 160257
-  updated_on: 2026-10-22
+  rating: 4.67
+  ratings_count: 161936
+  updated_on: 2026-11-08
   languages:
     - CA
     - EN
@@ -18,12 +18,12 @@ ios:
 android:
   package: com.imaginbank.app
   url: https://play.google.com/store/apps/details?id=com.imaginbank.app&gl=ES
-  rating: 4.54
-  ratings_count: 291878
-  updated_on: 2026-10-23
+  rating: 4.53
+  ratings_count: 293001
+  updated_on: 2026-11-08
 features:
   bizum: { value: true, source_url: https://roams.es/finanzas/entidades-financieras/imaginbank/bizum/ }
   apple_pay: { value: null, source_url: null }
   google_pay: { value: null, source_url: null }
-verified_on: 2026-11-02
+verified_on: 2026-11-09
 notes: "imagin is CaixaBank's digital bank; it has its own app and no offers in BankJar yet."
