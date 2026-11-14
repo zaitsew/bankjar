@@ -1,28 +1,52 @@
 #!/usr/bin/env bash
-# Install the weekly app-store refresh into the current user's launchd. Safe to run again.
+# Install a BankJar job into the current user's launchd. Safe to run again.
 #
-#   scripts/install-launchd.sh            install or update
-#   scripts/install-launchd.sh --remove   unload and delete
+#   scripts/install-launchd.sh                         app-refresh (the default, as before)
+#   scripts/install-launchd.sh verify-weekly           the weekly verifier PR job
+#   scripts/install-launchd.sh all                     both
+#   scripts/install-launchd.sh [job] --remove          unload and delete
 set -euo pipefail
 
-LABEL="com.zaitsew.bankjar.app-refresh"
-SRC="$(cd "$(dirname "$0")/.." && pwd)/deploy/launchd/${LABEL}.plist"
-DEST="$HOME/Library/LaunchAgents/${LABEL}.plist"
+JOB="app-refresh"
+REMOVE=0
+for a in "$@"; do
+  case "$a" in
+    --remove) REMOVE=1 ;;
+    app-refresh | verify-weekly | all) JOB="$a" ;;
+    *) echo "unknown argument: $a" >&2; exit 2 ;;
+  esac
+done
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DOMAIN="gui/$(id -u)"
 
-if launchctl print "${DOMAIN}/${LABEL}" >/dev/null 2>&1; then
-  launchctl bootout "${DOMAIN}/${LABEL}" || true
-fi
+install_one() {
+  local name="$1" when="$2" logname="$3"
+  local label="com.zaitsew.bankjar.${name}"
+  local src="${ROOT}/deploy/launchd/${label}.plist"
+  local dest="$HOME/Library/LaunchAgents/${label}.plist"
 
-if [ "${1:-}" = "--remove" ]; then
-  rm -f "$DEST"
-  echo "removed ${LABEL}"
-  exit 0
-fi
+  if launchctl print "${DOMAIN}/${label}" >/dev/null 2>&1; then
+    launchctl bootout "${DOMAIN}/${label}" || true
+  fi
+  if [ "$REMOVE" = 1 ]; then
+    rm -f "$dest"
+    echo "removed ${label}"
+    return
+  fi
+  mkdir -p "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
+  sed "s|__HOME__|${HOME}|g" "$src" > "$dest"
+  plutil -lint "$dest" >/dev/null
+  launchctl bootstrap "$DOMAIN" "$dest"
+  echo "installed ${label}: runs ${when}, log at ~/Library/Logs/${logname}"
+  echo "run it now with: launchctl kickstart ${DOMAIN}/${label}"
+}
 
-mkdir -p "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
-sed "s|__HOME__|${HOME}|g" "$SRC" > "$DEST"
-plutil -lint "$DEST" >/dev/null
-launchctl bootstrap "$DOMAIN" "$DEST"
-echo "installed ${LABEL}: runs Mondays at 07:30, log at ~/Library/Logs/bankjar-app-refresh.log"
-echo "run it now with: launchctl kickstart ${DOMAIN}/${LABEL}"
+case "$JOB" in
+  app-refresh) install_one app-refresh "Mondays at 07:30" bankjar-app-refresh.log ;;
+  verify-weekly) install_one verify-weekly "Sundays at 07:00" bankjar-verify-weekly.log ;;
+  all)
+    install_one app-refresh "Mondays at 07:30" bankjar-app-refresh.log
+    install_one verify-weekly "Sundays at 07:00" bankjar-verify-weekly.log
+    ;;
+esac

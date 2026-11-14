@@ -27,6 +27,7 @@ All 69 offers carry `verified_on: 2026-10-22`. They all go stale on 2026-11-21 a
 - [x] `scripts/verify-offers.ts` (#33): fetch each `source_url`, compare the numbers in the YAML with the page text, report ok, mismatch, unverifiable or blocked. First run, 2026-11-05: 39 ok, 13 mismatch, 12 unverifiable, 5 blocked.
 - [ ] Re-verify all 69 offers. A person or an agent reads every mismatch. BBVA and Bankinter (5 offers) block fetches and need another route. A failed fetch never renews `verified_on`.
 - [ ] Weekly verifier run that opens a pull request. A changed number is reviewed and never merged automatically.
+  Built as `scripts/verify-weekly.sh` (Sundays 07:00, launchd `com.zaitsew.bankjar.verify-weekly`, install with `scripts/install-launchd.sh verify-weekly`): writes `docs/verification/offers-latest.md`, opens a PR only when it changed, never merges.
 - [x] "Report a wrong offer" issue form, linked from each offer page (#32).
 
 ## Sprint 2b — market context, night of 2026-11-14
