@@ -5,7 +5,7 @@ bank_slug: pibank
 country: ES
 goal: deposit
 product_name: Depósito Pibank 12 meses
-headline: "3.03% TAE for 12 months, no minimum or maximum, interest paid quarterly, offer to 31 Oct 2026"
+headline: "3.03% TAE for 12 months, no minimum or maximum, interest paid quarterly, offer to 30 Nov 2026"
 reward:
   type: rate
   value_eur: null
@@ -29,9 +29,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: null
   notes: null
-valid_until: 2026-10-31
+valid_until: 2026-11-30
 source_url: https://www.pibank.es/deposito-bancario-plazo-fijo/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "The page says 'Oferta válida hasta el 31/10/2026'."
+verified_on: 2026-11-14
+notes: "The page says 'Oferta válida hasta el 30/11/2026' (was 31/10/2026). Rate unchanged."
 paid_placement: false

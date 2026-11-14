@@ -30,9 +30,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: null
   notes: null
-valid_until: 2026-10-31
+valid_until: 2026-11-30
 source_url: https://myinvestor.es/depositos/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "Page says the promotional deposits are available only until 31 October 2026. Shorter terms on the same page: 1 month 2.25% (2.50% with robo-portfolio), 3 months 2.25% (2.50%), 6 months 2.75% (3.00%)."
+verified_on: 2026-11-14
+notes: "Page says the promotional deposits are available only until 30 November 2026 (was 31 October). Rates unchanged. Shorter terms on the same page: 1 month 2.25% (2.50% with robo-portfolio), 3 months 2.25% (2.50%), 6 months 2.75% (3.00%)."
 paid_placement: false

@@ -5,21 +5,21 @@ bank_slug: cajamar
 country: ES
 goal: deposit
 product_name: Depósito Online 12 meses
-headline: "2.02% TAE for 12 months from EUR 1,000 to EUR 100,000, bookable in the app or web banking"
+headline: "2.78% TAE for 12 months from EUR 6,000, no maximum, bookable in the app or web banking"
 reward:
   type: rate
   value_eur: null
-  description: "2.00% TIN (2.02% TAE) for 12 months. Example: EUR 10,000 earns EUR 200 gross. Interest paid quarterly, half-yearly or at maturity; optional automatic renewal at the rates then in force."
-  paid_when: "Quarterly, half-yearly or at maturity, as chosen"
-rate_tae: 2.02
+  description: "2.75% TIN (2.78% TAE) for 12 months with quarterly interest. Example on the page: EUR 6,000 earns EUR 41.25 gross per quarter. No automatic renewal at maturity."
+  paid_when: "Quarterly"
+rate_tae: 2.78
 promo_months: 12
-balance_cap_eur: 100000
+balance_cap_eur: null
 commitment_months: 12
 requirements:
   min_monthly_income_eur: null
   new_customer_only: false
   other:
-    - "Minimum EUR 1,000, maximum EUR 100,000"
+    - "Minimum EUR 6,000, no maximum"
     - "Booked through web banking or the Grupo Cajamar app, so you must be a customer"
 fees:
   monthly_eur: 0
@@ -33,6 +33,6 @@ eligibility:
 valid_until: null
 source_url: https://www.cajamar.es/es/particulares/productos-y-servicios/ahorro-e-inversion/depositos/deposito-online/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "No end date stated. Cajamar also lists a Depósito Nueva Pensión (pensioners, EUR 900+ pension) that was not read."
+verified_on: 2026-11-14
+notes: "Was 2.02% TAE, EUR 1,000-100,000; now 2.78% TAE, minimum EUR 6,000 with no maximum, per the page read 2026-11-14. No end date stated. Cajamar also lists a Depósito Nueva Pensión (pensioners, EUR 900+ pension) that was not read."
 paid_placement: false

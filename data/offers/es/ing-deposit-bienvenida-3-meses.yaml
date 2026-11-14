@@ -34,6 +34,6 @@ eligibility:
 valid_until: 2026-12-31
 source_url: https://www.ing.es/depositos-naranja
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "End date shown on the page as 'Hasta el 31/12' (year not printed; read as 2026-12-31). Exclusive to customers contracting their first account with ING."
+verified_on: 2026-11-14
+notes: "Rate, term and end date re-read 2026-11-14; the EUR 50,000 cap and new-customer limit were not visible in that fetch and are unchanged. End date shown on the page as 'Hasta el 31/12' (year not printed; read as 2026-12-31). Exclusive to customers contracting their first account with ING."
 paid_placement: false
