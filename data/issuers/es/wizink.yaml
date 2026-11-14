@@ -1,0 +1,12 @@
+# Deposit guarantee for wizink: which scheme covers deposits at this issuer.
+bank_slug: "wizink"
+legal_entity: "WiZink Bank, S.A.U."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.wizink.es/documento/dep%C3%B3sito_a_18_meses"
+verified_on: 2026-11-14
+notes: "WiZink's pre-contract sheets state WiZink Bank, S.A.U. is adhered to the FGD with EUR 100,000 per depositor in each credit institution. Read from a search excerpt."

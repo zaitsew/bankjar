@@ -1,0 +1,13 @@
+# Deposit guarantee for caixabank: which scheme covers deposits at this issuer.
+bank_slug: "caixabank"
+legal_entity: "CaixaBank, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: 
+  - "imagin"
+source_url: "https://www.caixabank.es/deployedfiles/particulares/Estaticos/pdf/Cuentas/Informacion_precontractual_de_la_Cuenta_Online_ES.pdf"
+verified_on: 2026-11-14
+notes: "The pre-contract sheet says deposits under all trade names of the entity, including imagin, count together toward one EUR 100,000 total. Read from a search excerpt; the sheet is dated 2023 and was not opened."

@@ -1,0 +1,12 @@
+# Fake issuer for the Testbank fixtures.
+bank_slug: testbank
+legal_entity: "Testbank, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://example.test/testbank/deposit-guarantee"
+verified_on: 2026-10-21
+notes: null

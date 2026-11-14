@@ -1,0 +1,12 @@
+# Deposit guarantee for mano-bank: which scheme covers deposits at this issuer.
+bank_slug: "mano-bank"
+legal_entity: "AB Mano bankas"
+country_of_licence: "LT"
+scheme_name: "Deposit and Investment Insurance (Indėlių ir investicijų draudimas, VšĮ)"
+scheme_country: "LT"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.raisin.com/es-es/bancos/mano-bank/"
+verified_on: 2026-11-14
+notes: "Raisin's page names AB Mano bankas, the Lithuanian scheme and EUR 100,000 per customer and bank. Offers are contracted through Raisin; the guarantee belongs to the bank."

@@ -1,0 +1,12 @@
+# Deposit guarantee for santander: which scheme covers deposits at this issuer.
+bank_slug: "santander"
+legal_entity: "Banco Santander, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://wcm.bancosantander.es/fwm/do-o-8-2-0-fondo%20de%20garantia%20de%20depositos-ES.pdf"
+verified_on: 2026-11-14
+notes: "Santander's notice states adhesion to the FGD and EUR 100,000 per depositor and institution. Read from a search excerpt. Openbank is a separate credit institution (Open Bank, S.A.) with its own cap."

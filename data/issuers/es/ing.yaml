@@ -1,0 +1,13 @@
+# Deposit guarantee for ing: which scheme covers deposits at this issuer.
+bank_slug: "ing"
+legal_entity: "ING Bank N.V."
+country_of_licence: "NL"
+scheme_name: "Dutch Deposit Guarantee Scheme (Depositogarantiestelsel, administered by De Nederlandsche Bank)"
+scheme_country: "NL"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: 
+  - "ING Bank"
+source_url: "https://www.ing.es/sobre-ing/pdf/DGS.pdf"
+verified_on: 2026-11-14
+notes: "ING's Spanish customers hold deposits at the Dutch bank, so the Dutch scheme applies, not the Spanish FGD. The sheet (March 2026) says the trade names ING, ING BANK and ING BANK NV form one credit institution with one EUR 100,000 limit."
