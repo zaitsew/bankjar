@@ -97,7 +97,7 @@ if [ "$DRY" = 0 ]; then
       exit 1
     fi
     if [ "$pr_count" = "0" ]; then
-      if gh pr create --repo zaitsew/bankjar --head "$BRANCH" --base main --fill; then
+      if gh pr create --repo zaitsew/bankjar --head "$BRANCH" --base main --title "Verifier: weekly report ${TODAY}" --body "Opened by a retry: an earlier run pushed ${BRANCH} but could not open its PR. The report is docs/verification/offers-latest.md on the branch. Review before merging; never merged automatically."; then
         log "opened the missing PR for ${BRANCH}"
         rm -rf "$LOCK"
         exit 0
