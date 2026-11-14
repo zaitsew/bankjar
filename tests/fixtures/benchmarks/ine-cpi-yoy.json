@@ -1,0 +1,5 @@
+{"COD":"IPC290750", "Nombre":"National. Overall index. Annual change. ", "FK_Unidad":135, "FK_Escala":1, "Data":[{"Fecha":1785535200000, "FK_TipoDato":1, "FK_Periodo":8, "Anyo":2026, "Valor":4.3, "Secreto":false}
+,{"Fecha":1788213600000, "FK_TipoDato":1, "FK_Periodo":9, "Anyo":2026, "Valor":4.9, "Secreto":false}
+,{"Fecha":1790805600000, "FK_TipoDato":1, "FK_Periodo":10, "Anyo":2026, "Valor":4.9, "Secreto":false}
+]
+}

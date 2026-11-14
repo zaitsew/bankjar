@@ -1,0 +1,18 @@
+id: ine-cpi-yoy
+country: ES
+label: Spain consumer price inflation, year on year
+kind: cpi_yoy
+unit: percent
+source_name: Instituto Nacional de Estadística (INE), CPI table 76134
+source_url: https://www.ine.es/jaxiT3/Tabla.htm?t=76134
+api_url: https://servicios.ine.es/wstempus/js/EN/DATOS_SERIE/IPC290750?nult=3
+series_code: IPC290750
+method: Annual change of the national overall consumer price index (CPI), for the latest published month.
+sanity:
+  min: -3
+  max: 20
+stale_after_days: 45
+value: 4.9
+period: 2026-10
+published_on: null
+fetched_on: 2026-11-14
