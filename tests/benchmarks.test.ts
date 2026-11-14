@@ -62,6 +62,13 @@ describe("Letra del Tesoro, 12 months (tesoro.es auction table)", () => {
   it("does not take the 3-month column, which has another auction date", () => {
     expect(parseTesoroLetras12m(html, "Tipo de interés medio").value).not.toBe(2.652);
   });
+  it("refuses an empty or non-numeric 12-month yield cell instead of reading it as 0", () => {
+    for (const cell of ["", "&nbsp;", " - "]) {
+      const blank = html.replace(/(Tipo de inter[eé]s medio[\s\S]*?)(3,045)/, `$1${cell}`);
+      expect(blank).not.toBe(html);
+      expect(() => parseTesoroLetras12m(blank, "Tipo de interés medio")).toThrow(SourceError);
+    }
+  });
   it("refuses a page without the table, without a 12 MESES column, or without the row", () => {
     expect(() => parseTesoroLetras12m("<html></html>", "Tipo de interés medio")).toThrow(SourceError);
     expect(() => parseTesoroLetras12m(html.replace("12 MESES", "18 MESES"), "Tipo de interés medio")).toThrow(/12 MESES/);

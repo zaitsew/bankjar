@@ -112,9 +112,11 @@ export function parseIneJson(body: unknown): Observation {
   return { value: best.value, period: `${best.anyo}-${String(best.periodo).padStart(2, "0")}`, published_on: null };
 }
 
-/** Spanish number text ("3,045", "1.946,17") to a number. */
+/** Spanish number text ("3,045", "1.946,17") to a number; NaN when the cell holds no number (an empty cell is not 0). */
 function esNumber(text: string): number {
-  return Number(text.replace(/\./g, "").replace(",", "."));
+  const t = text.trim();
+  if (!/^-?\d{1,3}(\.\d{3})*(,\d+)?$|^-?\d+(,\d+)?$/.test(t)) return Number.NaN;
+  return Number(t.replace(/\./g, "").replace(",", "."));
 }
 
 const strip = (html: string) => html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
