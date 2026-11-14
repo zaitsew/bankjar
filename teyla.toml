@@ -129,6 +129,17 @@ every = "7d"
 log = "~/Library/Logs/bankjar-app-refresh.log"
 
 
+# The weekly offer verifier: npm run verify-offers, then a pull request with the
+# report. Never merged by the job; a person reads it. Install, when decided:
+# scripts/install-launchd.sh verify-weekly.
+[[routine]]
+name = "verify-weekly"
+kind = "launchd"
+label = "com.zaitsew.bankjar.verify-weekly"
+every = "7d"
+log = "~/Library/Logs/bankjar-verify-weekly.log"
+
+
 # ---------------------------------------------------------------------------
 # A legacy routine: scheduled somewhere else, reported on here.
 # kind = launchd | cron | pg_cron | github-actions | script
