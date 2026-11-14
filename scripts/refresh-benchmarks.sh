@@ -120,7 +120,9 @@ if [ "$have_change" = 0 ]; then
   if [ "$DRY" = 0 ] && [ -f "$PENDING" ]; then
     log "no change, but an earlier merge was not deployed: deploying main"
     git fetch -q origin main
-    git checkout -q --detach origin/main
+    # Deploy exactly origin/main: drop this run's unreviewed fetch edits first.
+    git checkout -q --force --detach origin/main
+    git clean -fdq -- data/benchmarks
     ./scripts/deploy.sh
     rm -f "$PENDING"
     log "deployed; done"
@@ -201,13 +203,14 @@ git push -q -u origin "$BRANCH"
 url="$(gh pr create --base main --head "$BRANCH" --title "Data: benchmark refresh ${TODAY}" --body-file pr-body.md)"
 log "opened ${url}"
 gh pr merge "$url" --merge
+# Merged but not yet deployed: mark it before anything else can fail.
+echo "$url" > "$PENDING"
 log "merged ${url}"
 git push -q origin --delete "$BRANCH" || true
 
 # The merge commit is on origin/main; deploy exactly that.
 git fetch -q origin main
-git checkout -q --detach origin/main
-echo "$url" > "$PENDING"
+git checkout -q --force --detach origin/main
 ./scripts/deploy.sh
 rm -f "$PENDING"
 log "deployed; done"
