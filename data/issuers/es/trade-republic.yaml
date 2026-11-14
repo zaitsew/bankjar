@@ -2,11 +2,11 @@
 bank_slug: "trade-republic"
 legal_entity: "Trade Republic Bank GmbH"
 country_of_licence: "DE"
-scheme_name: "Entschädigungseinrichtung deutscher Banken GmbH (EdB)"
-scheme_country: "DE"
+scheme_name: null
+scheme_country: null
 cover_eur: 100000
 cover_basis: "per depositor per credit institution"
 brand_aliases: []
 source_url: "https://assets.traderepublic.com/assets/files/TradeRepublic_DepositorInformationSheet.pdf"
 verified_on: 2026-11-14
-notes: "The depositor information sheet (September 2026) names the EdB and EUR 100,000 per depositor per credit institution. The Spanish branch operates under the German licence. Some Trade Republic support pages say cash may sit in partner-bank accounts covered by those banks' schemes; which applies to a given customer is not confirmed."
+notes: "Not one scheme for every customer. The depositor information sheet (September 2026) names the German EdB for money held at Trade Republic Bank GmbH, EUR 100,000 per depositor per credit institution. Trade Republic also says cash may be held at partner banks in Germany, France or Ireland, covered by that bank's scheme up to EUR 100,000 per client and bank. The source does not say which applies to a given customer, so scheme_name is null."
