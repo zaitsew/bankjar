@@ -5,15 +5,15 @@ bank_slug: self-bank
 country: ES
 goal: savings
 product_name: Cuenta Ahorro Self
-headline: "1.00% TAE with no conditions, 1.50% TAE with EUR 20,000+ in funds, on up to EUR 60,000"
+headline: "1.00% TAE with no conditions on the first EUR 50,000, 1.50% TAE with EUR 20,000+ in funds; higher tiers up to EUR 1,000,000"
 reward:
   type: rate
   value_eur: null
-  description: "1.00% TAE (0.995% TIN) with no ties; 1.50% TAE (1.4898% TIN) if you hold at least EUR 20,000 in funds, ETFs and/or pension plans at Self Bank under the same ownership. Interest paid monthly."
+  description: "1.00% TAE (0.995% TIN) with no ties; 1.50% TAE (1.4898% TIN) if you hold at least EUR 20,000 in funds, ETFs and/or pension plans at Self Bank under the same ownership. Tiered: with no ties 1.00% TAE up to EUR 50,000, 1.50% from EUR 50,000.01 to 150,000, 2.00% from EUR 150,000.01 to 1,000,000; with the funds tie 1.50%, 1.75% and 2.25%. Interest paid monthly."
   paid_when: null
 rate_tae: 1.0
 promo_months: null
-balance_cap_eur: 60000
+balance_cap_eur: 1000000
 commitment_months: 0
 requirements:
   min_monthly_income_eur: null
@@ -32,6 +32,6 @@ eligibility:
 valid_until: null
 source_url: https://www.selfbank.es/ahorrar/cuenta-ahorro-self
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "Self Bank is a digital brand of Singular Bank. Money is fully available. The page states no end date for either rate."
+verified_on: 2026-11-14
+notes: "Was a EUR 60,000 cap with two rates; the page now shows tiers up to EUR 1,000,000 (headline rate_tae is the first-tier no-tie rate, unchanged at 1.00%). Rates may be changed with 2 months' notice. Self Bank is a digital brand of Singular Bank. Money is fully available. The page states no end date for either rate."
 paid_placement: false

@@ -1,0 +1,12 @@
+# Deposit guarantee for cajamar: which scheme covers deposits at this issuer.
+bank_slug: "cajamar"
+legal_entity: "Cajamar Caja Rural, Sociedad Cooperativa de Crédito"
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.cajamar.es/es/comun/tablon-de-anuncios-y-tarifas/fondo-de-garantia-de-depositos-informacion-a-clientes/"
+verified_on: 2026-11-14
+notes: "Cajamar's customer notice states membership of the FGD and EUR 100,000 per depositor. Read from a search excerpt; the full legal form is the one Cajamar uses on its site."

@@ -1,0 +1,12 @@
+# Deposit guarantee for bbva: which scheme covers deposits at this issuer.
+bank_slug: "bbva"
+legal_entity: "Banco Bilbao Vizcaya Argentaria, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.bbva.es/finanzas-vistazo/ef/depositos/fondo-garantia-depositos.html"
+verified_on: 2026-11-14
+notes: "BBVA's page states membership of the FGD and EUR 100,000 per holder and institution. Read from a search excerpt; the legal name is the one used in BBVA's pre-contract documents."

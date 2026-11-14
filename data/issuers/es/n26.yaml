@@ -1,0 +1,12 @@
+# Deposit guarantee for n26: which scheme covers deposits at this issuer.
+bank_slug: "n26"
+legal_entity: "N26 Bank SE"
+country_of_licence: "DE"
+scheme_name: "German statutory deposit guarantee scheme"
+scheme_country: "DE"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://n26.com/es-es/seguridad"
+verified_on: 2026-11-14
+notes: "N26's Spanish security page says deposits are covered by the German scheme up to EUR 100,000 per holder and institution. The page does not name the operator (EdB) or the full legal entity; its footer reads N26 SE. The entity name N26 Bank SE comes from a search excerpt of N26's site."

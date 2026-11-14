@@ -34,6 +34,6 @@ eligibility:
 valid_until: null
 source_url: https://www.pibank.es/cuenta-nomina/
 confirmed_by: bank
-verified_on: 2026-10-22
+verified_on: 2026-11-14
 notes: "rate_tae is the top band: 0% TAE up to EUR 5,000, 2.52% above; a EUR 100,000 balance yields 2.40% TAE. Fees document: https://img.pibank.es/pdfs/Comisiones-Cuenta-Nomina.pdf (dated 2022). No payroll bonus or welcome gift found at Pibank."
 paid_placement: false

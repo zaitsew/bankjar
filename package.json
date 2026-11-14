@@ -17,6 +17,7 @@
     "usage": "tsx scripts/usage.ts",
     "mcp:smoke": "tsx scripts/mcp-smoke.ts",
     "fetch-apps": "tsx scripts/fetch-apps.ts",
+    "fetch-benchmarks": "tsx scripts/fetch-benchmarks.ts",
     "verify-offers": "tsx scripts/verify-offers.ts"
   },
   "dependencies": {

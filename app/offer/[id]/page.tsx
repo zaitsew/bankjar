@@ -20,6 +20,7 @@ import { makeProfile } from "../../../src/core/profile";
 import { scoreOffer } from "../../../src/core/score";
 import { allOffers } from "../../../src/server/data";
 import { JsonLd, offerJsonLd } from "../../../src/server/jsonld";
+import { issuerGuarantee } from "../../../src/server/issuers";
 import { search } from "../../../src/server/search";
 
 export const revalidate = 3600;
@@ -56,6 +57,7 @@ export default async function OfferPage({ params }: Props) {
   const reward = rewardView(offer);
   const reqs = requirementLines(offer);
   const e = offer.eligibility;
+  const guarantee = issuerGuarantee(offer.bank_slug);
 
   const board = search({ overrides: { goal: offer.goal }, today: now }).result.ranked;
   const rank = board.findIndex((r) => r.offer.id === offer.id);
@@ -162,6 +164,36 @@ export default async function OfferPage({ params }: Props) {
                 </ul>
               </dd>
             </div>
+            {guarantee && (
+              <div>
+                <dt>Deposit guarantee</dt>
+                <dd>
+                  <ul className="list-disc pl-5">
+                    <li>
+                      Scheme: {guarantee.scheme_name ?? "not confirmed"}
+                      {guarantee.scheme_name && guarantee.scheme_country ? ` (${guarantee.scheme_country})` : ""}
+                    </li>
+                    <li>
+                      Cover: {eur(guarantee.cover_eur)} {guarantee.cover_basis}
+                    </li>
+                    <li>Deposits held at: {guarantee.legal_entity}</li>
+                    {guarantee.shared_cap_with.length > 0 && (
+                      <li>
+                        One cap, not two: this bank shares its licence with {guarantee.shared_cap_with.map((s) => s.bank).join(", ")}. Deposits at {offer.bank} and{" "}
+                        {guarantee.shared_cap_with.map((s) => s.bank).join(", ")} count together toward {eur(guarantee.cover_eur)}.
+                      </li>
+                    )}
+                  </ul>
+                  <span className="t-caption muted">
+                    Read on {dateLabel(guarantee.verified_on)} from{" "}
+                    <a href={guarantee.source_url} target="_blank" rel="nofollow noopener" className="break-all underline underline-offset-4">
+                      {guarantee.source_url}
+                    </a>
+                    . This does not change the score or the order.
+                  </span>
+                </dd>
+              </div>
+            )}
             <div>
               <dt>Valid until</dt>
               <dd>{offer.valid_until ? dateLabel(offer.valid_until) : "No end date stated"}</dd>

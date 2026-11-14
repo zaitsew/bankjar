@@ -1,15 +1,15 @@
-# Source: https://www.kelisto.es/cuentas-nomina/bancos/bankinter/cuenta-nomina
+# Source: https://www.rankia.com/blog/cuentas-corrientes/7544345-mejores-cuentas-remuneradas-noviembre-2026
 id: bankinter-savings-cuenta-digital
 bank: Bankinter
 bank_slug: bankinter
 country: ES
 goal: savings
 product_name: Bankinter Cuenta Digital
-headline: 3.0% TAE guaranteed to 30 April 2027 on up to EUR 100,000, no payroll needed
+headline: 3.0% TAE guaranteed for one year on up to EUR 100,000, sign up by 16 Dec 2026, no payroll needed
 reward:
   type: rate
   value_eur: null
-  description: 3.0% TAE guaranteed until 30 April 2027 on balances up to EUR 100,000, from EUR 1. Kelisto shows a nominal rate (TIN) of 2.96%, EUR 296 gross a year on EUR 10,000.
+  description: "3.0% TAE guaranteed for one year (Kelisto shows to 16 Dec 2027) on balances up to EUR 100,000, from EUR 1. Nominal rate (TIN) 2.96%, EUR 296 gross a year on EUR 10,000."
   paid_when: null
 rate_tae: 3
 promo_months: null
@@ -20,7 +20,7 @@ requirements:
   new_customer_only: true
   other:
     - Offer for new customers only
-    - Sign up by 28 Oct 2026
+    - Sign up by 16 Dec 2026
 fees:
   monthly_eur: 0
   notes: No maintenance, administration, cheque-deposit or transfer fees; free debit card; no payroll or direct debits needed.
@@ -30,9 +30,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: null
   notes: null
-valid_until: 2026-10-28
-source_url: https://www.kelisto.es/cuentas-nomina/bancos/bankinter/cuenta-nomina
+valid_until: 2026-12-16
+source_url: https://www.rankia.com/blog/cuentas-corrientes/7544345-mejores-cuentas-remuneradas-noviembre-2026
 confirmed_by: aggregator
-verified_on: 2026-10-22
-notes: "bankinter.com returned HTTP 403. Kelisto page (dated 1 Oct 2026) and Finect (21 Oct) give 3.0% TAE guaranteed to 30 Apr 2027. Kelisto's table shows TAE as not available and TIN 2.96%. A rate after the guarantee is not stated. Bankinter pages reportedly mention a 2.5% base rate and a 15 Mar 2027 guarantee for another product; not verified."
+verified_on: 2026-11-14
+notes: "Was guaranteed to 30 Apr 2027 with sign-up by 28 Oct 2026; Bankinter extended the campaign. bankinter.com returned HTTP 403, so sources are Rankia (updated 2026-11-13: 3.00% TAE, TIN 2.96%, contracting until 16/12/2026, guaranteed one year) and Kelisto (undated page: guaranteed until 16/12/27). Cap is unclear: Rankia says the cap was removed, Kelisto shows EUR 100,000 in one place and no limit in another; the previous EUR 100,000 is kept. Bankinter's press release was not readable (403)."
 paid_placement: false

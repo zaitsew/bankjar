@@ -3,6 +3,7 @@ import { OfferSchema, type Offer } from "../../src/core/schema";
 import { loadOffers } from "../../src/server/data";
 
 export const FIXTURES_DIR = path.join(__dirname, "..", "fixtures", "offers");
+export const ISSUER_FIXTURES_DIR = path.join(__dirname, "..", "fixtures", "issuers");
 export const TODAY = "2026-10-21";
 
 export function fixtures(): Offer[] {

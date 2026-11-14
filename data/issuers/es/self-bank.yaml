@@ -1,0 +1,13 @@
+# Deposit guarantee for self-bank: which scheme covers deposits at this issuer.
+bank_slug: "self-bank"
+legal_entity: "Singular Bank, S.A.U."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: 
+  - "Singular Bank"
+source_url: "https://www.selfbank.es/ayuda/preguntas-frecuentes/corporativo/que-cobertura-tiene-self-bank-como-entidad"
+verified_on: 2026-11-14
+notes: "Self Bank is a trade name of Singular Bank, S.A.U.; deposits under both names share one EUR 100,000 cap. Read from a search excerpt of Self Bank's help page."

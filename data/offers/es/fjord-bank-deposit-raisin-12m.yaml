@@ -5,13 +5,13 @@ bank_slug: fjord-bank
 country: ES
 goal: deposit
 product_name: Fjord Bank 12-month deposit via Raisin
-headline: 3.25% TAE for 12 months at Fjord Bank (Lithuania), opened through Raisin
+headline: 3.15% TAE for 12 months at Fjord Bank (Lithuania), opened through Raisin
 reward:
   type: rate
   value_eur: null
-  description: Fixed 3.25% TAE for a 12-month deposit at Fjord Bank (Lithuania, rated A), contracted through the Raisin platform with no fee for the saver. Capital and interest are paid at maturity.
+  description: Fixed 3.15% TAE for a 12-month deposit at Fjord Bank (Lithuania, rated A), contracted through the Raisin platform with no fee for the saver. Capital and interest are paid at maturity.
   paid_when: At maturity (12 months)
-rate_tae: 3.25
+rate_tae: 3.15
 promo_months: 12
 balance_cap_eur: 95000
 commitment_months: 12
@@ -33,6 +33,6 @@ eligibility:
 valid_until: null
 source_url: https://www.raisin.com/es-es/depositos-a-plazo-fijo/depositos-un-ano/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: Rate from the Raisin 12-month page updated 2 Oct 2026. The Raisin bank page for Fjord Bank shows 3.15% for 1 year with data dated 17/03/2026, so the rate moves; confirm in the Raisin app. Guarantee is the Lithuanian scheme, EUR 100,000 per depositor and bank.
+verified_on: 2026-11-14
+notes: Was 3.25% TAE; now 3.15% on the Raisin 12-month page updated 13 Nov 2026. EUR 95,000 cap not shown on that page (unchanged). The Raisin bank page for Fjord Bank shows 3.15% for 1 year with data dated 17/03/2026, so the rate moves; confirm in the Raisin app. Guarantee is the Lithuanian scheme, EUR 100,000 per depositor and bank.
 paid_placement: false

@@ -9,9 +9,9 @@ const nextConfig: NextConfig = {
   // the Mac build of sharp (it is an optional dependency of next); scripts/deploy.sh
   // prunes it, because the droplet is linux/amd64 and nothing here loads it.
   images: { unoptimized: true },
-  // The loaders in src/server/data.ts and src/server/apps.ts read data/offers/** and
+  // The loaders in src/server/data.ts and src/server/apps.ts read data/offers/**, data/issuers/** and
   // data/apps/** at build and run time; /llms-full.txt reads docs/METHODOLOGY.md.
-  outputFileTracingIncludes: { "/**": ["./data/offers/**/*.yaml", "./data/apps/**/*.yaml", "./docs/METHODOLOGY.md"] },
+  outputFileTracingIncludes: { "/**": ["./data/offers/**/*.yaml", "./data/apps/**/*.yaml", "./data/issuers/**/*.yaml", "./docs/METHODOLOGY.md"] },
 };
 
 export default nextConfig;

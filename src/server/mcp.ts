@@ -15,6 +15,7 @@ import {
   type OfferRow,
 } from "./api";
 import { appLine, appsBody } from "./apps-api";
+import { guaranteeLine } from "./issuers";
 import { MCP_APP_MIME_TYPE, OFFER_WIDGET_HTML, OFFER_WIDGET_URI, offerWidgetResourceMeta, offerWidgetToolMeta } from "./mcp-widget";
 
 /**
@@ -37,6 +38,7 @@ export const MCP_INSTRUCTIONS = [
   "BankJar ranks Spanish bank offers (salary bonuses, savings, free accounts, term deposits, welcome bonuses) by first-year net value in euros, computed by a deterministic engine.",
   "Each offer includes source_url, verified_on and a stale flag; figures are estimates for the profile supplied and are not financial advice.",
   "Monthly income, balance, residency and maximum commitment change the ranking; a field left out uses its default or counts as unknown.",
+  "Each offer row has an issuer_guarantee object: the deposit-guarantee scheme, cover and legal entity behind the bank. It is context, not part of the score or the order.",
   "rank_bank_apps scores mobile apps only, not offers.",
 ].join(" ");
 
@@ -120,6 +122,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
         body.hidden ? "This offer is expired or unverified for 60+ days and is in no ranking." : "",
         body.not_eligible_reasons.length ? `Not available to this profile: ${body.not_eligible_reasons.join("; ")}.` : "",
         body.offer.score.flags.length ? `Flags: ${body.offer.score.flags.join("; ")}.` : "",
+        body.offer.issuer_guarantee ? guaranteeLine(body.offer.issuer_guarantee) : "",
         DISCLAIMER,
       ]
         .filter(Boolean)
@@ -147,6 +150,7 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
       const text = [
         body.offers.length ? summaryLines(body.offers) : "None of these ids matched an offer.",
         ...body.offers.filter((o) => o.not_eligible_reasons.length).map((o) => `${o.bank} (${o.id}) not available: ${o.not_eligible_reasons.join("; ")}.`),
+        ...body.offers.filter((o) => o.issuer_guarantee).map((o) => `${o.bank} (${o.id}): ${guaranteeLine(o.issuer_guarantee!)}`),
         body.missing.length ? `Unknown ids: ${body.missing.join(", ")}.` : "",
         DISCLAIMER,
       ]

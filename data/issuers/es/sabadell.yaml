@@ -1,0 +1,12 @@
+# Deposit guarantee for sabadell: which scheme covers deposits at this issuer.
+bank_slug: "sabadell"
+legal_entity: "Banco de Sabadell, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.bancsabadell.com/bsnacional/es/blog/que-es-y-que-cubre-el-fondo-de-garantia-de-depositos/"
+verified_on: 2026-11-14
+notes: "Sabadell states membership of the Spanish deposit guarantee fund and EUR 100,000 per depositor and institution. Read from a search excerpt."

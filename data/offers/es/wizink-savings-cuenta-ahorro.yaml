@@ -5,13 +5,13 @@ bank_slug: wizink
 country: ES
 goal: savings
 product_name: Cuenta de Ahorro WiZink
-headline: 1.20% TAE on any balance from EUR 1, no fees, instant access
+headline: 2.30% TAE on any balance from EUR 1, no fees, instant access
 reward:
   type: rate
   value_eur: null
-  description: 1.20% TAE (1.193% TIN) with no balance limit, interest settled monthly, money available at any time without penalty. Example on the page - EUR 15,000 for 12 months earns EUR 178.95 gross.
+  description: 2.30% TAE (2.276% TIN) with no balance limit, interest settled monthly, money available at any time without penalty. Example on the page - EUR 15,000 for 12 months earns EUR 341.40 gross.
   paid_when: Monthly
-rate_tae: 1.2
+rate_tae: 2.3
 promo_months: null
 balance_cap_eur: null
 commitment_months: 0
@@ -33,6 +33,6 @@ eligibility:
 valid_until: null
 source_url: https://www.wizink.es/public/productos-ahorro/cuenta-ahorro
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: The page says the offer is valid for new and existing customers.
+verified_on: 2026-11-14
+notes: Was 1.20% TAE (1.193% TIN); now 2.30% TAE (2.276% TIN), shown as a new offer on the page, with no end date stated. Valid for new and existing customers. The page says a payslip or tax return may be requested in some cases.
 paid_placement: false

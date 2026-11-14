@@ -34,6 +34,6 @@ eligibility:
 valid_until: 2026-12-31
 source_url: https://www.bancomediolanum.es/es/w/cuentas-depositos/cuentas-corrientes/cuenta-freedom
 confirmed_by: bank
-verified_on: 2026-10-22
+verified_on: 2026-11-14
 notes: valid_until is the last day to contract the offer, as stated on the page. 1.06% TAE is the bank's example for a EUR 100,000 average balance over one year with no managed product (1.49% with EUR 50,000-100,000 managed assets). Rate_tae is therefore a worst-case-fee-free example, not a headline rate.
 paid_placement: false

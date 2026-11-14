@@ -1,0 +1,13 @@
+# Deposit guarantee for pibank: which scheme covers deposits at this issuer.
+bank_slug: "pibank"
+legal_entity: "Banco Pichincha España, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: 
+  - "Banco Pichincha España"
+source_url: "https://img.pibank.es/pdfs/FondoGarantiaDepositos.pdf"
+verified_on: 2026-11-14
+notes: "Pibank is the trade name of Banco Pichincha España, S.A., which is adhered to the FGD; deposits under all its trade names share one EUR 100,000 limit. Read from a search excerpt of Pibank's pages."

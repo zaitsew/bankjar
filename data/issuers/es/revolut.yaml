@@ -1,0 +1,12 @@
+# Deposit guarantee for revolut: which scheme covers deposits at this issuer.
+bank_slug: "revolut"
+legal_entity: "Revolut Bank UAB"
+country_of_licence: "LT"
+scheme_name: "Deposit and Investment Insurance (Indėlių ir investicijų draudimas, VšĮ)"
+scheme_country: "LT"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.revolut.com/es-ES/legal/deposit-insurance-information/"
+verified_on: 2026-11-14
+notes: "Spanish customers are served by Revolut Bank UAB, Sucursal en España (Banco de España code 1583); deposits are covered by the Lithuanian scheme, not the Spanish FGD. Revolut's page returned 403 to the page fetcher, so the text comes from a search excerpt. A French licence granted in August 2026 may move customers to another entity and scheme later; none has moved yet per press reports."

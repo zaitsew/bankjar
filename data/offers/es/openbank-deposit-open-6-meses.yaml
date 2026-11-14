@@ -34,6 +34,6 @@ eligibility:
 valid_until: null
 source_url: https://www.openbank.es/cuenta-nomina
 confirmed_by: bank
-verified_on: 2026-10-22
+verified_on: 2026-11-14
 notes: "The page states no end date for this deposit rate, but it depends on the new-money reference date of 2026-09-30. Rates also shown on https://www.openbank.es/cuenta-ahorro."
 paid_placement: false

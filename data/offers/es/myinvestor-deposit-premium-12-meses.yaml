@@ -30,9 +30,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: null
   notes: null
-valid_until: 2026-10-31
+valid_until: 2026-11-30
 source_url: https://myinvestor.es/depositos/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "Premium price from https://myinvestor.es/premium. Available until 31 October 2026."
+verified_on: 2026-11-14
+notes: "Premium price from https://myinvestor.es/premium. Available until 30 November 2026 (was 31 October). Rate 3.50% and EUR 7.99 monthly fee re-read 2026-11-14."
 paid_placement: false
