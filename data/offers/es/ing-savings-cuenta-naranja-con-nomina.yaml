@@ -16,14 +16,14 @@ promo_months: null
 balance_cap_eur: null
 commitment_months: 0
 requirements:
-  min_monthly_income_eur: 700
+  min_monthly_income_eur: null
   new_customer_only: false
   other:
     - "Hold an ING Cuenta NÓMINA"
-    - "Cuenta NÓMINA is free only with payroll, pension or EUR 700+ monthly income"
+    - "Cuenta NÓMINA is free only with payroll, pension or regular monthly income"
 fees:
   monthly_eur: 0
-  notes: "Cuenta NARANJA has no fees; the linked Cuenta NÓMINA costs EUR 3 a month if payroll/income of EUR 700 stops"
+  notes: "Cuenta NARANJA has no fees; the linked Cuenta NÓMINA costs EUR 3 a month if payroll/income stops"
 penalty: null
 eligibility:
   residents_only: null
@@ -31,8 +31,8 @@ eligibility:
   non_residents: null
   notes: null
 valid_until: null
-source_url: https://www.ing.es/cuenta-naranja
-confirmed_by: bank
-verified_on: 2026-10-22
-notes: "The EUR 700 threshold comes from the Cuenta NÓMINA page (https://www.ing.es/cuenta-nomina-ing); the Cuenta NARANJA page only says 'while you have a Cuenta NÓMINA'. No end date stated."
+source_url: https://www.helpmycash.com/cuentas/ing/cuenta-naranja/
+confirmed_by: aggregator
+verified_on: 2026-11-14
+notes: "1.00% TAE with an active Cuenta NÓMINA confirmed 2026-11-14 on HelpMyCash (updated 2026-11-09) and Kelisto (0.995% TIN). ing.es no longer shows the rate on the fetched pages. Was min_monthly_income_eur 700; no payroll minimum is stated for the 1% on any page today (the EUR 700 figure belongs to a separate payroll promotion), so it is now null. Balance up to EUR 5,000,000. No end date stated."
 paid_placement: false

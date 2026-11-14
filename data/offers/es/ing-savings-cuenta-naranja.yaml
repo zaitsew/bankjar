@@ -31,8 +31,8 @@ eligibility:
   non_residents: null
   notes: "Opening requires an ID; the page lists a residence card for non-EU citizens"
 valid_until: null
-source_url: https://www.ing.es/cuenta-naranja
-confirmed_by: bank
-verified_on: 2026-10-22
-notes: "Rate has no end date stated. Interest is credited on day 1 of each month. Dutch deposit guarantee up to EUR 100,000 per depositor."
+source_url: https://www.helpmycash.com/cuentas/ing/cuenta-naranja/
+confirmed_by: aggregator
+verified_on: 2026-11-14
+notes: "Checked 2026-11-14 on HelpMyCash (updated 2026-11-09) and Kelisto (updated 2026-09-30): 0.30% TAE without payroll, unchanged. ing.es/cuenta-naranja no longer lists the rate. Rate has no end date stated. Interest is credited on day 1 of each month. Dutch deposit guarantee up to EUR 100,000 per depositor."
 paid_placement: false

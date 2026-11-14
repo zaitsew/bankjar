@@ -1,19 +1,19 @@
-# Source: https://traderepublic.com/es-es/interes
+# Source: https://www.rankia.com/blog/cuentas-corrientes/7544513-intereses-trade-republic
 id: trade-republic-savings-cuenta-efectivo
 bank: Trade Republic
 bank_slug: trade-republic
 country: ES
 goal: savings
 product_name: Interés sobre efectivo (cuenta con IBAN español)
-headline: 3.04% TAE on cash up to EUR 50,000 for new customers, paid monthly, full access
+headline: 4.07% TAE on cash up to EUR 20,000 for new customers until 1 March 2027, paid monthly, full access
 reward:
   type: rate
   value_eur: null
-  description: 3.04% TAE on cash balances up to EUR 50,000, new customers only. Interest is calculated daily and paid monthly into the account with a Spanish IBAN. Cash can be added or withdrawn at any time and spent with the card against the interest-bearing balance.
+  description: 4.07% TAE (4.00% TIN) on cash balances up to EUR 20,000, new customers only, promotion until 1 March 2027; 2.53% TAE above EUR 20,000. Interest is calculated daily and paid monthly into the account with a Spanish IBAN. Cash can be added or withdrawn at any time and spent with the card against the interest-bearing balance.
   paid_when: Monthly
-rate_tae: 3.04
+rate_tae: 4.07
 promo_months: null
-balance_cap_eur: 50000
+balance_cap_eur: 20000
 commitment_months: 0
 requirements:
   min_monthly_income_eur: null
@@ -30,9 +30,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: null
   notes: The page does not state residency or NIE/TIE rules.
-valid_until: null
-source_url: https://traderepublic.com/es-es/interes
-confirmed_by: bank
-verified_on: 2026-10-22
-notes: The page does not say how long the 3.04% lasts or what the rate is above EUR 50,000 or for existing customers; both unknown. Deposits are covered by the German, French or Irish guarantee schemes up to EUR 100,000 per client and bank. Fees from the pricing modal on traderepublic.com/es-es.
+valid_until: 2027-03-01
+source_url: https://www.rankia.com/blog/cuentas-corrientes/7544513-intereses-trade-republic
+confirmed_by: aggregator
+verified_on: 2026-11-14
+notes: "Was 3.04% TAE up to EUR 50,000 with no end date; now 4.07% TAE (4.00% TIN) up to EUR 20,000 until 2027-03-01, 2.53% TAE above. The bank page (traderepublic.com/es-es/interes, 2026-11-14) shows the 4.07% headline only; the cap, 2.53% above it and the end date come from Rankia (updated 2026-11-12). Customers who opened before the promotion get 2.53% TAE with no cap. Interest must be activated in the app. Deposits are covered by the German, French or Irish guarantee schemes up to EUR 100,000 per client and bank. Fees from the pricing modal on traderepublic.com/es-es."
 paid_placement: false
