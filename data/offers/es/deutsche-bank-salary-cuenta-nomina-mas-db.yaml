@@ -35,6 +35,6 @@ eligibility:
 valid_until: null
 source_url: https://www.deutsche-bank.es/es/soluciones-db/cuenta-mas-db.html
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: The same Cuenta Más DB page advertises "up to EUR 6,500" in total (EUR 500 payroll plus "up to EUR 6,000 for bringing your savings"); the savings part is not itemised on the pages fetched, so it is not included here. The bank gives -4.714% TAE as an example if no condition is met and the balance is EUR 5,000. The sister page cuentas-tarjetas/cuentas/mas-db.html shows the savings account at 2% TAE up to EUR 150,000, so the savings band differs between DB pages.
+verified_on: 2026-11-14
+notes: "The same Cuenta Más DB page advertises 'up to EUR 6,500' in total (EUR 500 payroll plus 'up to EUR 6,000 for bringing your savings'); the savings part is not itemised on the pages fetched, so it is not included here. The bank gives -4.714% TAE as an example if no condition is met and the balance is EUR 5,000. The sister page cuentas-tarjetas/cuentas/mas-db.html shows the savings account at 2% TAE up to EUR 150,000, so the savings band differs between DB pages. Reconfirmed 2026-11-14: EUR 500 gross (EUR 405 net), paid EUR 33.75 net a month for up to 12 months; page gives no end date."
 paid_placement: false

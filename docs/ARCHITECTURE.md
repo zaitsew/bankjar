@@ -93,3 +93,7 @@ At the 15 EUR ceiling that is about **136,000 AI searches a month**. If Haiku ad
 ## Licences
 
 Code: Apache-2.0. Data in `data/`: CC BY 4.0. The hosted AI search runs on the owner's key with a cost ceiling.
+
+## Benchmarks (reference numbers)
+
+Official reference rates sit in `data/benchmarks/<country>/<id>.yaml` (schema `src/core/benchmark-schema.ts`, loader `src/server/benchmarks.ts`). They are context only: they never change the euro ranking or any score. `npm run fetch-benchmarks` reads each publisher's API (ECB Data Portal, Banco de España, INE, tesoro.es); a failed fetch or a value outside the file's `sanity` range keeps the old file. Every file carries `series_code`, `api_url`, `period` and `fetched_on`; a file older than `stale_after_days` is stale.

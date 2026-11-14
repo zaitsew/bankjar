@@ -1,4 +1,5 @@
 import { loadApps } from "../src/server/apps";
+import { loadBenchmarks } from "../src/server/benchmarks";
 import { datasetVersion, DataError, loadOffers } from "../src/server/data";
 import { loadIssuers, missingIssuers } from "../src/server/issuers";
 
@@ -11,7 +12,8 @@ try {
   if (missing.length > 0) {
     throw new DataError("data/issuers", [`no issuer file for bank_slug: ${missing.join(", ")} (add data/issuers/es/<bank_slug>.yaml)`]);
   }
-  console.log(`validated offers=${offers.length} goals=${goals.size} version=${datasetVersion(offers).version} apps=${apps.length} issuers=${issuers.length}`);
+  const benchmarks = loadBenchmarks();
+  console.log(`validated offers=${offers.length} goals=${goals.size} version=${datasetVersion(offers).version} apps=${apps.length} issuers=${issuers.length} benchmarks=${benchmarks.length}`);
 } catch (e) {
   console.error(e instanceof DataError ? e.message : e);
   process.exit(1);

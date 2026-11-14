@@ -1,0 +1,18 @@
+id: estr
+country: ES
+label: Euro short-term rate (€STR)
+kind: overnight_rate
+unit: percent
+source_name: European Central Bank, Data Portal
+source_url: https://data.ecb.europa.eu/data/datasets/EST/EST.B.EU000A2X2A25.WT
+api_url: https://data-api.ecb.europa.eu/service/data/EST/B.EU000A2X2A25.WT?lastNObservations=5&format=csvdata
+series_code: EST.B.EU000A2X2A25.WT
+method: The volume-weighted trimmed mean unsecured overnight euro borrowing rate of euro area banks, published by the ECB each business day for the previous day.
+sanity:
+  min: -1
+  max: 10
+stale_after_days: 7
+period: 2026-11-12
+value: 2.443
+published_on: null
+fetched_on: 2026-11-14

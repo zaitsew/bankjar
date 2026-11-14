@@ -20,8 +20,8 @@ requirements:
   new_customer_only: true
   other:
     - "Enter code ING400 when opening Cuenta NÓMINA and Cuenta NARANJA"
-    - "First valid deposit received before 2026-12-31 and kept for 12 consecutive months"
-    - "Activate Bizum before 2026-12-31 and keep it 12 months"
+    - "Payroll or regular income kept in the account for 12 months, before 2027-01-20 (bank page; the September legal terms said 2026-12-31)"
+    - "Bring Bizum and keep it 12 months, before 2027-01-20"
     - "Payroll money stays in the account until 9:00 the next day"
     - "Not combinable with other ING promotions"
 fees:
@@ -33,9 +33,9 @@ eligibility:
   nie_tie_ok: true
   non_residents: null
   notes: "ING FAQ accepts a valid residence card for non-EU citizens. The product page says a payroll of any amount counts, but the legal terms (used here) require EUR 700 or more."
-valid_until: 2026-10-31
+valid_until: 2026-11-20
 source_url: https://www.ing.es/sobre-ing/pdf/bases-legales-promo-ING400-2026-09.pdf
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "Promotion period for opening the account: 2026-08-24 to 2026-10-31. Also shown at https://www.ing.es/cuenta-nomina-ing. Existing or former ING customers are excluded."
+verified_on: 2026-11-14
+notes: "Was valid until 2026-10-31; the bank page https://www.ing.es/cuenta-nomina-ing now says the sign-up deadline is extended to 20/11 (no year printed; read as 2026 from the 20/01/2027 condition date). Figures unchanged: EUR 400 gross, 12 months. The page does not print the EUR 700 figure; it comes from the legal terms (recurring income of EUR 700+ if there is no payroll). Source PDF is the September legal terms (period 2026-08-24 to 2026-10-31), not updated for the extension. Existing or former ING customers are excluded."
 paid_placement: false

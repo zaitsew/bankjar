@@ -31,6 +31,6 @@ eligibility:
 valid_until: null
 source_url: https://www.kelisto.es/cuentas-nomina/bancos/bbva/cuenta-nomina
 confirmed_by: aggregator
-verified_on: 2026-10-22
-notes: bbva.es could not be fetched (HTTP 403). Account pays no interest (TIN 0%); TAE not given by the source.
+verified_on: 2026-11-14
+notes: bbva.es could not be fetched (HTTP 403); fees re-read on Kelisto, page updated 11 Nov 2026. Account pays no interest (TIN 0%); TAE not given by the source.
 paid_placement: false

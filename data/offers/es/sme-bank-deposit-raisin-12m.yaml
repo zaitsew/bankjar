@@ -33,6 +33,6 @@ eligibility:
 valid_until: null
 source_url: https://www.raisin.com/es-es/depositos-a-plazo-fijo/depositos-un-ano/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: Rate from the Raisin 12-month page updated 2 Oct 2026. The Raisin bank page for SME Bank shows 3.31% for 1 year with data dated 09/06/2026, so the rate moves; confirm in the Raisin app. Raisin describes SME Bank as a digital bank oriented to businesses; the Raisin 12-month page lists its deposit for savers. Guarantee is the Lithuanian scheme, EUR 100,000 per depositor and bank.
+verified_on: 2026-11-14
+notes: Rate unchanged at 3.35%; Raisin 12-month page updated 13 Nov 2026 (EUR 100,000 cap not shown on it, unchanged). The Raisin bank page for SME Bank shows 3.31% for 1 year with data dated 09/06/2026, so the rate moves; confirm in the Raisin app. Raisin describes SME Bank as a digital bank oriented to businesses; the Raisin 12-month page lists its deposit for savers. Guarantee is the Lithuanian scheme, EUR 100,000 per depositor and bank.
 paid_placement: false

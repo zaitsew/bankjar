@@ -35,6 +35,6 @@ eligibility:
 valid_until: 2026-12-31
 source_url: https://www.ibercaja.es/particulares/cuentas-tarjetas/cuentas/cuenta-vamos/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "Filed as salary because the rate depends on domiciling payroll. valid_until is the last day to open the account. Tarjeta de débito: no issue or maintenance fee when conditions are met. Early-leaving rules were not read."
+verified_on: 2026-11-14
+notes: "Filed as salary because the rate depends on domiciling payroll. valid_until is the last day to open the account. Tarjeta de débito: no issue or maintenance fee when conditions are met. Early-leaving rules were not read. Reconfirmed 2026-11-14: 5.10% TAE year one, 2.02% year two on up to EUR 20,000, payroll EUR 600+, contracts signed until 2026-12-31."
 paid_placement: false
