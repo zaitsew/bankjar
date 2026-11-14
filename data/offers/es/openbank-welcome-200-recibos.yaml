@@ -32,9 +32,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: false
   notes: "Natural person 18+, resident in Spain with a Spanish mailing address"
-valid_until: 2026-10-29
+valid_until: 2026-11-16
 source_url: https://www.openbank.es/assets/static/pdf/promociones/Cuenta_Remunerada_Openbank.pdf
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "Terms amended 2026-10-08 to extend the end date to 2026-10-29. Headline on https://www.openbank.es/cuenta-ahorro. Incompatible with other new-customer cash promotions in the same period."
+verified_on: 2026-11-14
+notes: "Was valid until 2026-10-29; terms amended 2026-10-27 to run until 2026-11-16 (code OPEN325 from 2026-10-08). Figures unchanged: EUR 20 net a month for up to 10 months, 2 monthly direct debits. Headline on https://www.openbank.es/cuenta-ahorro. Incompatible with other new-customer cash promotions in the same period."
 paid_placement: false
