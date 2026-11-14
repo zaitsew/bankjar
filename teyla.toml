@@ -139,6 +139,17 @@ label = "com.zaitsew.bankjar.verify-weekly"
 every = "7d"
 log = "~/Library/Logs/bankjar-verify-weekly.log"
 
+# The daily benchmark refresh: fetch BdE, ECB, Letra and CPI, open a PR that touches
+# data/benchmarks/ only, merge after check.sh, deploy. Install:
+# scripts/install-launchd.sh benchmark-refresh. Without it the market strip shows a
+# Stale badge once a series is older than its stale_after_days (14 to 75 days).
+[[routine]]
+name = "benchmark-refresh"
+kind = "launchd"
+label = "com.zaitsew.bankjar.benchmark-refresh"
+every = "1d"
+log = "~/Library/Logs/bankjar-benchmark-refresh.log"
+
 
 # ---------------------------------------------------------------------------
 # A legacy routine: scheduled somewhere else, reported on here.
