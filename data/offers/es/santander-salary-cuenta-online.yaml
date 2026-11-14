@@ -33,9 +33,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: false
   notes: Aged 18+ and resident in Spain. Press release (Apr 2026) and aggregators say new and existing customers, but the offer page says income must not already be paid into Santander.
-valid_until: 2026-10-30
+valid_until: 2027-03-31
 source_url: https://www.bancosantander.es/en/particulares/cuentas-bancarias/cuentas-nomina/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "The iPhone 17 Pro Max for a 3-year commitment is not on the Santander page fetched; Roams (Jul 2026) describes a 36-month iPhone rental (17e at EUR 1,200 payroll; 17 at EUR 3,000) with no lock-in, not verified on a bank page."
+verified_on: 2026-11-14
+notes: "Was valid until 2026-10-30; the bank page now says sign up before 2027-03-31. Figures unchanged (up to EUR 840 over 24 months: EUR 360 payroll, EUR 240 Bizum, EUR 240 direct debits). The iPhone 17 Pro Max for a 3-year commitment is not on the Santander page fetched; Roams (Jul 2026) describes a 36-month iPhone rental (17e at EUR 1,200 payroll; 17 at EUR 3,000) with no lock-in, not verified on a bank page."
 paid_placement: false

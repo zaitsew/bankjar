@@ -32,9 +32,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: null
   notes: New customers over 18, single-holder account opened digitally; former customers who left within 180 days are excluded.
-valid_until: 2026-11-10
+valid_until: 2027-01-11
 source_url: https://www.kelisto.es/cuentas-nomina/bancos/bbva/cuenta-nomina
 confirmed_by: aggregator
-verified_on: 2026-10-22
-notes: "bbva.es returned HTTP 403 to every fetch, so figures come from Kelisto (updated 20 Oct 2026), Finect (21 Oct), HelpMyCash (19 Oct) and Finantres (2 Jul). End date is 10 Nov 2026 per Kelisto and Finect; HelpMyCash says 20 Oct. The owner's example of EUR 800 for a 1-year commitment does not match: the payroll block is EUR 400 and there is no commitment."
+verified_on: 2026-11-14
+notes: "bbva.es returned HTTP 403 to every fetch, so figures come from Kelisto and HelpMyCash (both updated 11 Nov 2026). Both now give the end date as 11 Jan 2027 for new digital sign-ups with code PLAN1060; earlier reports gave 10 Nov. Figures unchanged: payroll EUR 400 (EUR 800+), card 120, Bizum 120, direct debits 120 = EUR 760 gross, plus EUR 300 for a EUR 10,000 balance. The owner example of EUR 800 for a 1-year commitment does not match: the payroll block is EUR 400 and there is no commitment."
 paid_placement: false

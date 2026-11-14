@@ -36,6 +36,6 @@ eligibility:
 valid_until: 2027-01-31
 source_url: https://www.abanca.com/en/cuentas/cuenta-online/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: Self-employed variant page was reported to end 31 Dec 2026; the payroll page says 31 Jan 2027, which is used here. Incentive is taxed as capital income with withholding.
+verified_on: 2026-11-14
+notes: "Self-employed variant page was reported to end 31 Dec 2026; the payroll page says 31 Jan 2027, which is used here. Incentive is taxed as capital income with withholding. Reconfirmed 2026-11-14 on the bank page (EUR 500 gross for EUR 1,200+, EUR 185 gross for EUR 800-1,199; 24 months; open until 2027-01-31); no change."
 paid_placement: false
