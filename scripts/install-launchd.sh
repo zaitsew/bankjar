@@ -3,7 +3,8 @@
 #
 #   scripts/install-launchd.sh                         app-refresh (the default, as before)
 #   scripts/install-launchd.sh verify-weekly           the weekly verifier PR job
-#   scripts/install-launchd.sh all                     both
+#   scripts/install-launchd.sh benchmark-refresh       the daily market-benchmark refresh
+#   scripts/install-launchd.sh all                     all three
 #   scripts/install-launchd.sh [job] --remove          unload and delete
 set -euo pipefail
 
@@ -12,7 +13,7 @@ REMOVE=0
 for a in "$@"; do
   case "$a" in
     --remove) REMOVE=1 ;;
-    app-refresh | verify-weekly | all) JOB="$a" ;;
+    app-refresh | verify-weekly | benchmark-refresh | all) JOB="$a" ;;
     *) echo "unknown argument: $a" >&2; exit 2 ;;
   esac
 done
@@ -45,8 +46,10 @@ install_one() {
 case "$JOB" in
   app-refresh) install_one app-refresh "Mondays at 07:30" bankjar-app-refresh.log ;;
   verify-weekly) install_one verify-weekly "Sundays at 07:00" bankjar-verify-weekly.log ;;
+  benchmark-refresh) install_one benchmark-refresh "every day at 08:00" bankjar-benchmark-refresh.log ;;
   all)
     install_one app-refresh "Mondays at 07:30" bankjar-app-refresh.log
     install_one verify-weekly "Sundays at 07:00" bankjar-verify-weekly.log
+    install_one benchmark-refresh "every day at 08:00" bankjar-benchmark-refresh.log
     ;;
 esac
