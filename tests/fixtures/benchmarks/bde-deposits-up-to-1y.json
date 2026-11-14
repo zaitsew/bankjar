@@ -1,0 +1,42 @@
+[
+ {
+  "serie": "DN_1TI2T0025",
+  "descripcion": "NEDR. Deposits from households & NPISHs. Up to 1 year",
+  "descripcionCorta": "NEDR. Deposits from households & NPISHs. Up to 1 year",
+  "codFrecuencia": "M",
+  "decimales": 2,
+  "simbolo": "%",
+  "informacion": [
+   {
+    "titulo": "Name",
+    "descripcion": "NEDR. Deposits from households & NPISHs. Up to 1 year"
+   },
+   {
+    "titulo": "Description",
+    "descripcion": "Interest rates. Interest rates applied by MFIs. NEDR. Deposits from households & NPISHs. Up to 1 year."
+   },
+   {
+    "titulo": "Units",
+    "descripcion": "Rate"
+   },
+   {
+    "titulo": "Source",
+    "descripcion": "Bank of Spain"
+   }
+  ],
+  "fechaInicio": "2003-01-01T09:15:00Z",
+  "fechaFin": "2026-09-01T08:15:00Z",
+  "fechas": [
+   "2026-09-01T08:15:00Z",
+   "2026-08-01T08:15:00Z",
+   "2026-07-01T08:15:00Z",
+   "2026-06-01T08:15:00Z"
+  ],
+  "valores": [
+   2.29,
+   2.01,
+   2.02,
+   1.93
+  ]
+ }
+]
