@@ -4,6 +4,7 @@
  *   ECB Data Portal    deposit facility rate, €STR (csvdata, no key)
  *   Banco de España    average rate on new household deposits (bierest JSON)
  *   INE                CPI annual change (wstempus JSON)
+ *   Tesoro Público     12-month Letra auction yields (tesoro.es results page, HTML table)
  *
  *   npm run fetch-benchmarks             fetch and rewrite every file
  *   npm run fetch-benchmarks -- estr     only the ids that contain "estr"

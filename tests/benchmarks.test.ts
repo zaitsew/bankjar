@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { BenchmarkSchema, isBenchmarkStale } from "../src/core/benchmark-schema";
-import { checkSanity, parseBdeJson, parseEcbCsv, parseIneJson, SOURCES, SourceError } from "../src/server/benchmark-sources";
+import { checkSanity, parseBdeJson, parseEcbCsv, parseIneJson, parseTesoroLetras12m, SOURCES, SourceError } from "../src/server/benchmark-sources";
 import { loadBenchmarks, withStaleFlag } from "../src/server/benchmarks";
 import { DataError } from "../src/server/data";
 
@@ -48,6 +48,28 @@ describe("parsers, on responses saved from the real APIs", () => {
   it("INE: refuses a yearly or empty response", () => {
     expect(() => parseIneJson({ Data: [] })).toThrow(SourceError);
     expect(() => parseIneJson({ Data: [{ Fecha: 1, Anyo: 2025, FK_Periodo: 28, Valor: 118.4, Secreto: false }] })).toThrow(/not a month/);
+  });
+});
+
+describe("Letra del Tesoro, 12 months (tesoro.es auction table)", () => {
+  const html = text("tesoro-letras.html");
+  it("reads the average yield and the auction date of the 12-month column", () => {
+    expect(parseTesoroLetras12m(html, "Tipo de interés medio")).toEqual({ value: 3.045, period: "2026-11-03", published_on: null });
+  });
+  it("reads the marginal yield", () => {
+    expect(parseTesoroLetras12m(html, "Tipo de interés marginal")).toMatchObject({ value: 3.068, period: "2026-11-03" });
+  });
+  it("does not take the 3-month column, which has another auction date", () => {
+    expect(parseTesoroLetras12m(html, "Tipo de interés medio").value).not.toBe(2.652);
+  });
+  it("refuses a page without the table, without a 12 MESES column, or without the row", () => {
+    expect(() => parseTesoroLetras12m("<html></html>", "Tipo de interés medio")).toThrow(SourceError);
+    expect(() => parseTesoroLetras12m(html.replace("12 MESES", "18 MESES"), "Tipo de interés medio")).toThrow(/12 MESES/);
+    expect(() => parseTesoroLetras12m(html.replace("Tipo de interés medio", "Otro"), "Tipo de interés medio")).toThrow(/no number/);
+    expect(() => parseTesoroLetras12m(html.replace("Fecha subasta", "Otra fecha"), "Tipo de interés medio")).toThrow(/auction date/);
+  });
+  it("refuses a value that is not a number", () => {
+    expect(() => parseTesoroLetras12m(html.replace("3,045", "n/d"), "Tipo de interés medio")).toThrow(/no number/);
   });
 });
 
