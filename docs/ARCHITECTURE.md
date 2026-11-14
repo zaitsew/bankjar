@@ -95,4 +95,4 @@ Code: Apache-2.0. Data in `data/`: CC BY 4.0. The hosted AI search runs on the o
 
 ## Benchmarks (reference numbers)
 
-Official reference rates sit in `data/benchmarks/<country>/<id>.yaml` (schema `src/core/benchmark-schema.ts`, loader `src/server/benchmarks.ts`). They are context only: they never change the euro ranking or any score. `npm run fetch-benchmarks` reads each publisher's API (ECB Data Portal, Banco de España, INE); a failed fetch or a value outside the file's `sanity` range keeps the old file. Every file carries `series_code`, `api_url`, `period` and `fetched_on`; a file older than `stale_after_days` is stale.
+Official reference rates sit in `data/benchmarks/<country>/<id>.yaml` (schema `src/core/benchmark-schema.ts`, loader `src/server/benchmarks.ts`). They are context only: they never change the euro ranking or any score. `npm run fetch-benchmarks` reads each publisher's API (ECB Data Portal, Banco de España, INE, tesoro.es); a failed fetch or a value outside the file's `sanity` range keeps the old file. Every file carries `series_code`, `api_url`, `period` and `fetched_on`; a file older than `stale_after_days` is stale.
