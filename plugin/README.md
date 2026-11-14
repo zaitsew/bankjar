@@ -18,13 +18,14 @@ The plugin adds one skill, `bank-offers`, and connects the public BankJar server
 
 ## Tools
 
-All five tools are read-only.
+All six tools are read-only.
 
 - `search_offers`: ranked offers for a question or a profile, plus the offers closed to you and why.
 - `get_offer`: every term of one offer with its score breakdown.
 - `compare_offers`: two to five offers side by side for your profile.
 - `list_goals`: the goals that are ranked.
 - `rank_bank_apps`: Spanish bank mobile apps ranked by store ratings, release freshness, reach and payment features.
+- `get_benchmarks`: official reference numbers (BdE average deposit rate, ECB deposit facility rate, Letra yield, CPI) with period and source; context only.
 
 ## Privacy
 

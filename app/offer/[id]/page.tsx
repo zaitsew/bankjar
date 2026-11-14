@@ -9,8 +9,10 @@ import {
   dateLabel,
   eur,
   eur2,
+  periodLabel,
   requirementLines,
   rewardView,
+  signedPoints,
   today,
   yesNo,
 } from "../../../components/format";
@@ -20,6 +22,7 @@ import { makeProfile } from "../../../src/core/profile";
 import { scoreOffer } from "../../../src/core/score";
 import { allOffers } from "../../../src/server/data";
 import { JsonLd, offerJsonLd } from "../../../src/server/jsonld";
+import { showsMarketContext, vsBdeAverage } from "../../../src/server/benchmarks-api";
 import { issuerGuarantee } from "../../../src/server/issuers";
 import { search } from "../../../src/server/search";
 
@@ -58,6 +61,7 @@ export default async function OfferPage({ params }: Props) {
   const reqs = requirementLines(offer);
   const e = offer.eligibility;
   const guarantee = issuerGuarantee(offer.bank_slug);
+  const vsBde = showsMarketContext(offer.goal) ? vsBdeAverage(offer.rate_tae, now) : null;
 
   const board = search({ overrides: { goal: offer.goal }, today: now }).result.ranked;
   const rank = board.findIndex((r) => r.offer.id === offer.id);
@@ -125,6 +129,29 @@ export default async function OfferPage({ params }: Props) {
                   {offer.rate_tae}% TAE
                   {offer.promo_months ? ` for ${offer.promo_months} months` : ""}
                   {offer.balance_cap_eur ? `, on the first ${eur(offer.balance_cap_eur)}` : ""}
+                </dd>
+              </div>
+            )}
+            {vsBde && offer.rate_tae !== null && (
+              <div data-testid="vs-bde">
+                <dt>Against the market</dt>
+                <dd>
+                  <span className="num">
+                    vs BdE average up to 1 year: {signedPoints(vsBde.difference_points)} percentage points
+                  </span>
+                  {vsBde.bde.stale && (
+                    <>
+                      {" "}
+                      <StaleBadge title={`Not re-fetched for more than ${vsBde.bde.stale_after_days} days`} />
+                    </>
+                  )}
+                  <span className="t-caption muted block">
+                    This offer {offer.rate_tae}% TAE; BdE average {Number(vsBde.bde.value.toFixed(3))}% for {periodLabel(vsBde.bde.period)}, fetched {dateLabel(vsBde.bde.fetched_on)} from{" "}
+                    <a href={vsBde.bde.source_url} target="_blank" rel="nofollow noopener" className="underline underline-offset-4">
+                      {vsBde.bde.source_name}
+                    </a>
+                    . A promotional rate often covers part of the balance only. This does not change the score or the order.
+                  </span>
                 </dd>
               </div>
             )}

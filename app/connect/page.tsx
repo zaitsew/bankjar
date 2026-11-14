@@ -17,6 +17,7 @@ const TOOLS: Array<{ name: string; what: string }> = [
   { name: "compare_offers", what: "Two to five offers side by side for your profile." },
   { name: "list_goals", what: "The goals BankJar ranks: salary, savings, account, deposit, welcome." },
   { name: "rank_bank_apps", what: "Spanish bank mobile apps ranked by store ratings, freshness and payment features." },
+  { name: "get_benchmarks", what: "Official reference numbers (BdE average deposit rate, ECB rate, Letra yield, CPI) with period and source." },
 ];
 
 const PROMPTS = [
@@ -71,7 +72,7 @@ export default function ConnectPage() {
             Enter the name <code className="inline">BankJar</code> and the server URL above. If you are asked how to authenticate, choose <strong>No sign-in</strong> and leave the OAuth
             fields empty.
           </li>
-          <li>Click <strong>Add</strong>. The connector shows as connected, and its five tools are listed under Tool permissions.</li>
+          <li>Click <strong>Add</strong>. The connector shows as connected, and its six tools are listed under Tool permissions.</li>
           <li>In a conversation, open <strong>+ &gt; Connectors</strong>, turn BankJar on, and ask a question from the examples below. Approve the tool call when Claude asks.</li>
         </ol>
         <p className="muted mt-2">
@@ -94,7 +95,7 @@ export default function ConnectPage() {
           </li>
           <li>Enter the name <code className="inline">BankJar</code> and a short description, for example &ldquo;Compare Spanish bank offers&rdquo;.</li>
           <li>Under <strong>Connection</strong>, enter the server URL above, including the <code className="inline">/mcp</code> path. Set authentication to none.</li>
-          <li>Read the risk notice, select <strong>I understand and want to continue</strong>, then <strong>Create as a plugin</strong>. Check that the five tools are listed.</li>
+          <li>Read the risk notice, select <strong>I understand and want to continue</strong>, then <strong>Create as a plugin</strong>. Check that the six tools are listed.</li>
           <li>Start a new chat, type <code className="inline">@</code>, choose BankJar and ask your question.</li>
         </ol>
         <p className="muted mt-2">Whether you can add a custom server depends on your plan and, in a workspace, on your admin&rsquo;s settings.</p>
@@ -143,14 +144,14 @@ export default function ConnectPage() {
             </li>
           ))}
         </ul>
-        <p className="muted mt-2">All five tools only read public data. Nothing is written, sent to a bank or bought.</p>
+        <p className="muted mt-2">All six tools only read public data. Nothing is written, sent to a bank or bought.</p>
       </section>
 
       <section aria-labelledby="help-h" className="mt-10 grid max-w-3xl gap-3">
         <h2 id="help-h" className="font-semibold">
           If it does not connect
         </h2>
-        <p>Check that the server answers from your machine. It should return a JSON list of five tools:</p>
+        <p>Check that the server answers from your machine. It should return a JSON list of six tools:</p>
         <CopyBlock label="curl MCP tools list" code={check} />
         <p>
           Still stuck? See{" "}

@@ -1,0 +1,18 @@
+id: ecb-deposit-facility-rate
+country: ES
+label: ECB deposit facility rate
+kind: policy_rate
+unit: percent
+source_name: European Central Bank, Data Portal
+source_url: https://data.ecb.europa.eu/data/datasets/FM/FM.D.U2.EUR.4F.KR.DFR.LEV
+api_url: https://data-api.ecb.europa.eu/service/data/FM/D.U2.EUR.4F.KR.DFR.LEV?lastNObservations=5&format=csvdata
+series_code: FM.D.U2.EUR.4F.KR.DFR.LEV
+method: The ECB deposit facility rate in force for the euro area on the latest day of the daily series (the rate banks earn on overnight deposits at the ECB).
+sanity:
+  min: -1
+  max: 10
+stale_after_days: 14
+period: 2026-10-19
+value: 2.5
+published_on: null
+fetched_on: 2026-10-20

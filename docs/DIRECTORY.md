@@ -2,7 +2,7 @@
 
 Everything needed to submit BankJar to four listings: the Claude connector, the Claude plugin bundle, the ChatGPT / Codex plugin directory and Gemini Connected Apps. The text below is paste-ready. The submissions are account actions: the owner does them from the checklist at the end of this file, in the order given there.
 
-- Server: `https://bankjar.fabriquefutur.com/mcp` (Streamable HTTP, stateless, no authentication, five read-only tools, one offer-cards widget).
+- Server: `https://bankjar.fabriquefutur.com/mcp` (Streamable HTTP, stateless, no authentication, six read-only tools, one offer-cards widget).
 - Public pages the listings link to: [/connect](https://bankjar.fabriquefutur.com/connect) (documentation), [/privacy](https://bankjar.fabriquefutur.com/privacy), [/data-deletion](https://bankjar.fabriquefutur.com/data-deletion), [/terms](https://bankjar.fabriquefutur.com/terms), [/support](https://bankjar.fabriquefutur.com/support).
 - Icon: `public/brand/icon-512.png` and `public/brand/icon-1024.png`, rendered from `app/icon.svg` (the SVG is `public/brand/icon.svg`). Rounded corners are transparent. Square SVG logo for Google: `public/brand/logo.svg` (512 by 512, no rounded corners).
 - Claude plugin bundle: `plugin/` (manifest, skill, MCP URL, README, LICENSE), listed by `.claude-plugin/marketplace.json`.
@@ -14,7 +14,7 @@ Checked 2026-10-29 against the roadmap rules (`~/ops/startup/ai-integrations/ROA
 
 | Rule | Status | Evidence |
 |---|---|---|
-| `title` on every tool | Done | Live `tools/list`: all five tools carry a `title`, also repeated in `annotations.title`. `tests/mcp.test.ts` pins it. |
+| `title` on every tool | Done | Live `tools/list`: all six tools carry a `title`, also repeated in `annotations.title`. `tests/mcp.test.ts` pins it. |
 | Explicit `readOnlyHint`, `destructiveHint`, `openWorldHint` | Done | All five: `readOnlyHint: true`, `destructiveHint: false`, `openWorldHint: false`, plus `idempotentHint: true`. Same test. |
 | Reads and writes are separate tools | Done | There is no write tool. |
 | MCP App widget | Shipped and live | `ui://bankjar/offer-cards-v1.html` (`text/html;profile=mcp-app`), bound to `search_offers` and `compare_offers` through `_meta.ui.resourceUri`. Empty CSP lists: it loads nothing. Live `resources/list` returns it. The earlier "submit after the widget has merged" condition is met. |
@@ -205,8 +205,8 @@ https://bankjar.fabriquefutur.com/mcp (Streamable HTTP, stateless). Add it as a 
 Customize > Connectors > Add custom connector; ChatGPT: chatgpt.com/plugins > Add custom MCP server) and
 choose no authentication. Setup steps: https://bankjar.fabriquefutur.com/connect
 
-All five tools are read-only (readOnlyHint true, destructiveHint false, openWorldHint false) and have titles:
-search_offers, get_offer, compare_offers, list_goals, rank_bank_apps. Nothing is written, sent to a bank or
+All six tools are read-only (readOnlyHint true, destructiveHint false, openWorldHint false) and have titles:
+search_offers, get_offer, compare_offers, list_goals, rank_bank_apps, get_benchmarks. Nothing is written, sent to a bank or
 bought. BankJar ranks public bank offers; it never opens accounts, moves money or contacts banks.
 
 Not financial advice: every answer carries that disclaimer, a source link and a verified date. Figures are
@@ -233,7 +233,7 @@ Test prompts and expected results are in the listing: five positive, three negat
 | The underlying API is | **Our own.** The server at bankjar.fabriquefutur.com reads its own dataset (`data/` in the public repository). It calls no third-party API at request time, except the optional AI parser, which goes through the operator's own accounts service. The MCP domain is the service's domain. |
 | Handles personal health data | **No.** |
 | Handles sponsored content | **No.** No advertising, sponsorship or paid placement; ranking is a public formula (`src/core/score.ts`) and `docs/METHODOLOGY.md` states that paid placement never changes the order. |
-| Reads or writes | **Reads only.** Five read-only tools. |
+| Reads or writes | **Reads only.** Six read-only tools. |
 
 **Claude portal, step 4 (Use cases)**: primary use cases: (1) rank Spanish bank offers for a goal and a profile (salary bonus, savings, account, deposit, welcome bonus); (2) read and compare the terms of specific offers; (3) rank Spanish bank mobile apps. Users need nothing before connecting: no account, plan or setup. Reads data only.
 
@@ -284,7 +284,7 @@ BankJar has no authentication, so the rule that an OAuth server must offer dynam
 | Item | Answer |
 |---|---|
 | MCP server | `https://bankjar.fabriquefutur.com/mcp`, remote, public HTTPS, Streamable HTTP, authentication: none |
-| Tool hints | All five tools: `readOnlyHint: true`, `destructiveHint: false`, `openWorldHint: false`. No tool needs a confirmation, so mark none in the console. |
+| Tool hints | All six tools: `readOnlyHint: true`, `destructiveHint: false`, `openWorldHint: false`. No tool needs a confirmation, so mark none in the console. |
 | UI | Optional card widget `ui://bankjar/offer-cards-v1.html`, bound through `_meta.ui.resourceUri` (the key Google's guide shows). It loads nothing from the network. |
 | Domain verification | The console shows the method when you apply. The domain is `bankjar.fabriquefutur.com`; its parent `fabriquefutur.com` is the fallback. A DNS TXT record needs no deploy. A meta tag or a file needs a small PR; ask a session to add it. |
 | IP allowlist | Nothing to configure. The server has no IP filter (`deploy/droplet/Caddyfile.fragment` has none) and the site is open to all addresses, so Google's ranges already reach it. |
@@ -314,7 +314,7 @@ Sequence: Loco is the first app on Fabrique Futur's preview application. Submit 
 1. Deploy `main`: `./scripts/deploy.sh`. The pages `/privacy`, `/data-deletion`, `/terms`, `/support` and `/connect` must return 200 (the listings link to them), and `/data-deletion` is new in this change.
 2. **Public contact e-mail:** done. The public contact address is the default in `scripts/deploy.sh` and live since 2026-10-29. It appears on the privacy, terms, support and deletion pages. All three programs ask for a contact; Claude's policy asks for a verified one.
 3. Read `/privacy` and `/terms` once. They describe the code as it is; the operator line and the legal-basis sentence are yours to confirm (the repo has no postal address, so none is given).
-4. Check the live metadata matches this file: a `tools/list` call returns five tools with four hints each.
+4. Check the live metadata matches this file: a `tools/list` call returns six tools with four hints each.
 
 ### 2. Claude: connector, then plugin bundle
 
@@ -322,10 +322,10 @@ Sequence: Loco is the first app on Fabrique Futur's preview application. Submit 
 
 You need a paid Claude plan. Time: about 20 minutes.
 
-1. Test it as a user first. Open https://claude.ai/customize/connectors, **Add custom connector**, name `BankJar`, URL `https://bankjar.fabriquefutur.com/mcp`, no sign-in. In a chat turn it on from **+ > Connectors** and run P1 to P5 above so that each of the five tools has been called once. The portal's *Test & launch* step asks you to confirm this.
+1. Test it as a user first. Open https://claude.ai/customize/connectors, **Add custom connector**, name `BankJar`, URL `https://bankjar.fabriquefutur.com/mcp`, no sign-in. In a chat turn it on from **+ > Connectors** and run P1 to P5 above so that each of the six tools has been called once. The portal's *Test & launch* step asks you to confirm this.
 2. Open https://claude.ai/directory/manage, **Submit new**, **MCP connector**.
 3. Step 1 Connection: paste `https://bankjar.fabriquefutur.com/mcp`, or pick the custom connector you added.
-4. Step 2 Tools: five tools sync in; none should be flagged (all have titles and annotations).
+4. Step 2 Tools: six tools sync in; none should be flagged (all have titles and annotations).
 5. Step 3 Listing: name, one-liner, description, categories, the four URLs and slug from the sections above. Icon: upload `public/brand/icon-512.png` (1024 version: `icon-1024.png`).
 6. Steps 4 to 7: use the answers above (no authentication; own API; no health data; no sponsored content).
 7. Step 8 Test & launch: paste the reviewer notes; credentials: none needed; tick that you ran every tool.
@@ -370,7 +370,7 @@ Time: about 30 minutes, plus the video.
 Time: about 30 minutes, after Loco's application is in.
 
 1. Open https://developers.google.com/connected-apps and follow **Apply for preview** to the Google Connected Console.
-2. Add the server: URL `https://bankjar.fabriquefutur.com/mcp`, authentication none. The console syncs the five tools; check the hints show as read-only.
+2. Add the server: URL `https://bankjar.fabriquefutur.com/mcp`, authentication none. The console syncs the six tools; check the hints show as read-only.
 3. Verify the domain with the method the console shows. For a DNS TXT record, add it at the DNS provider for `fabriquefutur.com`. For a meta tag or a file, tell a session the exact value; it is a small PR and a deploy.
 4. Listing: name, one-liner and description from above; logo `public/brand/logo.svg`; privacy `/privacy`; data deletion `/data-deletion`; terms and support from the table.
 5. Submit for review. If the console says it needs OAuth or a registration endpoint, stop and send the message to a session: the answer decides whether BankJar can be listed there at all.

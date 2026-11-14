@@ -41,7 +41,8 @@ Official numbers beside the offers, so a person and an agent can tell whether an
 - [x] Fetchers on official APIs with saved fixtures (#43): ECB deposit facility rate, €STR, Banco de España average rate on new household deposits up to one year, INE CPI year on year.
 - [ ] 12-month Letra del Tesoro (#44): the latest auction's average and marginal yield, gross, parsed from tesoro.es with a fixture.
 - [ ] Deposit guarantee per issuer (#45): scheme (FGD or the home country's), cover per depositor, legal entity, shared caps. Offer pages, the API and MCP; the score does not change.
-- [ ] Surfaces: a market line on the savings and deposit leaderboards ("BdE average, deposits up to 1 year: x %, Sep 2026"), `/api/v1/benchmarks`, an MCP tool, `llms.txt`, OpenAPI, README. A weekly unattended benchmark refresh.
+- [x] Surfaces: a market strip on the savings and deposit leaderboards (BdE average, ECB rate, 12-month Letra, CPI), a "vs BdE average" line on their offer pages, `/api/v1/benchmarks`, MCP `get_benchmarks`, `llms-full.txt`, `/data/offers.json`, OpenAPI, README.
+- [ ] Unattended benchmark refresh: `scripts/refresh-benchmarks.sh`, daily 08:00 (launchd, not installed yet).
 - [ ] Weekly verifier run that opens a pull request (the Sprint 2 item), so the new rows do not grow faster than the checks.
 
 ## Later — investment data, each behind its own gate

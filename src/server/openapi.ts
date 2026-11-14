@@ -2,6 +2,8 @@ import { z } from "zod";
 import { AppSchema } from "../core/app-schema";
 import { GOALS, OfferSchema } from "../core/schema";
 import pkg from "../../package.json";
+import { BENCHMARK_KINDS, BenchmarkSchema } from "../core/benchmark-schema";
+import { BENCHMARKS_DISCLAIMER } from "./benchmarks-api";
 import { APPS_DISCLAIMER, DISCLAIMER, LICENSE, PROFILE_PARAMS, REPO_URL, siteUrl } from "./api";
 
 /**
@@ -57,6 +59,7 @@ function ok(description: string, schema: Json): Json {
 
 export function buildOpenApi(): Json {
   const offer = jsonSchemaOf(OfferSchema) as { properties: Record<string, Json> } & Json;
+  const benchmark = jsonSchemaOf(BenchmarkSchema) as { properties: Record<string, Json> } & Json;
   const bankApp = jsonSchemaOf(AppSchema) as { properties: Record<string, Json> } & Json;
   const ap = bankApp.properties;
   const p = offer.properties;
@@ -87,6 +90,7 @@ export function buildOpenApi(): Json {
     tags: [
       { name: "offers", description: "Ranked offers and one offer." },
       { name: "apps", description: "Spanish bank mobile apps ranked by store numbers." },
+      { name: "benchmarks", description: "Official reference numbers (context only; they never change a score or an order)." },
       { name: "agents", description: "Machine-readable entry points." },
     ],
     paths: {
@@ -184,12 +188,42 @@ export function buildOpenApi(): Json {
           },
         },
       },
+      "/api/v1/benchmarks": {
+        get: {
+          tags: ["benchmarks"],
+          operationId: "listBenchmarks",
+          summary: "Official reference numbers",
+          description:
+            "Banco de España average rate on new household deposits up to 1 year, ECB deposit facility rate, €STR, 12-month Letra yields and CPI year on year. " +
+            "Each record carries period, source_name, source_url, fetched_on and a stale flag (fetched more than stale_after_days ago). " +
+            "They are context: no score or order uses them.",
+          parameters: [
+            { name: "kind", in: "query", required: false, description: "Only this kind.", example: "avg_deposit_rate", schema: { type: "string", enum: [...BENCHMARK_KINDS] } },
+          ],
+          responses: { "200": ok("The benchmarks.", ref("BenchmarksResponse")), ...errorResponses },
+        },
+      },
+      "/api/v1/benchmarks/{id}": {
+        get: {
+          tags: ["benchmarks"],
+          operationId: "getBenchmark",
+          summary: "One benchmark",
+          parameters: [
+            { name: "id", in: "path", required: true, description: "Benchmark id, kebab-case.", example: "bde-new-deposits-households-up-to-1y", schema: { type: "string", pattern: "^[a-z0-9]+(-[a-z0-9]+)*$" } },
+          ],
+          responses: {
+            "200": ok("The benchmark.", ref("BenchmarkResponse")),
+            "404": { description: "No benchmark with this id.", content: { "application/json": { schema: ref("Error") } } },
+            ...errorResponses,
+          },
+        },
+      },
       "/data/offers.json": {
         get: {
           tags: ["agents"],
           operationId: "downloadDataset",
           summary: "The whole dataset",
-          description: "Every validated offer, including expired and stale ones (check verified_on and valid_until). CC BY 4.0.",
+          description: "Every validated offer, including expired and stale ones (check verified_on and valid_until), the issuer records and the market benchmarks. CC BY 4.0.",
           responses: { "200": ok("The dataset.", ref("DatasetResponse")) },
         },
       },
@@ -199,7 +233,7 @@ export function buildOpenApi(): Json {
           operationId: "mcp",
           summary: "Model Context Protocol endpoint (Streamable HTTP, stateless)",
           description:
-            "JSON-RPC 2.0 over POST. Tools: search_offers, get_offer, compare_offers, list_goals, rank_bank_apps. Send Accept: application/json, text/event-stream. " +
+            "JSON-RPC 2.0 over POST. Tools: search_offers, get_offer, compare_offers, list_goals, rank_bank_apps, get_benchmarks. Send Accept: application/json, text/event-stream. " +
             "Use an MCP client rather than calling this by hand; see /llms.txt for client setup.",
           requestBody: { required: true, content: { "application/json": { schema: { type: "object", description: "A JSON-RPC 2.0 request or notification." } } } },
           responses: { "200": { description: "A JSON-RPC 2.0 response.", content: { "application/json": { schema: { type: "object" } } } }, "202": { description: "Notification accepted." } },
@@ -500,10 +534,48 @@ export function buildOpenApi(): Json {
             license: { type: "string", const: LICENSE },
           },
         },
+        BenchmarksDataset: {
+          type: "object",
+          required: ["latest_fetched_on", "count", "version"],
+          properties: {
+            latest_fetched_on: { type: ["string", "null"], format: "date", description: "Newest fetched_on in the benchmarks." },
+            count: { type: "integer" },
+            version: { type: "string" },
+          },
+        },
+        Benchmark: {
+          ...benchmark,
+          properties: { ...benchmark.properties, stale: { type: "boolean", description: "fetched_on is more than stale_after_days ago." } },
+          required: [...((benchmark.required as string[] | undefined) ?? []), "stale"],
+          description: "One reference number with its period, source and fetch date. Context only.",
+        },
+        BenchmarksResponse: {
+          type: "object",
+          required: ["count", "benchmarks", "dataset", "disclaimer", "license"],
+          properties: {
+            count: { type: "integer" },
+            benchmarks: { type: "array", items: ref("Benchmark") },
+            dataset: ref("BenchmarksDataset"),
+            disclaimer: { type: "string", const: BENCHMARKS_DISCLAIMER },
+            license: { type: "string", const: LICENSE },
+          },
+        },
+        BenchmarkResponse: {
+          type: "object",
+          required: ["benchmark", "dataset", "disclaimer", "license"],
+          properties: {
+            benchmark: ref("Benchmark"),
+            dataset: ref("BenchmarksDataset"),
+            disclaimer: { type: "string", const: BENCHMARKS_DISCLAIMER },
+            license: { type: "string", const: LICENSE },
+          },
+        },
         DatasetResponse: {
           type: "object",
-          required: ["dataset", "license", "offers", "issuers"],
+          required: ["dataset", "license", "offers", "issuers", "benchmarks", "benchmarks_dataset"],
           properties: {
+            benchmarks: { type: "array", items: ref("Benchmark"), description: "Official reference numbers, context only." },
+            benchmarks_dataset: ref("BenchmarksDataset"),
             dataset: ref("Dataset"),
             license: { type: "string", const: LICENSE },
             offers: { type: "array", items: ref("Offer") },
