@@ -1,4 +1,4 @@
-# Source: https://portal.kutxabank.es/cs/Satellite/kb/es/particulares/cuenta-remunerada/pys?c=PyS&cid=1306601848440&d=Touch&hizkuntza=es&localizador=1298547039252&pagename=PortalBBK%2FPortalKutxabank%2FPyS%2FPK_PyS&sitio=PortalBBK%2FPortalKutxabank
+# Source: https://www.rankia.com/blog/cuentas-corrientes/7544345-mejores-cuentas-remuneradas-noviembre-2026
 id: kutxabank-savings-cuenta-remunerada
 bank: Kutxabank
 bank_slug: kutxabank
@@ -32,8 +32,8 @@ eligibility:
   non_residents: null
   notes: null
 valid_until: 2026-11-22
-source_url: https://portal.kutxabank.es/cs/Satellite/kb/es/particulares/cuenta-remunerada/pys?c=PyS&cid=1306601848440&d=Touch&hizkuntza=es&localizador=1298547039252&pagename=PortalBBK%2FPortalKutxabank%2FPyS%2FPK_PyS&sitio=PortalBBK%2FPortalKutxabank
-confirmed_by: bank
-verified_on: 2026-10-22
-notes: "valid_until is the last day to activate the account (page footnote). The page headline says the promotion runs until 2026-12-31, but the footnote limits activation to 2026-11-22; the stricter date is used. The page also advertises up to EUR 600 for payroll (see kutxabank-salary-trae-tu-nomina)."
+source_url: https://www.rankia.com/blog/cuentas-corrientes/7544345-mejores-cuentas-remuneradas-noviembre-2026
+confirmed_by: aggregator
+verified_on: 2026-11-14
+notes: "Figures unchanged (3.10% TAE for 12 months, EUR 100,000, then 0.75% TAE). The bank page returned 404, so confirmed from Rankia (updated 2026-11-13: activation until 22 Nov 2026, second year 0.75% TAE) and Kelisto, Finect and Finantres reports. valid_until is the last day to activate the account. The page also advertises up to EUR 600 for payroll (see kutxabank-salary-trae-tu-nomina)."
 paid_placement: false

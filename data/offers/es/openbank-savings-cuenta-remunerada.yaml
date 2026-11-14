@@ -20,7 +20,7 @@ requirements:
   new_customer_only: true
   other:
     - "Activate Bizum at Openbank"
-    - "Use promo code OPEN325 when signing up (valid 2026-10-08 to 2026-10-29)"
+    - "Use promo code OPEN325 when signing up (valid 2026-10-08 to 2026-11-16)"
     - "Account only accepts tax direct debits; move money to the Cuenta Corriente Open to spend"
 fees:
   monthly_eur: 0
@@ -31,9 +31,9 @@ eligibility:
   nie_tie_ok: null
   non_residents: false
   notes: "Residency in Spain is stated in the linked promotion terms"
-valid_until: 2026-10-29
+valid_until: 2026-11-16
 source_url: https://www.openbank.es/cuenta-ahorro
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: "valid_until is the last day to sign up with code OPEN325 (promotion terms, https://www.openbank.es/assets/static/pdf/promociones/Cuenta_Remunerada_Openbank.pdf). Pre-contract sheet (version of 2026-10-08): https://www.openbank.es/assets/static/pdf/Productos/301_027_006_Cuenta_Remunerada_Openbank/301_027_006_Cuenta_Remunerada_Openbank.pdf. The product is aimed exclusively at new customers."
+verified_on: 2026-11-14
+notes: "Was 2026-10-29; Openbank extended the OPEN325 sign-up window to 2026-11-16 (terms amended 2026-10-27; Rankia 2026-11-13 agrees). 3.25% TAE, no cap and Bizum condition confirmed on the bank page 2026-11-14. valid_until is the last day to sign up with code OPEN325 (promotion terms, https://www.openbank.es/assets/static/pdf/promociones/Cuenta_Remunerada_Openbank.pdf). Pre-contract sheet (version of 2026-10-08): https://www.openbank.es/assets/static/pdf/Productos/301_027_006_Cuenta_Remunerada_Openbank/301_027_006_Cuenta_Remunerada_Openbank.pdf. The product is aimed exclusively at new customers."
 paid_placement: false
