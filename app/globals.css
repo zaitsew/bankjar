@@ -595,6 +595,27 @@ a.card:hover {
   padding: 1rem 1.125rem;
 }
 
+/* Market context strip: one column at 375 px, two from 30rem, four from 62rem. */
+.mkt-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem 1.25rem;
+  margin: 0;
+}
+.mkt-item dd {
+  margin: 0;
+}
+@media (min-width: 30rem) {
+  .mkt-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 62rem) {
+  .mkt-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* --- Chips, badges ------------------------------------------------------------ */
 
 .chips {

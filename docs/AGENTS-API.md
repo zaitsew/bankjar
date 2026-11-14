@@ -123,6 +123,7 @@ Server name `bankjar`, version from `package.json`. Its `instructions` describe 
 | `compare_offers` | `ids` (2 to 5), plus the profile fields | Rows in the order asked, `missing`, `not_eligible_reasons`. |
 | `list_goals` | none | The goals with an example question each. |
 | `rank_bank_apps` | `limit?` (1 to 50, default 24) | Bank apps ranked 0 to 100 with breakdown, per-store rating and count, store URLs. A score is about the app, not about offers. |
+| `get_benchmarks` | `kind?` (`policy_rate`, `overnight_rate`, `avg_deposit_rate`, `cpi_yoy`, `treasury_yield`) | Official reference numbers: value, period, source name and link, fetched date, stale flag. Context only: no score or order uses them. |
 
 Each result has a human-readable text block, the same data as JSON text, and `structuredContent`.
 

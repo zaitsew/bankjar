@@ -3,9 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CompareForm } from "../../../components/CompareForm";
 import { EmptyState } from "../../../components/EmptyState";
+import { MarketContext } from "../../../components/MarketContext";
 import { OfferTable } from "../../../components/OfferTable";
 import { GOAL_META, dateLabel, today } from "../../../components/format";
 import { GOALS, GoalSchema } from "../../../src/core/schema";
+import { marketStrip, showsMarketContext } from "../../../src/server/benchmarks-api";
 import { search } from "../../../src/server/search";
 
 export const revalidate = 3600;
@@ -47,6 +49,8 @@ export default async function GoalBoard({ params }: Props) {
       </p>
       <h1 className="t-title mt-1">{meta.name}</h1>
       <p className="muted mt-2 max-w-2xl">{meta.blurb}</p>
+
+      {showsMarketContext(goal) && <MarketContext items={marketStrip(now)} />}
 
       <section aria-labelledby="board-h" className="mt-6">
         <h2 id="board-h" className="sr-only">

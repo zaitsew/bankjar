@@ -105,3 +105,16 @@ export function avatarIndex(slug: string): number {
 export function yesNo(v: boolean | null): string {
   return v === null ? "Unknown" : v ? "Yes" : "No";
 }
+
+/** "2026-09" -> "Sep 2026"; "2026-11-03" -> "3 Nov 2026". */
+export function periodLabel(period: string): string {
+  const m = /^(\d{4})-(\d{2})$/.exec(period);
+  if (m) return `${MONTHS[Number(m[2]) - 1] ?? ""} ${m[1]}`;
+  return dateLabel(period);
+}
+
+/** +0.71 / -0.40 / 0.00: a signed difference in percentage points. */
+export function signedPoints(n: number): string {
+  const sign = n > 0 ? "+" : n < 0 ? "\u2212" : "";
+  return `${sign}${Math.abs(n).toFixed(2)}`;
+}

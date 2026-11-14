@@ -15,9 +15,9 @@ export function RewardBadge({ offer }: { offer: Offer }) {
   return <span className={`badge badge-${r.kind}`}>{r.badge}</span>;
 }
 
-export function StaleBadge() {
+export function StaleBadge({ title = "Not re-checked for more than 30 days" }: { title?: string } = {}) {
   return (
-    <span className="badge badge-stale" title="Not re-checked for more than 30 days">
+    <span className="badge badge-stale" title={title}>
       Stale
     </span>
   );

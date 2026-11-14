@@ -1,9 +1,12 @@
 import { clearAppCache } from "../../src/server/apps";
+import { clearBenchmarkCache } from "../../src/server/benchmarks";
+import path from "node:path";
 import { clearOfferCache } from "../../src/server/data";
 import { clearIssuerCache } from "../../src/server/issuers";
 import { APP_FIXTURES_DIR } from "./apps";
 import { FIXTURES_DIR, ISSUER_FIXTURES_DIR, TODAY } from "./offers";
 
+export const BENCHMARK_FIXTURES_DIR = path.join(__dirname, "..", "fixtures", "benchmark-data");
 export const SITE = "https://bankjar.test";
 
 /** Point the loaders at the fake Testbank fixtures (offers and apps), pin the clock and the origin. */
@@ -11,11 +14,13 @@ export function useFixtureEnv(): void {
   process.env.BANKJAR_OFFERS_DIR = FIXTURES_DIR;
   process.env.BANKJAR_APPS_DIR = APP_FIXTURES_DIR;
   process.env.BANKJAR_ISSUERS_DIR = ISSUER_FIXTURES_DIR;
+  process.env.BANKJAR_BENCHMARKS_DIR = BENCHMARK_FIXTURES_DIR;
   process.env.BANKJAR_TODAY = TODAY;
   process.env.NEXT_PUBLIC_SITE_URL = SITE;
   clearOfferCache();
   clearAppCache();
   clearIssuerCache();
+  clearBenchmarkCache();
 }
 
 export function get(path: string): Request {

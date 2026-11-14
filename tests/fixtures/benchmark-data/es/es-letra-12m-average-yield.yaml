@@ -1,0 +1,18 @@
+id: es-letra-12m-average-yield
+country: ES
+label: 12-month Letra del Tesoro, average yield at the latest auction
+kind: treasury_yield
+unit: percent
+source_name: Tesoro Público, auction results (Letras del Tesoro)
+source_url: https://www.tesoro.es/deuda-publica/subastas/resultado-ultimas-subastas/letras-del-tesoro
+api_url: https://www.tesoro.es/deuda-publica/subastas/resultado-ultimas-subastas/letras-del-tesoro
+series_code: tesoro.es:letras:12-meses:tipo-de-interes-medio
+method: The average (weighted) gross yield of the latest 12-month Letra del Tesoro auction, before the 19% withholding tax; an auction result on the auction date, not a live quote.
+sanity:
+  min: -1
+  max: 10
+stale_after_days: 45
+value: 3.045
+period: 2026-07-29
+published_on: null
+fetched_on: 2026-08-01

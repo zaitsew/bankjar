@@ -85,7 +85,7 @@ At the 15 EUR ceiling that is about **136,000 AI searches a month**. If Haiku ad
 - `GET /api/v1/search?q=...` — the same pipeline as the search box (rule parser, plus the AI step when the host enables it), returning `{parser, intent, offers, summary}`.
 - `GET /api/v1/offers/{id}` and `GET /api/v1/compare?ids=a,b`.
 - `GET /openapi.json`, `/llms.txt`, `/llms-full.txt`, `/data/offers.json` (the whole dataset, CC BY 4.0).
-- `POST /mcp` — a stateless Streamable-HTTP MCP server with tools `search_offers`, `get_offer`, `compare_offers`, `list_goals`, `rank_bank_apps`.
+- `POST /mcp` — a stateless Streamable-HTTP MCP server with tools `search_offers`, `get_offer`, `compare_offers`, `list_goals`, `rank_bank_apps`, `get_benchmarks`.
 - `GET /api/v1/apps` and `GET /api/v1/apps/{id}` — Spanish bank mobile apps ranked 0 to 100 (rules in `src/core/app-score.ts`, data in `data/apps/`); the MCP tool `rank_bank_apps` serves the same ranking. The page is `/apps`.
 - Offer pages carry schema.org JSON-LD (`FinancialProduct` + `Offer`) with `validThrough` and the source URL.
 - Every response carries `verified_on` and `source_url`, so an agent can cite and date its answer.
@@ -97,3 +97,5 @@ Code: Apache-2.0. Data in `data/`: CC BY 4.0. The hosted AI search runs on the o
 ## Benchmarks (reference numbers)
 
 Official reference rates sit in `data/benchmarks/<country>/<id>.yaml` (schema `src/core/benchmark-schema.ts`, loader `src/server/benchmarks.ts`). They are context only: they never change the euro ranking or any score. `npm run fetch-benchmarks` reads each publisher's API (ECB Data Portal, Banco de España, INE, tesoro.es); a failed fetch or a value outside the file's `sanity` range keeps the old file. Every file carries `series_code`, `api_url`, `period` and `fetched_on`; a file older than `stale_after_days` is stale.
+
+Surfaces: `src/server/benchmarks-api.ts` is the one service layer. `GET /api/v1/benchmarks[?kind=]` and `/api/v1/benchmarks/{id}` (stale flag computed per request), the MCP tool `get_benchmarks`, `llms-full.txt` and `/data/offers.json` all read it. The savings and deposit leaderboards show a market strip (BdE average, ECB rate, 12-month Letra, CPI); savings and deposit offer pages show the offer's TAE minus the BdE average in percentage points. No ranking function imports benchmarks; `tests/benchmark-surfaces.test.ts` asserts the order is identical with and without them.

@@ -15,6 +15,7 @@ BankJar ranks Spanish bank offers by first-year net value in euros. The numbers 
    - `compare_offers`: two to five offer ids side by side.
    - `list_goals`: the goals that are ranked (salary, savings, account, deposit, welcome).
    - `rank_bank_apps`: bank mobile apps by store ratings, freshness, reach and payment features.
+   - `get_benchmarks`: official reference numbers with period and source; context for a rate, never part of the ranking.
 2. Ask for monthly income, balance, residency and the longest commitment the person accepts when the goal needs them and they are unknown. Do not guess them.
 3. Report the ranking as the tool returned it. For each offer give the net value, the commitment, `source_url` and `verified_on`. Say the figures are estimates for the profile given.
 4. If an offer has `stale=true`, say its terms may have changed. If the tool lists excluded offers, say why.

@@ -37,7 +37,7 @@ async function main(): Promise<void> {
 
   const { tools } = await client.listTools();
   const names = tools.map((t) => t.name).sort();
-  check("tools/list", names.join(",") === "compare_offers,get_offer,list_goals,rank_bank_apps,search_offers", names.join(","));
+  check("tools/list", names.join(",") === "compare_offers,get_benchmarks,get_offer,list_goals,rank_bank_apps,search_offers", names.join(","));
 
   // MCP App: the offer-cards widget is listed, readable, and referenced by the two offer tools.
   const uiTools = tools.filter((t) => (t._meta as { ui?: { resourceUri?: string } } | undefined)?.ui?.resourceUri);
