@@ -78,14 +78,35 @@ fi
 git -C "$REPO" fetch -q origin main
 
 if [ "$DRY" = 0 ]; then
-  open_prs="$(gh pr list --repo zaitsew/bankjar --state open --search 'head:verify-weekly-' --json number,headRefName --jq '[.[] | select(.headRefName | startswith("verify-weekly-"))] | map("#\(.number) \(.headRefName)") | join(", ")' 2>/dev/null || true)"
+  # Fail closed: a GitHub API error must not read as "no open PR".
+  if ! open_prs="$(gh pr list --repo zaitsew/bankjar --state open --search 'head:verify-weekly-' --json number,headRefName --jq '[.[] | select(.headRefName | startswith("verify-weekly-"))] | map("#\(.number) \(.headRefName)") | join(", ")')"; then
+    log "STOP: could not list open verifier PRs (GitHub API error); nothing done"
+    rm -rf "$LOCK"
+    exit 1
+  fi
   if [ -n "$open_prs" ]; then
     log "an earlier verifier PR is still open (${open_prs}); review or close it first. Stopping."
     rm -rf "$LOCK"
     exit 0
   fi
   if git -C "$REPO" ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
-    log "branch ${BRANCH} already exists on origin; today's run was done. Stopping."
+    # Today's branch exists. If an earlier run pushed it but failed to open the PR, open it now.
+    if ! pr_count="$(gh pr list --repo zaitsew/bankjar --state all --head "$BRANCH" --json number --jq 'length')"; then
+      log "STOP: branch ${BRANCH} exists and the PR lookup failed (GitHub API error)"
+      rm -rf "$LOCK"
+      exit 1
+    fi
+    if [ "$pr_count" = "0" ]; then
+      if gh pr create --repo zaitsew/bankjar --head "$BRANCH" --base main --fill; then
+        log "opened the missing PR for ${BRANCH}"
+        rm -rf "$LOCK"
+        exit 0
+      fi
+      log "STOP: branch ${BRANCH} exists with no PR, and opening one failed; open it by hand"
+      rm -rf "$LOCK"
+      exit 1
+    fi
+    log "branch ${BRANCH} already exists on origin with a PR; today's run was done. Stopping."
     rm -rf "$LOCK"
     exit 0
   fi
