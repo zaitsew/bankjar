@@ -42,9 +42,9 @@ describe("MCP server", () => {
     expect(MCP_INSTRUCTIONS).toContain("verified_on");
   });
 
-  it("lists five read-only tools with schemas", async () => {
+  it("lists six read-only tools with schemas", async () => {
     const { tools } = await client.listTools();
-    expect(tools.map((t) => t.name).sort()).toEqual(["compare_offers", "get_offer", "list_goals", "rank_bank_apps", "search_offers"]);
+    expect(tools.map((t) => t.name).sort()).toEqual(["compare_offers", "get_benchmarks", "get_offer", "list_goals", "rank_bank_apps", "search_offers"]);
     for (const t of tools) {
       expect(t.description!.length).toBeGreaterThan(60);
       expect(t.annotations?.readOnlyHint).toBe(true);
@@ -163,6 +163,8 @@ describe("MCP server", () => {
       ["compare_offers", { ids: ["testbank-saver", "testbank-payroll-cash", "ghost"], monthly_income_eur: 100 }],
       ["list_goals", {}],
       ["rank_bank_apps", {}],
+      ["get_benchmarks", {}],
+      ["get_benchmarks", { kind: "cpi_yoy" }],
     ];
     for (const [name, args] of calls) {
       const res = await client.callTool({ name, arguments: args });
@@ -192,7 +194,7 @@ const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: 
 describe("MCP App: offer cards", () => {
   it("annotations are unchanged: title plus the four hints on every tool", async () => {
     const { tools } = await client.listTools();
-    expect(tools).toHaveLength(5);
+    expect(tools).toHaveLength(6);
     for (const t of tools) expect(t.annotations, t.name).toEqual({ title: t.title, ...READ_ONLY });
     expect(Object.fromEntries(tools.map((t) => [t.name, t.annotations!.title]))).toEqual({
       search_offers: "Search Spanish bank offers",
@@ -200,6 +202,7 @@ describe("MCP App: offer cards", () => {
       compare_offers: "Compare bank offers",
       list_goals: "List offer goals",
       rank_bank_apps: "Rank Spanish bank apps",
+      get_benchmarks: "Get market benchmarks",
     });
   });
 
@@ -414,7 +417,7 @@ describe("/mcp other methods", () => {
     const res = GET();
     expect(res.status).toBe(405);
     expect(res.headers.get("allow")).toContain("POST");
-    expect((await res.json()).tools).toHaveLength(5);
+    expect((await res.json()).tools).toHaveLength(6);
   });
   it("DELETE is a 405, OPTIONS a CORS preflight", () => {
     expect(DELETE().status).toBe(405);

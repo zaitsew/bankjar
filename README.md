@@ -33,6 +33,7 @@ The droplet has 1 GB of RAM and cannot compile Next, so the script builds on you
 
 - Does: rank Spanish bank offers by goal (salary, savings, account, deposit, welcome) with one transparent formula (`/methodology`); show every catch and the source; compare two to three offers side by side; answer agents over JSON and MCP.
 - Also: rank Spanish bank mobile apps (0 to 100 from store ratings, release freshness, reach and Bizum / Apple Pay / Google Pay / English) on `/apps`, at `/api/v1/apps` and with the MCP tool `rank_bank_apps`. One YAML per app in `data/apps/es/`; `npm run fetch-apps` refreshes the store numbers.
+- Market context: the savings and deposit leaderboards show a strip with official reference numbers (Banco de España average rate on new household deposits up to 1 year, ECB deposit facility rate, 12-month Letra yield, CPI year on year), each with its period, source link and fetched date and a Stale badge when old. Savings and deposit offer pages show the offer's TAE minus the BdE average, in percentage points. The same records are at `/api/v1/benchmarks`, in the MCP tool `get_benchmarks`, in `llms-full.txt` and in `/data/offers.json`. One YAML per series in `data/benchmarks/es/`; `npm run fetch-benchmarks` refreshes them from the publishers' APIs. Benchmarks are context: they never change a score or an order.
 - Doesn't: take paid placement, give personal financial advice, or invent numbers — the AI only parses your question and summarises rows from `data/`.
 
 ## For Claude

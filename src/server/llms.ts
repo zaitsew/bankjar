@@ -5,6 +5,7 @@ import { rankOffers } from "../core/rank";
 import { makeProfile } from "../core/profile";
 import { DISCLAIMER, LICENSE, REPO_URL, eur, offerRow, rowLine, siteUrl, todayIso } from "./api";
 import { appLine, appsBody } from "./apps-api";
+import { BENCHMARKS_DISCLAIMER, benchmarksTable } from "./benchmarks-api";
 import { allOffers, datasetVersion } from "./data";
 
 /** Content of /llms.txt and /llms-full.txt (llmstxt.org format). */
@@ -30,14 +31,16 @@ Net value is an estimate for the stated profile. Every row has source_url and ve
 - [Goals](${base}/api/v1/goals): GET /api/v1/goals: the goals and an example question for each.
 - [Bank apps](${base}/api/v1/apps): GET /api/v1/apps?limit=: Spanish bank mobile apps ranked 0 to 100 by store ratings, release freshness, reach and payment features. Not a ranking of offers.
 - [One bank app](${base}/api/v1/apps/{id}): GET /api/v1/apps/{id}: the row, its score breakdown and the full data file.
+- [Market benchmarks](${base}/api/v1/benchmarks): GET /api/v1/benchmarks?kind=: official reference numbers (BdE average deposit rate, ECB deposit facility rate, Letra yield, CPI), each with period, source link, fetched date and a stale flag. Context only; they never change a score or an order.
+- [One benchmark](${base}/api/v1/benchmarks/{id}): GET /api/v1/benchmarks/{id}: the record with its method and series code.
 
 ## MCP
 
-- [MCP server](${base}/mcp): stateless Streamable HTTP MCP endpoint, POST. Tools: search_offers, get_offer, compare_offers, list_goals, rank_bank_apps. In Claude Code: claude mcp add --transport http bankjar ${base}/mcp
+- [MCP server](${base}/mcp): stateless Streamable HTTP MCP endpoint, POST. Tools: search_offers, get_offer, compare_offers, list_goals, rank_bank_apps, get_benchmarks. In Claude Code: claude mcp add --transport http bankjar ${base}/mcp
 
 ## Data
 
-- [Whole dataset (JSON)](${base}/data/offers.json): every validated offer plus one deposit-guarantee record per bank (issuers), licence CC BY 4.0, attribution: BankJar (github.com/zaitsew/bankjar).
+- [Whole dataset (JSON)](${base}/data/offers.json): every validated offer plus one deposit-guarantee record per bank (issuers) and the market benchmarks, licence CC BY 4.0, attribution: BankJar (github.com/zaitsew/bankjar).
 - [Full text for LLMs](${base}/llms-full.txt): this file plus the methodology and a table of every current offer.
 
 ## Docs
@@ -110,6 +113,14 @@ ${offersTable() || "No current offers."}
 Spanish bank mobile apps, ranked 0 to 100 by store ratings, release freshness, reach and payment features (see the methodology). "?" means a feature is unknown; it scores 0. The score is about the app, not about the bank's offers.
 
 ${appsTable() || "No bank apps in the data."}
+
+---
+
+## Market benchmarks
+
+Official reference numbers shown beside the offers. ${BENCHMARKS_DISCLAIMER}
+
+${benchmarksTable() || "No benchmarks in the data."}
 
 ${DISCLAIMER}
 ${LICENSE}

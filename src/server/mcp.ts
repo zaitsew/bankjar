@@ -14,12 +14,14 @@ import {
   siteUrl,
   type OfferRow,
 } from "./api";
+import { BENCHMARK_KINDS } from "../core/benchmark-schema";
 import { appLine, appsBody } from "./apps-api";
+import { benchmarkLine, benchmarksBody } from "./benchmarks-api";
 import { guaranteeLine } from "./issuers";
 import { MCP_APP_MIME_TYPE, OFFER_WIDGET_HTML, OFFER_WIDGET_URI, offerWidgetResourceMeta, offerWidgetToolMeta } from "./mcp-widget";
 
 /**
- * The MCP server: five read-only tools over the same service functions as the REST
+ * The MCP server: six read-only tools over the same service functions as the REST
  * API, so an agent sees the table a person sees. A new server per request (stateless).
  *
  * search_offers and compare_offers also render offer cards in hosts that support MCP Apps
@@ -39,6 +41,7 @@ export const MCP_INSTRUCTIONS = [
   "Each offer includes source_url, verified_on and a stale flag; figures are estimates for the profile supplied and are not financial advice.",
   "Monthly income, balance, residency and maximum commitment change the ranking; a field left out uses its default or counts as unknown.",
   "Each offer row has an issuer_guarantee object: the deposit-guarantee scheme, cover and legal entity behind the bank. It is context, not part of the score or the order.",
+  "get_benchmarks returns official reference numbers (BdE average deposit rate, ECB deposit facility rate, Letra yield, CPI) with period, source and fetched date; they are context only: no score or order depends on them.",
   "rank_bank_apps scores mobile apps only, not offers.",
 ].join(" ");
 
@@ -193,6 +196,26 @@ export function createMcpServer(ctx: { ip?: string } = {}): McpServer {
         body.apps.length ? `Top ${body.apps.length} of ${body.total_apps} bank apps:\n${body.apps.map((a) => appLine(a)).join("\n")}` : "No bank apps in the data.",
         "Score = rating 60 + freshness 15 + reach 10 + features 15 points. ? means unknown and scores 0.",
         `Store numbers checked up to ${body.dataset.latest_verified_on ?? "never"}. ${APPS_DISCLAIMER}`,
+      ].join("\n\n");
+      return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
+    },
+  );
+
+  server.registerTool(
+    "get_benchmarks",
+    {
+      title: "Get market benchmarks",
+      description:
+        "Official Spanish reference numbers shown beside the offers: the Banco de España average rate on new household deposits up to 1 year, the ECB deposit facility rate, the 12-month Letra yield and CPI year on year. " +
+        "Each record has period, source_name, source_url, fetched_on and a stale flag. They are context: no score or order uses them.",
+      inputSchema: { kind: z.enum(BENCHMARK_KINDS).optional().describe("Only this kind: policy_rate, overnight_rate, avg_deposit_rate, cpi_yoy or treasury_yield.") },
+      annotations: { title: "Get market benchmarks", ...READ_ONLY },
+    },
+    ({ kind }) => {
+      const body = benchmarksBody({ kind });
+      const text = [
+        body.benchmarks.length ? body.benchmarks.map((b) => `- ${benchmarkLine(b)}`).join("\n") : "No benchmarks match.",
+        body.disclaimer,
       ].join("\n\n");
       return { content: [textBlock(text), textBlock(JSON.stringify(body))], structuredContent: { ...body } };
     },

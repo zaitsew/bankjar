@@ -1,0 +1,18 @@
+id: bde-new-deposits-households-up-to-1y
+country: ES
+label: Average rate on new household term deposits, up to 1 year
+kind: avg_deposit_rate
+unit: percent
+source_name: Banco de España, statistical bulletin chapter 19, table 19.7 (new business, credit institutions)
+source_url: https://www.bde.es/webbe/en/estadisticas/compartido/datos/pdf/a1907e.pdf
+api_url: https://app.bde.es/bierest/resources/srdatosapp/listaSeries?idioma=en&series=DN_1TI2T0025&rango=60M
+series_code: DN_1TI2T0025
+method: Narrowly defined effective rate (NEDR) on new deposits with agreed maturity up to 1 year from Spanish households and non-profit institutions serving households, a monthly average across all banks (alias BE_19_7.3).
+sanity:
+  min: 0
+  max: 10
+stale_after_days: 75
+value: 2.29
+period: 2026-09
+published_on: null
+fetched_on: 2026-10-20

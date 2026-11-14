@@ -28,6 +28,7 @@ const TOOLS: Array<{ name: string; what: string }> = [
   { name: "compare_offers", what: "Two or three offers in one grid." },
   { name: "list_goals", what: "The goals BankJar ranks: salary, savings, account, deposit, welcome." },
   { name: "rank_bank_apps", what: "Bank mobile apps ranked by store ratings, freshness, reach and payment features." },
+  { name: "get_benchmarks", what: "Official reference numbers (BdE average deposit rate, ECB rate, Letra yield, CPI) with period and source. Context only." },
 ];
 
 export default function AgentsPage() {
