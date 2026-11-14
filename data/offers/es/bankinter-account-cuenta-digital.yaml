@@ -31,6 +31,6 @@ eligibility:
 valid_until: null
 source_url: https://www.kelisto.es/cuentas-nomina/bancos/bankinter/cuenta-nomina
 confirmed_by: aggregator
-verified_on: 2026-10-22
-notes: bankinter.com could not be fetched (HTTP 403); fees come from Kelisto (page dated 1 Oct 2026).
+verified_on: 2026-11-14
+notes: bankinter.com could not be fetched (HTTP 403); fees come from Kelisto (page updated 27 Oct 2026, re-read 2026-11-14).
 paid_placement: false

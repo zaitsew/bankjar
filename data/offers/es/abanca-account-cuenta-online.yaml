@@ -32,6 +32,6 @@ eligibility:
 valid_until: null
 source_url: https://www.abanca.com/en/cuentas/cuenta-online/
 confirmed_by: bank
-verified_on: 2026-10-22
+verified_on: 2026-11-14
 notes: Page lists NIR 0% and APR 0%. Counter operations means deposits or withdrawals under EUR 600 or counter transfers; ABANCA warns before converting.
 paid_placement: false

@@ -5,13 +5,13 @@ bank_slug: bluor-bank
 country: ES
 goal: deposit
 product_name: BluOr Bank 12-month deposit via Raisin
-headline: 3.45% TAE for 12 months at BluOr Bank (Latvia), opened through Raisin
+headline: 3.20% TAE for 12 months at BluOr Bank (Latvia), opened through Raisin
 reward:
   type: rate
   value_eur: null
-  description: Fixed 3.45% TAE for a 12-month deposit at BluOr Bank (Latvia, rated A), contracted through the Raisin platform with no fee for the saver. Capital and interest are paid at maturity.
+  description: Fixed 3.20% TAE for a 12-month deposit at BluOr Bank (Latvia, rated A), contracted through the Raisin platform with no fee for the saver. Capital and interest are paid at maturity.
   paid_when: At maturity (12 months)
-rate_tae: 3.45
+rate_tae: 3.20
 promo_months: 12
 balance_cap_eur: 100000
 commitment_months: 12
@@ -33,6 +33,6 @@ eligibility:
 valid_until: null
 source_url: https://www.raisin.com/es-es/depositos-a-plazo-fijo/depositos-un-ano/
 confirmed_by: bank
-verified_on: 2026-10-22
-notes: Rate from the Raisin 12-month page updated 2 Oct 2026. Amount range from the Raisin partner-bank list (checked 22 Oct 2026). Guarantee covers EUR 100,000 per depositor and bank under the Latvian scheme, not the Spanish one. Raisin's own 1-July-2026 deposits page listed 3.20% for the same bank, so the rate moves; confirm in the Raisin app before opening. The 12-month page title says up to 3.31% while its list shows higher rates; the list is used.
+verified_on: 2026-11-14
+notes: Was 3.45% TAE; now 3.20% on the Raisin 12-month page updated 13 Nov 2026. EUR 100,000 cap not shown on that page (unchanged, from the partner-bank list). Amount range from the Raisin partner-bank list (checked 22 Oct 2026). Guarantee covers EUR 100,000 per depositor and bank under the Latvian scheme, not the Spanish one. Raisin's own 1-July-2026 deposits page listed 3.20% for the same bank, so the rate moves; confirm in the Raisin app before opening. The 12-month page title says up to 3.31% while its list shows higher rates; the list is used.
 paid_placement: false

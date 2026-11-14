@@ -35,6 +35,6 @@ eligibility:
 valid_until: null
 source_url: https://www.caixabank.es/particular/ahorro/fixed-term-deposit.html
 confirmed_by: bank
-verified_on: 2026-10-22
+verified_on: 2026-11-14
 notes: "rate_tae is the base AER (0.10%); the maximum is quoted as a nominal rate only. The page's representative-example table looks internally inconsistent. No start or end date shown. Not competitive against online banks; included because it is the CaixaBank deposit published."
 paid_placement: false
