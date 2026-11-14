@@ -1,7 +1,8 @@
 import { clearAppCache } from "../../src/server/apps";
 import { clearOfferCache } from "../../src/server/data";
+import { clearIssuerCache } from "../../src/server/issuers";
 import { APP_FIXTURES_DIR } from "./apps";
-import { FIXTURES_DIR, TODAY } from "./offers";
+import { FIXTURES_DIR, ISSUER_FIXTURES_DIR, TODAY } from "./offers";
 
 export const SITE = "https://bankjar.test";
 
@@ -9,10 +10,12 @@ export const SITE = "https://bankjar.test";
 export function useFixtureEnv(): void {
   process.env.BANKJAR_OFFERS_DIR = FIXTURES_DIR;
   process.env.BANKJAR_APPS_DIR = APP_FIXTURES_DIR;
+  process.env.BANKJAR_ISSUERS_DIR = ISSUER_FIXTURES_DIR;
   process.env.BANKJAR_TODAY = TODAY;
   process.env.NEXT_PUBLIC_SITE_URL = SITE;
   clearOfferCache();
   clearAppCache();
+  clearIssuerCache();
 }
 
 export function get(path: string): Request {

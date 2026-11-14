@@ -1,0 +1,12 @@
+# Deposit guarantee for deutsche-bank: which scheme covers deposits at this issuer.
+bank_slug: "deutsche-bank"
+legal_entity: "Deutsche Bank, Sociedad Anónima Española"
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.deutsche-bank.es/es/blog/educacion-financiera/que-es-fondo-garantia-depositos.html"
+verified_on: 2026-11-14
+notes: "Spanish-contracted accounts and deposits are covered by the FGD. Deutsche Bank's Deposit Market range (deposits placed in Italy or France) is covered by the scheme of that country instead; no Deposit Market product is in this dataset. Read from search excerpts; the legal name was not shown on the page."

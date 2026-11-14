@@ -1,0 +1,14 @@
+# Deposit guarantee for bankinter: which scheme covers deposits at this issuer.
+bank_slug: "bankinter"
+legal_entity: "Bankinter, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: 
+  - "Coinc"
+  - "Popcoin"
+source_url: "https://docs.bankinter.com/stf/plataformas/particulares/inicio/tablon_de_anuncios/informacion_a_los_depositantes/informacion_depositantes.pdf"
+verified_on: 2026-11-14
+notes: "Bankinter's depositor sheet says deposits under the names Bankinter, Coinc and Popcoin share one EUR 100,000 limit. Read from a search excerpt of the PDF; the PDF itself was not opened."

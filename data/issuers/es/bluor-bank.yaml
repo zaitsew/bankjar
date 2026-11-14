@@ -1,0 +1,12 @@
+# Deposit guarantee for bluor-bank: which scheme covers deposits at this issuer.
+bank_slug: "bluor-bank"
+legal_entity: "BluOr Bank AS"
+country_of_licence: "LV"
+scheme_name: "Deposit Guarantee Fund of Latvia (administered by Latvijas Banka)"
+scheme_country: "LV"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://cdn.latvijasbanka.lv/en/operational-areas/customer-protection/operation-of-guarantee-funds"
+verified_on: 2026-11-14
+notes: "Offers reach Spanish customers through Raisin; the guarantee sits with BluOr Bank, not Raisin. Latvijas Banka's page names the fund and the EUR 100,000 limit per bank. Raisin's BluOr page (https://www.raisin.com/es-es/bancos/bluor-bank/) shows the EUR 100,000 limit but does not name the scheme."

@@ -7,6 +7,7 @@ The data and the ranking are open. The hosted site adds AI search and a daily fr
 
 ```
 data/offers/<country>/<offer-id>.yaml    one file per offer; contributors add or fix one file
+data/issuers/<country>/<bank_slug>.yaml  one file per bank: its deposit-guarantee scheme (context only, never scored)
 src/core/                                 pure TypeScript, no I/O: schema, scoring, intent parser, ranking
 src/server/                               I/O: load data, call the AI, rate limit
 app/                                      Next.js App Router: pages, API routes, MCP endpoint

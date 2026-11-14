@@ -54,7 +54,7 @@ Every offer page links to a "Report a wrong offer" form with the offer id filled
 
 ## Contributing an offer
 
-One offer is one YAML file in `data/offers/es/`. Copy a neighbour, change the terms, put the bank's page in `source_url`, and open a pull request. `./check.sh` validates the file.
+One offer is one YAML file in `data/offers/es/`. Copy a neighbour, change the terms, put the bank's page in `source_url`, and open a pull request. `./check.sh` validates the file. A new bank also needs `data/issuers/es/<bank_slug>.yaml` (deposit-guarantee scheme, legal entity, source); `./check.sh` fails without it.
 
 Check offers against their sources with `npm run verify-offers` (one bank: `npm run verify-offers -- bbva`). It fetches each `source_url`, looks for the numbers the YAML states and writes a report to `runs/verify-offers/`. It is read-only: it never edits `data/` or `verified_on`, and a page it cannot fetch counts as not verified.
 

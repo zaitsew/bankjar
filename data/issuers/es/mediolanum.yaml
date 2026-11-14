@@ -1,0 +1,12 @@
+# Deposit guarantee for mediolanum: which scheme covers deposits at this issuer.
+bank_slug: "mediolanum"
+legal_entity: "Banco Mediolanum, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.bancomediolanum.es/es/informacion-al-cliente/fondo-de-garantia"
+verified_on: 2026-11-14
+notes: "The bank's page states EUR 100,000 per depositor and names the scheme with its pre-2011 title (FGDE Bancarios); the scheme is today the FGD."

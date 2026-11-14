@@ -1,0 +1,12 @@
+# Deposit guarantee for kutxabank: which scheme covers deposits at this issuer.
+bank_slug: "kutxabank"
+legal_entity: "Kutxabank, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://clientes.kutxabank.es/default/documentos/6887_es-deposito_plazo_fijo.pdf"
+verified_on: 2026-11-14
+notes: "Kutxabank's brochures state adhesion to the FGD and EUR 100,000 per depositor. Read from a search excerpt; the PDF was not opened and its legal form comes from a register listing."

@@ -5,7 +5,9 @@ import { compareOffers, rankOffers, type ExcludedOffer, type RankedOffer } from 
 import { GOALS, GoalSchema, type Goal, type Offer } from "../core/schema";
 import { scoreOffer, type Score } from "../core/score";
 import type { ParserName } from "./ai";
+import type { IssuerGuarantee } from "../core/issuer-schema";
 import { allOffers, datasetVersion, type DatasetVersion } from "./data";
+import { issuerGuarantee } from "./issuers";
 import { search, searchAsync, type SearchResult } from "./search";
 
 /**
@@ -72,6 +74,11 @@ export interface OfferRow {
     breakdown: Score["breakdown"];
     flags: string[];
   };
+  /**
+   * Who guarantees deposits at the bank behind this offer. Read-only context: it is never
+   * an input to the score or the order. Null when no issuer file exists for the bank.
+   */
+  issuer_guarantee: IssuerGuarantee | null;
   url: string;
 }
 
@@ -101,6 +108,7 @@ export function offerRow(offer: Offer, score: Score): OfferRow {
       breakdown: score.breakdown,
       flags: score.flags,
     },
+    issuer_guarantee: issuerGuarantee(offer.bank_slug),
     url: offerUrl(offer.id),
   };
 }

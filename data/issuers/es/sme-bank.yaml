@@ -1,0 +1,12 @@
+# Deposit guarantee for sme-bank: which scheme covers deposits at this issuer.
+bank_slug: "sme-bank"
+legal_entity: "SME Bank"
+country_of_licence: "LT"
+scheme_name: "Deposit and Investment Insurance (Indėlių ir investicijų draudimas, VšĮ)"
+scheme_country: "LT"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.raisin.com/es-es/bancos/sme-bank/"
+verified_on: 2026-11-14
+notes: "Raisin's page says deposits are protected by the Lithuanian scheme up to EUR 100,000 per customer and bank. The page gives no legal form (AB, UAB), so the name is as shown there. Offers are contracted through Raisin; the guarantee belongs to the bank."

@@ -1,0 +1,13 @@
+# Deposit guarantee for b100: which scheme covers deposits at this issuer.
+bank_slug: "b100"
+legal_entity: "ABANCA Corporación Bancaria, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: 
+  - "ABANCA"
+source_url: "https://b100.es/media/1/2026/07/FIPRE-Julio-2026.pdf"
+verified_on: 2026-11-14
+notes: "B100 is a brand of ABANCA Corporación Bancaria, S.A.; deposits at B100 and ABANCA share one EUR 100,000 cap. Source is the July 2026 B100 pre-contract sheet for the Pack B100. The FGD member register is a dynamic page and could not be read."

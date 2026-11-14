@@ -1,0 +1,12 @@
+# Deposit guarantee for openbank: which scheme covers deposits at this issuer.
+bank_slug: "openbank"
+legal_entity: "Open Bank, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: []
+source_url: "https://www.openbank.es/deposito-bancario"
+verified_on: 2026-11-14
+notes: "Openbank's page names Open Bank, S.A. (not Banco Santander, S.A.) and the Spanish FGD, EUR 100,000 per depositor per credit institution. It is its own credit institution, so its cap is separate from Banco Santander's."

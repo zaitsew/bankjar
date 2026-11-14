@@ -24,7 +24,7 @@ Net value is an estimate for the stated profile. Every row has source_url and ve
 
 - [OpenAPI 3.1 spec](${base}/openapi.json): every endpoint, parameter and response schema.
 - [Search](${base}/api/v1/search?q=best+salary+bonus+for+2500+a+month): GET /api/v1/search?q=...: the same pipeline as the website search box. Optional goal, income, balance, max_commitment, residency, gift_factor, prefer, customer_of.
-- [Ranked offers](${base}/api/v1/offers?goal=salary&income=2500): GET /api/v1/offers?goal=&country=ES&...: ranked rows for one goal, or one table per goal when goal is left out.
+- [Ranked offers](${base}/api/v1/offers?goal=salary&income=2500): GET /api/v1/offers?goal=&country=ES&...: ranked rows for one goal, or one table per goal when goal is left out. Each row has an issuer_guarantee object: the deposit-guarantee scheme, cover and legal entity behind the bank (context only; it does not change the score or the order).
 - [One offer](${base}/api/v1/offers/{id}): GET /api/v1/offers/{id}: the row, its score breakdown and the full data file.
 - [Compare](${base}/api/v1/compare?ids=a,b): GET /api/v1/compare?ids=a,b,c: side by side, with the reasons a profile cannot take an offer.
 - [Goals](${base}/api/v1/goals): GET /api/v1/goals: the goals and an example question for each.
@@ -37,7 +37,7 @@ Net value is an estimate for the stated profile. Every row has source_url and ve
 
 ## Data
 
-- [Whole dataset (JSON)](${base}/data/offers.json): every validated offer, licence CC BY 4.0, attribution: BankJar (github.com/zaitsew/bankjar).
+- [Whole dataset (JSON)](${base}/data/offers.json): every validated offer plus one deposit-guarantee record per bank (issuers), licence CC BY 4.0, attribution: BankJar (github.com/zaitsew/bankjar).
 - [Full text for LLMs](${base}/llms-full.txt): this file plus the methodology and a table of every current offer.
 
 ## Docs

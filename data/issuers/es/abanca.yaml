@@ -1,0 +1,13 @@
+# Deposit guarantee for abanca: which scheme covers deposits at this issuer.
+bank_slug: "abanca"
+legal_entity: "ABANCA Corporación Bancaria, S.A."
+country_of_licence: "ES"
+scheme_name: "Fondo de Garantía de Depósitos de Entidades de Crédito (FGD)"
+scheme_country: "ES"
+cover_eur: 100000
+cover_basis: "per depositor per credit institution"
+brand_aliases: 
+  - "B100"
+source_url: "https://b100.es/media/1/2026/07/FIPRE-Julio-2026.pdf"
+verified_on: 2026-11-14
+notes: "B100 is a brand of the same licence, so one EUR 100,000 cap covers deposits at ABANCA and B100 together. Source is the July 2026 B100 pre-contract sheet, which names ABANCA Corporación Bancaria, S.A. and states the limit per depositor and credit institution. ABANCA's own page was not fetched. The FGD member register is a dynamic page and could not be read."

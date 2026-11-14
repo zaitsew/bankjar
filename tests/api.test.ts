@@ -18,7 +18,7 @@ beforeAll(useFixtureEnv);
 const ROW_KEYS = [
   "id", "bank", "bank_slug", "country", "goal", "product_name", "headline", "reward", "rate_tae",
   "commitment_months", "requirements", "fees", "penalty", "eligibility", "valid_until", "source_url",
-  "verified_on", "stale", "score", "url",
+  "verified_on", "stale", "score", "issuer_guarantee", "url",
 ];
 
 describe("siteUrl", () => {

@@ -43,6 +43,13 @@ If we do not know a fact about you (income, residency), we do not exclude. We fl
 Every offer has a `verified_on` date and a source link.
 After 30 days the offer shows a "stale" badge. After 60 days, or after its `valid_until` date, it leaves the rankings.
 
+## Deposit guarantee
+
+Each offer page, API row and MCP result also states which deposit-guarantee scheme covers deposits at the bank: scheme, cover (EUR 100,000 per depositor per credit institution unless the source says otherwise) and the licensed legal entity.
+A branch of an EU bank is covered by its home scheme, not the Spanish FGD. For a Raisin deposit the guarantee belongs to the partner bank, not Raisin.
+Banks that share one licence share one cap: the offer page says so.
+These facts are context. They are never an input to the net value or the order. One file per bank in `data/issuers/es/`, each with a source link and a `verified_on` date.
+
 ## Order
 
 Highest net value first. A tie goes to the higher value per month (no commitment ranks last), then to the newer `verified_on`, then to the offer id.
