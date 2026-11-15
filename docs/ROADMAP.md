@@ -26,7 +26,7 @@ All 69 offers carry `verified_on: 2026-10-22`. They all go stale on 2026-11-21 a
 - [ ] Deploy #30, and confirm the new instructions on the live `/mcp`.
 - [x] `scripts/verify-offers.ts` (#33): fetch each `source_url`, compare the numbers in the YAML with the page text, report ok, mismatch, unverifiable or blocked. First run, 2026-11-05: 39 ok, 13 mismatch, 12 unverifiable, 5 blocked.
 - [x] Re-verify all 69 offers (done 2026-11-14 in #42, #47, #48; see Sprint 2b). A person or an agent reads every mismatch. BBVA and Bankinter (5 offers) block fetches and need another route. A failed fetch never renews `verified_on`.
-- [x] Weekly verifier run that opens a pull request (#49, #50; launchd not installed yet). A changed number is reviewed and never merged automatically.
+- [x] Weekly verifier run that opens a pull request (#49, #50; launchd installed 2026-11-15). A changed number is reviewed and never merged automatically.
   Built as `scripts/verify-weekly.sh` (Sundays 07:00, launchd `com.zaitsew.bankjar.verify-weekly`, install with `scripts/install-launchd.sh verify-weekly`): writes `docs/verification/offers-latest.md`, opens a PR only when it changed, never merges.
 - [x] "Report a wrong offer" issue form, linked from each offer page (#32).
 
@@ -42,9 +42,9 @@ Official numbers beside the offers, so a person and an agent can tell whether an
 - [x] 12-month Letra del Tesoro (#44): the latest auction's average and marginal yield, gross, parsed from tesoro.es with a fixture.
 - [x] Deposit guarantee per issuer (#45): scheme (FGD or the home country's), cover per depositor, legal entity, shared caps. Offer pages, the API and MCP; the score does not change.
 - [x] Surfaces: a market strip on the savings and deposit leaderboards (BdE average, ECB rate, 12-month Letra, CPI), a "vs BdE average" line on their offer pages, `/api/v1/benchmarks`, MCP `get_benchmarks`, `llms-full.txt`, `/data/offers.json`, OpenAPI, README.
-- [ ] Unattended benchmark refresh: `scripts/refresh-benchmarks.sh`, daily 08:00 (launchd, not installed yet).
+- [x] Unattended benchmark refresh: `scripts/refresh-benchmarks.sh`, daily 08:00 (#52; launchd installed 2026-11-15).
 - [x] Deploy everything above (live 2026-11-15: 66 offers, 25 issuers, 6 benchmarks; `mcp:smoke` 24 checks pass).
-- [x] Weekly verifier run that opens a pull request (the Sprint 2 item; #49, #50; launchd not installed yet), so the new rows do not grow faster than the checks.
+- [x] Weekly verifier run that opens a pull request (the Sprint 2 item; #49, #50; launchd installed 2026-11-15), so the new rows do not grow faster than the checks.
 
 ## Later — investment data, each behind its own gate
 
