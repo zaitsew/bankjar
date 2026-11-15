@@ -43,7 +43,7 @@ Official numbers beside the offers, so a person and an agent can tell whether an
 - [x] Deposit guarantee per issuer (#45): scheme (FGD or the home country's), cover per depositor, legal entity, shared caps. Offer pages, the API and MCP; the score does not change.
 - [x] Surfaces: a market strip on the savings and deposit leaderboards (BdE average, ECB rate, 12-month Letra, CPI), a "vs BdE average" line on their offer pages, `/api/v1/benchmarks`, MCP `get_benchmarks`, `llms-full.txt`, `/data/offers.json`, OpenAPI, README.
 - [ ] Unattended benchmark refresh: `scripts/refresh-benchmarks.sh`, daily 08:00 (launchd, not installed yet).
-- [ ] Deploy everything above. All of it is merged on main; the live site still serves the 2026-11-09 build (the load guard refused the 2026-11-15 build).
+- [x] Deploy everything above (live 2026-11-15: 66 offers, 25 issuers, 6 benchmarks; `mcp:smoke` 24 checks pass).
 - [x] Weekly verifier run that opens a pull request (the Sprint 2 item; #49, #50; launchd not installed yet), so the new rows do not grow faster than the checks.
 
 ## Later — investment data, each behind its own gate
