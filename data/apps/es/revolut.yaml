@@ -8,8 +8,8 @@ ios:
   app_id: 932493382
   url: https://apps.apple.com/es/app/id932493382
   rating: 4.82
-  ratings_count: 208503
-  updated_on: 2026-11-05
+  ratings_count: 209694
+  updated_on: 2026-11-13
   languages:
     - BG
     - CS
@@ -38,12 +38,12 @@ ios:
 android:
   package: com.revolut.revolut
   url: https://play.google.com/store/apps/details?id=com.revolut.revolut&gl=ES
-  rating: 4.74
-  ratings_count: 4184141
-  updated_on: 2026-11-03
+  rating: 4.73
+  ratings_count: 4190601
+  updated_on: 2026-11-11
 features:
   bizum: { value: true, source_url: https://finantresnoticias.com/bancos/mejores-neobancos-con-bizum/ }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-11-09
+verified_on: 2026-11-16
 notes: "Google Play's rating count is worldwide for this app; its average is the one Play shows in Spain."
