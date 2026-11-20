@@ -1,0 +1,25 @@
+{
+  "name": "BankJar",
+  "tagline": "Rank Spanish bank offers by first-year net value.",
+  "summary": "One table, one formula, every catch and source. Open code, open data, MCP for agents.",
+  "accent": "#EFC455",
+  "accent_dark": "#F2C14E",
+  "status": "building",
+  "kind": "web",
+  "platforms": ["web"],
+  "pills": ["Open source", "MCP server"],
+  "highlights": [
+    {"label": "SEARCH", "title": "Ask in plain words", "text": "AI search, with a rule parser as fallback, turns a goal into a ranked table."},
+    {"label": "SCALE", "title": "One first-year net scale", "text": "Every reward and rate lands on the same euro value, from one open formula."},
+    {"label": "COMPARE", "title": "Side by side", "text": "Put two or three offers next to each other, with every catch and source."},
+    {"label": "APPS", "title": "24 bank apps ranked", "text": "Scored 0 to 100 on ratings, freshness, reach and Bizum or Apple Pay."},
+    {"label": "DATA", "title": "Open, dated data", "text": "One YAML file per offer, CC BY 4.0, with a source link and a verified date."},
+    {"label": "AGENTS", "title": "Built for agents", "text": "JSON API, OpenAPI, llms.txt and a remote MCP server. No key needed."}
+  ],
+  "steps": [
+    {"title": "Ask", "text": "Type a goal: salary, savings, account, deposit or bonus."},
+    {"title": "Parse", "text": "AI or a rule parser turns the words into a profile."},
+    {"title": "Rank", "text": "One engine scores every offer in first-year net euros."},
+    {"title": "Check", "text": "Read each catch, then open the bank's own source link."}
+  ]
+}
