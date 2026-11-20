@@ -1,9 +1,7 @@
 <!-- Pictures: docs/readme/spec.json, drawn by readme-kit. Do not edit the SVGs by hand. -->
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-dark.svg"><img src="docs/readme/hero-light.svg" alt="BankJar: rank Spanish bank offers by first-year net value. One table, one formula, every catch and source. Open code, open data, MCP for agents." width="100%"></picture>
 
-# BankJar
-
-**Ask what you want from a Spanish bank and get every offer ranked on one first-year net scale.**
+**Say what you want from your bank, and see which Spanish offer pays most after its catches.**
 
 BankJar covers salary bonuses, savings, free accounts, term deposits and welcome bonuses: 66 offers, each with its catch and its source. It also ranks 24 Spanish bank apps. Open code (Apache-2.0), open data (CC BY 4.0), for people and for AI agents. Alpha, live on the web.
 
@@ -17,15 +15,8 @@ BankJar covers salary bonuses, savings, free accounts, term deposits and welcome
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/highlights-dark.svg"><img src="docs/readme/highlights-light.svg" alt="Six highlights: ask in plain words, one first-year net scale, side by side compare, 24 bank apps ranked, open dated data, built for agents" width="100%"></picture>
 
-- **Rank by goal.** Salary, savings, account, deposit and welcome offers, ranked with one formula (`/methodology`).
-- **Show the catch.** Every offer page lists its conditions and the source link.
-- **Compare.** Two to three offers side by side.
-- **Answer agents.** JSON API and MCP, no key.
-- **Rank apps.** See below.
-- **Give market context.** See below.
-
 <details>
-<summary>Bank apps and market context, in detail</summary>
+<summary>App scoring and market benchmarks: inputs, endpoints, refresh commands</summary>
 
 - **Bank apps.** Spanish bank mobile apps score 0 to 100 from store ratings, release freshness, reach and Bizum / Apple Pay / Google Pay / English. They are on `/apps`, at `/api/v1/apps` and in the MCP tool `rank_bank_apps`. One YAML per app in `data/apps/es/`; `npm run fetch-apps` refreshes the store numbers.
 - **Market context.** The savings and deposit leaderboards show a strip of official reference numbers: Banco de España average rate on new household deposits up to 1 year, ECB deposit facility rate, 12-month Letra yield, CPI year on year. Each has its period, source link and fetched date, and a Stale badge when old. Savings and deposit offer pages show the offer's TAE minus the BdE average, in percentage points.
