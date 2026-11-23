@@ -7,8 +7,8 @@ app_name: "Self Bank"
 ios:
   app_id: 6739063648
   url: https://apps.apple.com/es/app/id6739063648
-  rating: 2.32
-  ratings_count: 57
+  rating: 2.29
+  ratings_count: 58
   updated_on: 2026-10-23
   languages:
     - EN
@@ -23,5 +23,5 @@ features:
   bizum: { value: null, source_url: null }
   apple_pay: { value: null, source_url: null }
   google_pay: { value: null, source_url: null }
-verified_on: 2026-11-16
+verified_on: 2026-11-23
 notes: null

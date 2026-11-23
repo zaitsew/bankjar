@@ -8,7 +8,7 @@ ios:
   app_id: 956857223
   url: https://apps.apple.com/es/app/id956857223
   rating: 4.76
-  ratings_count: 66320
+  ratings_count: 66546
   updated_on: 2026-11-13
   languages:
     - DE
@@ -19,12 +19,12 @@ ios:
 android:
   package: de.number26.android
   url: https://play.google.com/store/apps/details?id=de.number26.android&gl=ES
-  rating: 4.07
-  ratings_count: 164279
-  updated_on: 2026-10-30
+  rating: 4.06
+  ratings_count: 164407
+  updated_on: 2026-11-12
 features:
   bizum: { value: true, source_url: https://n26.com/es-es/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-11-16
+verified_on: 2026-11-23
 notes: "Google Play's rating count is worldwide for this app; its average is the one Play shows in Spain."

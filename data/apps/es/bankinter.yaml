@@ -8,7 +8,7 @@ ios:
   app_id: 356160865
   url: https://apps.apple.com/es/app/id356160865
   rating: 4.02
-  ratings_count: 12358
+  ratings_count: 12362
   updated_on: 2026-11-11
   languages:
     - CA
@@ -17,12 +17,12 @@ ios:
 android:
   package: com.bankinter.launcher
   url: https://play.google.com/store/apps/details?id=com.bankinter.launcher&gl=ES
-  rating: 1.72
-  ratings_count: 25627
+  rating: 1.73
+  ratings_count: 25643
   updated_on: 2026-11-10
 features:
   bizum: { value: true, source_url: https://www.rastreator.com/finanzas/entidades-financieras/bankinter/bizum }
   apple_pay: { value: true, source_url: https://support.apple.com/es-lamr/109516 }
   google_pay: { value: true, source_url: https://support.google.com/pay/answer/7351836?hl=es }
-verified_on: 2026-11-16
+verified_on: 2026-11-23
 notes: null
