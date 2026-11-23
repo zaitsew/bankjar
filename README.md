@@ -19,8 +19,8 @@ BankJar covers salary bonuses, savings, free accounts, term deposits and welcome
 <summary>App scoring and market benchmarks: inputs, endpoints, refresh commands</summary>
 
 - **Bank apps.** Spanish bank mobile apps score 0 to 100 from store ratings, release freshness, reach and Bizum / Apple Pay / Google Pay / English. They are on `/apps`, at `/api/v1/apps` and in the MCP tool `rank_bank_apps`. One YAML per app in `data/apps/es/`; `npm run fetch-apps` refreshes the store numbers.
-- **Market context.** The savings and deposit leaderboards show a strip of official reference numbers: Banco de España average rate on new household deposits up to 1 year, ECB deposit facility rate, 12-month Letra yield, CPI year on year. Each has its period, source link and fetched date, and a Stale badge when old. Savings and deposit offer pages show the offer's TAE minus the BdE average, in percentage points.
-- **Where the benchmarks live.** `/api/v1/benchmarks`, the MCP tool `get_benchmarks`, `llms-full.txt` and `/data/offers.json`. One YAML per series in `data/benchmarks/es/`; `npm run fetch-benchmarks` refreshes them from the publishers' APIs.
+- **Market context.** The savings and deposit leaderboards show a strip of official reference numbers: Banco de España average rate on new household deposits up to 1 year, ECB deposit facility rate, €STR, 12-month Letra yield (average and marginal), CPI year on year. Each has its period, source link and fetched date, and a Stale badge when old. Savings and deposit offer pages show the offer's TAE minus the BdE average, in percentage points.
+- **Where the benchmarks live.** `/api/v1/benchmarks`, the MCP tool `get_benchmarks`, `llms-full.txt` and `/data/offers.json`. One YAML per series in `data/benchmarks/es/`; `npm run fetch-benchmarks` refreshes them from the publishers' APIs. `scripts/refresh-benchmarks.sh` runs daily (launchd, 08:00): it fetches, runs `./check.sh`, merges a data-only PR and deploys.
 - **Benchmarks never rank.** They are context: they never change a score or an order.
 
 </details>
@@ -109,6 +109,8 @@ Store numbers are written by `npm run fetch-apps`. Bizum, Apple Pay and Google P
 
 The store numbers refresh every Monday: `scripts/refresh-apps.sh` fetches them, opens and merges a data-only PR after `./check.sh`, and deploys. `scripts/install-launchd.sh` installs the job (`--remove` uninstalls it); `scripts/refresh-apps.sh --dry` shows the diff without shipping. Log: `~/Library/Logs/bankjar-app-refresh.log`.
 
+Offers are re-checked against their sources every Sunday: `scripts/verify-weekly.sh` runs `npm run verify-offers` and opens a PR with the report in `docs/verification/offers-latest.md`. A person reviews it.
+
 </details>
 
 ## Legal pages
@@ -129,6 +131,8 @@ The site has [privacy](https://bankjar.fabriquefutur.com/privacy), [terms](https
 ## Licence
 
 Code: Apache-2.0 ([LICENSE](LICENSE)). Data in `data/`: CC BY 4.0 ([data/LICENSE](data/LICENSE)).
+
+<sub>In JavaScript, 0.1 + 0.2 is 0.30000000000000004. The ranking engine rounds each line to the cent (`src/core/score.ts`), so your euros add up.</sub>
 
 <sub>Built by <a href="https://github.com/zaitsew">zaitsew</a> with a fleet of AI agents.</sub>
 
