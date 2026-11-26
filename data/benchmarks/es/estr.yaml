@@ -12,7 +12,7 @@ sanity:
   min: -1
   max: 10
 stale_after_days: 7
-period: 2026-11-23
-value: 2.443
+period: 2026-11-24
+value: 2.444
 published_on: null
-fetched_on: 2026-11-25
+fetched_on: 2026-11-26
