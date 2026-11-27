@@ -132,7 +132,17 @@ The site has [privacy](https://bankjar.fabriquefutur.com/privacy), [terms](https
 
 Code: Apache-2.0 ([LICENSE](LICENSE)). Data in `data/`: CC BY 4.0 ([data/LICENSE](data/LICENSE)).
 
-<sub>In JavaScript, 0.1 + 0.2 is 0.30000000000000004. The ranking engine rounds each line to the cent (`src/core/score.ts`), so your euros add up.</sub>
+<details>
+<summary>€</summary>
+
+```math
+\underbrace{5\%\ \text{TAE}}_{\text{headline}}\ \text{on}\ \underbrace{\text{€5,000 for 3 months}}_{\text{fine print}}
+\;\Rightarrow\; 5000\,\bigl(1.05^{3/12}-1\bigr) = \text{€61.36} \;\neq\; \text{€250}
+```
+
+The old idiom is to sell someone a cat as a hare, that is, to swindle them. BankJar ranks by first-year net value, so the cat shows up as €61.36.
+
+</details>
 
 <sub>Built by <a href="https://github.com/zaitsew">zaitsew</a> with a fleet of AI agents.</sub>
 
